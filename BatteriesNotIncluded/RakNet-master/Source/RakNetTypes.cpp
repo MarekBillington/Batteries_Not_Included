@@ -11,7 +11,7 @@
 /// \file
 ///
 
-
+#define _CRT_SECURE_NO_DEPRECATE
 #include "RakNetTypes.h"
 #include "RakAssert.h"
 #include <string.h>

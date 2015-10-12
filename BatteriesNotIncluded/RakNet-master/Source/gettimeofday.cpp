@@ -7,7 +7,7 @@
  *  of patent rights can be found in the PATENTS file in the same directory.
  *
  */
-
+#define _CRT_SECURE_NO_DEPRECATE
 #if defined(_WIN32) && !defined(__GNUC__)  &&!defined(__GCCXML__)
 
 #include "gettimeofday.h"

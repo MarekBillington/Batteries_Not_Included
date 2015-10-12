@@ -12,7 +12,7 @@
 //
 
 
-
+#define _CRT_SECURE_NO_DEPRECATE
 #define CAT_NEUTER_EXPORT /* Neuter dllimport for libcat */
 
 #include "RakNetDefines.h"

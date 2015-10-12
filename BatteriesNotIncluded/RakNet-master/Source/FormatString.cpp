@@ -7,7 +7,7 @@
  *  of patent rights can be found in the PATENTS file in the same directory.
  *
  */
-
+#define _CRT_SECURE_NO_DEPRECATE
 #include "FormatString.h"
 #include <stdio.h>
 #include <string.h>

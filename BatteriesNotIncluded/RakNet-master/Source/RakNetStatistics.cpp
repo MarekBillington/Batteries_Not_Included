@@ -12,7 +12,7 @@
 ///
 
 
-
+#define _CRT_SECURE_NO_DEPRECATE
 #include "RakNetStatistics.h"
 #include <stdio.h> // sprintf
 #include "GetTime.h"

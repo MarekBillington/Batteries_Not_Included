@@ -7,7 +7,7 @@
  *  of patent rights can be found in the PATENTS file in the same directory.
  *
  */
-
+#define _CRT_SECURE_NO_DEPRECATE
 #include "NativeFeatureIncludes.h"
 #if _RAKNET_SUPPORT_TelnetTransport==1 && _RAKNET_SUPPORT_TCPInterface==1
 

@@ -7,11 +7,11 @@
  *  of patent rights can be found in the PATENTS file in the same directory.
  *
  */
-
+#define _CRT_SECURE_NO_DEPRECATE
 #include "EmptyHeader.h"
 
 #ifdef RAKNET_SOCKET_2_INLINE_FUNCTIONS
-
+#define _CRT_SECURE_NO_DEPRECATE
 #ifndef RAKNETSOCKET2_BERKLEY_NATIVE_CLIENT_CPP
 #define RAKNETSOCKET2_BERKLEY_NATIVE_CLIENT_CPP
 
