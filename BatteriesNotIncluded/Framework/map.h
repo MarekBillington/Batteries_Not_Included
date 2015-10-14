@@ -2,6 +2,29 @@
 #ifndef __MAP_H__
 #define __MAP_H__
 
+class BackBuffer;
+class Sprite;
+
+enum Room
+{
+	fourDoors,
+	threeDoorsTopWall,
+	threeDoorsBottomWall,
+	threeDoorsLeftWall,
+	threeDoorsRightWall,
+	twoDoorsTopLeftWalls,
+	twoDoorsTopRightWalls,
+	twoDoorsBottomLeftWalls,
+	twoDoorsBottomRightWalls,
+	twoDoorsSplitHorizontal,
+	twoDoorsSplitVertical,
+	oneDoorAtBottom,
+	oneDoorAtTop,
+	oneDoorOnRight,
+	oneDoorOnLeft,
+	blank
+};
+
 class Map
 {
 public:
@@ -10,12 +33,17 @@ public:
 
 	void parseFile();
 
-	int getRoom();
-	void setRoom();
+	Room getRoom();
+	void setRoom(Room room);
+
+	bool initialise(Sprite* sprite);
+	void process(float deltaTime);
+	void drawRoom(BackBuffer& backbuffer);
 
 	int getItemTimer();
-
+	void setItemTimer(int itemTimer);
 	int getBossTimer();
+	void setBossTimer(int bossTimer);
 
 	bool arePlayersDuelling();
 
@@ -24,11 +52,13 @@ public:
 	bool isBossRoomActive();
 
 private:
-	int ma_layout[9][9];
-	int ma_room;
+	Room ma_layout[9][9];
+	Room ma_room;
 	int ma_itemTimer;
 	int ma_bossTimer;
-
+	bool ma_playerDuel;
+	bool ma_itemActivate;
+	bool ma_bossActivate;
 };
 
 #endif

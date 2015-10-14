@@ -35,42 +35,81 @@ Player::Draw(BackBuffer& backBuffer)
 }
 
 
-float Player::getHealth(){
+int 
+Player::getCurrentRoomX(){
+	return pl_currentRoomX;
+}
+
+int 
+Player::getCurrentRoomY(){
+	return pl_currentRoomY;
+}
+
+void 
+Player::setCurrentRoomX(int x){
+	pl_currentRoomX = x;
+}
+
+void 
+Player::setCurrentRoomY(int y){
+	pl_currentRoomY = y;
+}
+
+
+int 
+Player::getHealth(){
 	return pl_health;
 }
-void Player::setHealth(float health){
+
+void 
+Player::setHealth(int health){
 	pl_health = health;
 }
 
-float Player::getAttackSpeed(){
+int 
+Player::getAttackSpeed(){
 	return pl_attackSpeed;
 }
-void Player::getAttackSpeed(float attackSpeed){
+
+void 
+Player::getAttackSpeed(int attackSpeed){
 	pl_attackSpeed = attackSpeed;
 }
-float Player::getAttackDamage(){
+
+int 
+Player::getAttackDamage(){
 	return pl_attackDamage;
 }
-void Player::getAttackDamage(float attackDamage){
+
+void 
+Player::getAttackDamage(int attackDamage){
 	pl_attackDamage = attackDamage;
 }
-float Player::getMovementSpeed(){
+
+int 
+Player::getMovementSpeed(){
 	return pl_movementSpeed;
 }
-void Player::setMovementSpeed(float movementSpeed){
+
+void 
+Player::setMovementSpeed(int movementSpeed){
 	pl_movementSpeed = movementSpeed;
 }
 
 
 
-Weapon Player::getWeapon(){
+Weapon* 
+Player::getWeapon(){
 	return pl_weapon;
 }
-void Player::setWeapon(Weapon weapon){
+
+void 
+Player::setWeapon(Weapon* weapon){
 	pl_weapon = weapon;
 }
 
-Passive Player::getPassive(int passiveNum){
+Passive* 
+Player::getPassive(int passiveNum){
 	if (passiveNum == 1){
 		return pl_passive1;
 	}
@@ -84,7 +123,9 @@ Passive Player::getPassive(int passiveNum){
 		return pl_passive4;
 	}
 }
-void Player::setPassive(int passiveNum, Passive passive){
+
+void 
+Player::setPassive(int passiveNum, Passive* passive){
 	if (passiveNum == 1){
 		pl_passive1 = passive;
 	}
@@ -99,44 +140,63 @@ void Player::setPassive(int passiveNum, Passive passive){
 	}
 }
 
-Active Player::getActive(){
+Active* 
+Player::getActive(){
 	return pl_active;
 }
-void Player::setActive(Active active){
+
+void 
+Player::setActive(Active* active){
 	pl_active = active;
 }
 
-std::string Player::getName(){
+std::string 
+Player::getName(){
 	return pl_name;
 }
-void Player::setName(std::string name){
+
+void 
+Player::setName(std::string name){
 	pl_name = name;
 }
 
-
-int Player::fireTimeRemaining(){
+int 
+Player::fireTimeRemaining(){
 	return pl_remainingDurationFire;
 }
-int Player::poisonedTimeRemaining(){
+
+int 
+Player::poisonedTimeRemaining(){
 	return pl_remainingDurationPoisoned;
 }
-int Player::electrocutedTimeRemaining(){
+
+int 
+Player::electrocutedTimeRemaining(){
 	return pl_remainingDurationElectrocuted;
 }
-int Player::repairingTimeRemaining(){
+
+int 
+Player::repairingTimeRemaining(){
 	return pl_remainingDurationRepairing;
 }
 
-void Player::setOnFire(int duration){
+void 
+Player::setOnFire(int duration){
 	pl_remainingDurationFire = duration;
 
 }
-void Player::setPoisoned(int duration){
+
+void 
+Player::setPoisoned(int duration){
 	pl_remainingDurationPoisoned = duration;
 }
-void Player::setElectrocuted(int duration){
+
+void 
+Player::setElectrocuted(int duration){
 	pl_remainingDurationElectrocuted = duration;
 }
-void Player::setRepairing(int duration){
+
+void 
+Player::setRepairing(int duration){
 	pl_remainingDurationRepairing = duration;
 }

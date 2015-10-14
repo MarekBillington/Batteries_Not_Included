@@ -60,8 +60,8 @@ Game::~Game()
 bool 
 Game::Initialise()
 {
-	const int width = 800;
-	const int height = 600;
+	const int width = 1280;
+	const int height = 720;
 
 	m_pBackBuffer = new BackBuffer();
 	if (!m_pBackBuffer->Initialise(width, height))

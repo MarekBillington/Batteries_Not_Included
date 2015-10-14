@@ -30,24 +30,29 @@ public:
 	void setName(std::string name);
 
 	//Stats
-	float getHealth();
-	float getAttackSpeed();
-	float getAttackDamage();
-	float getMovementSpeed();
 
-	void setHealth(float health);
-	void getAttackSpeed(float attackSpeed);
-	void getAttackDamage(float attackDamage);
-	void setMovementSpeed(float movementSpeed);
+	int getCurrentRoomX();
+	int getCurrentRoomY();
+	int getHealth();
+	int getAttackSpeed();
+	int getAttackDamage();
+	int getMovementSpeed();
+
+	void setCurrentRoomX(int x);
+	void setCurrentRoomY(int y);
+	void setHealth(int health);
+	void getAttackSpeed(int attackSpeed);
+	void getAttackDamage(int attackDamage);
+	void setMovementSpeed(int movementSpeed);
 
 	//Items
-	Weapon getWeapon();
-	Passive getPassive(int passiveNum);
-	Active getActive();
+	Weapon* getWeapon();
+	Passive* getPassive(int passiveNum);
+	Active* getActive();
 
-	void setWeapon(Weapon weapon);
-	void setPassive(int passiveNum, Passive passive);
-	void setActive(Active active);
+	void setWeapon(Weapon* weapon);
+	void setPassive(int passiveNum, Passive* passive);
+	void setActive(Active* active);
 	
 	//Effects
 	int fireTimeRemaining();
@@ -65,19 +70,22 @@ public:
 private:
 	std::string  pl_name;
 
+	int pl_currentRoomX;
+	int pl_currentRoomY;
+
 	int pl_health;
 	int pl_attackSpeed;
 	int pl_attackDamage;
 	int pl_movementSpeed;
 
-	Weapon pl_weapon;
+	Weapon* pl_weapon;
 
-	Passive pl_passive1;
-	Passive pl_passive2;
-	Passive pl_passive3;
-	Passive pl_passive4;
+	Passive* pl_passive1;
+	Passive* pl_passive2;
+	Passive* pl_passive3;
+	Passive* pl_passive4;
 
-	Active pl_active;
+	Active* pl_active;
 
 	
 	int pl_remainingDurationPoisoned;
