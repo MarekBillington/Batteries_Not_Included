@@ -26,6 +26,9 @@ Player::Process(float deltaTime)
 	m_pSprite->SetX(static_cast<int>(m_x));
 	m_pSprite->SetY(static_cast<int>(m_y));
 
+	m_x += m_velocityX*deltaTime;
+	m_y += m_velocityY*deltaTime;
+
 }
 
 void

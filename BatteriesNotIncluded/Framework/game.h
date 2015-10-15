@@ -6,6 +6,15 @@
 class BackBuffer;
 class InputHandler;
 class Sprite;
+class Map;
+class Entity;
+class Player;
+
+enum GameState
+{
+	MAINMENU,
+	RUNNING
+};
 
 class Game
 {
@@ -15,15 +24,28 @@ public:
 	static void DestroyInstance();
 	~Game();
 
+	static Game& GetGame();
+
 	bool Initialise();
 	bool DoGameLoop();
 	void Quit();
 
-	void MoveSpaceShipLeft();
+	void MoveSpaceShipHor(float speed);
+	void MoveSpaceShipVert(float speed);
+	BackBuffer* CallBackBuffer();
+	void ServerMoveShip();
 	void FireSpaceShipBullet();
+
+	void MoveSpaceShipLeft();
 
 	void SpawnEnemy(int x, int y);
 	void SpawnExplosion(int x, int y);
+
+	void initiateServer();
+	void initiateClient();
+
+	//ryan
+	GameState ga_gameState;
 	
 protected:
 	void Process(float deltaTime);
@@ -58,6 +80,19 @@ protected:
 	// Ex006.2: Add a PlayerShip field.    
 	// Ex006.3: Add an alien enemy container field.
 	// Ex006.4: Add a bullet container field.
+
+
+	//marek
+	//liam
+	//ryan
+	Sprite* ga_mainMenu;
+	Player* player;
+
+
+	//james
+	//tom
+	Map* ga_gameMap;
+	Sprite* ga_currentRoom;
 
 private:
 

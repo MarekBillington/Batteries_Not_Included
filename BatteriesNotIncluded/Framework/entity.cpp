@@ -87,6 +87,18 @@ Entity::GetPositionY()
 	return (m_y);
 }
 
+void
+Entity::SetPositionX(float x)
+{
+	m_x = x;
+}
+
+void
+Entity::SetPositionY(float y)
+{
+	m_y = y;
+}
+
 float 
 Entity::GetHorizontalVelocity()
 {

@@ -24,7 +24,9 @@ public:
 	bool IsCollidingWith(Entity& e);
 
 	float GetPositionX();
+	void  SetPositionX(float x);
 	float GetPositionY();
+	void  SetPositionY(float y);
 
 	float GetHorizontalVelocity();
 	void SetHorizontalVelocity(float x); 

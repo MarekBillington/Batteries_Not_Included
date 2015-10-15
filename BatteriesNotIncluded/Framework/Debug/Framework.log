@@ -1,27 +1,139 @@
-﻿Build started 14/10/2015 6:59:21 p.m..
-     1>Project "C:\Batteries_Not_Included\BatteriesNotIncluded\Framework\Framework.vcxproj" on node 2 (Build target(s)).
+﻿Build started 15/10/2015 3:48:11 p.m..
+     1>Project "C:\Users\gjv5453\Desktop\Batteries_Not_Included-master\BatteriesNotIncluded\Framework\Framework.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Batteries_Not_Included\BatteriesNotIncluded\\SDL\SDL2-2.0.3\include\\" /I"C:\Batteries_Not_Included\BatteriesNotIncluded\\SDL\SDL2_image-2.0.0\include" /I"C:\Batteries_Not_Included\BatteriesNotIncluded\\RakNet-master\Source" /IC:\Batteries_Not_Included\BatteriesNotIncluded\\FMOD\inc /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt inputhandler.cpp
-         inputhandler.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\gjv5453\Desktop\Batteries_Not_Included-master\BatteriesNotIncluded\\SDL\SDL2-2.0.3\include\\" /I"C:\Users\gjv5453\Desktop\Batteries_Not_Included-master\BatteriesNotIncluded\\SDL\SDL2_image-2.0.0\include" /I"C:\Users\gjv5453\Desktop\Batteries_Not_Included-master\BatteriesNotIncluded\\RakNet-master\Source" /I"C:\Users\gjv5453\Desktop\Batteries_Not_Included-master\BatteriesNotIncluded\\FMOD\inc" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt game.cpp
+         game.cpp
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Batteries_Not_Included\BatteriesNotIncluded\Debug\Framework.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Batteries_Not_Included\BatteriesNotIncluded\\SDL\SDL2-2.0.3\lib\x86" /LIBPATH:"C:\Batteries_Not_Included\BatteriesNotIncluded\\SDL\SDL2_image-2.0.0\lib\x86" /LIBPATH:C:\Batteries_Not_Included\BatteriesNotIncluded\\FMOD\lib SDL2.lib SDL2main.lib SDL2_image.lib fmodl_vc.lib ws2_32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Batteries_Not_Included\BatteriesNotIncluded\Debug\Framework.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Batteries_Not_Included\BatteriesNotIncluded\Debug\Framework.lib" /MACHINE:X86 Debug\active.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\gjv5453\Desktop\Batteries_Not_Included-master\BatteriesNotIncluded\Debug\Framework.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Users\gjv5453\Desktop\Batteries_Not_Included-master\BatteriesNotIncluded\\SDL\SDL2-2.0.3\lib\x86" /LIBPATH:"C:\Users\gjv5453\Desktop\Batteries_Not_Included-master\BatteriesNotIncluded\\SDL\SDL2_image-2.0.0\lib\x86" /LIBPATH:"C:\Users\gjv5453\Desktop\Batteries_Not_Included-master\BatteriesNotIncluded\\FMOD\lib" SDL2.lib SDL2main.lib SDL2_image.lib fmodl_vc.lib ws2_32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\gjv5453\Desktop\Batteries_Not_Included-master\BatteriesNotIncluded\Debug\Framework.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\gjv5453\Desktop\Batteries_Not_Included-master\BatteriesNotIncluded\Debug\Framework.lib" /MACHINE:X86 Debug\Base64Encoder.obj
+         Debug\BitStream.obj
+         Debug\CCRakNetSlidingWindow.obj
+         Debug\CCRakNetUDT.obj
+         Debug\CheckSum.obj
+         Debug\CloudClient.obj
+         Debug\CloudCommon.obj
+         Debug\CloudServer.obj
+         Debug\CommandParserInterface.obj
+         Debug\ConnectionGraph2.obj
+         Debug\ConsoleServer.obj
+         Debug\DataCompressor.obj
+         Debug\DirectoryDeltaTransfer.obj
+         Debug\DR_SHA1.obj
+         Debug\DS_BytePool.obj
+         Debug\DS_ByteQueue.obj
+         Debug\DS_HuffmanEncodingTree.obj
+         Debug\DS_Table.obj
+         Debug\DynDNS.obj
+         Debug\EmailSender.obj
+         Debug\EpochTimeToString.obj
+         Debug\FileList.obj
+         Debug\FileListTransfer.obj
+         Debug\FileOperations.obj
+         Debug\FormatString.obj
+         Debug\FullyConnectedMesh2.obj
+         Debug\Getche.obj
+         Debug\Gets.obj
+         Debug\GetTime.obj
+         Debug\gettimeofday.obj
+         Debug\GridSectorizer.obj
+         Debug\HTTPConnection.obj
+         Debug\HTTPConnection2.obj
+         Debug\IncrementalReadInterface.obj
+         Debug\Itoa.obj
+         Debug\LinuxStrings.obj
+         Debug\LocklessTypes.obj
+         Debug\LogCommandParser.obj
+         Debug\MessageFilter.obj
+         Debug\NatPunchthroughClient.obj
+         Debug\NatPunchthroughServer.obj
+         Debug\NatTypeDetectionClient.obj
+         Debug\NatTypeDetectionCommon.obj
+         Debug\NatTypeDetectionServer.obj
+         Debug\NetworkIDManager.obj
+         Debug\NetworkIDObject.obj
+         Debug\PacketConsoleLogger.obj
+         Debug\PacketFileLogger.obj
+         Debug\PacketizedTCP.obj
+         Debug\PacketLogger.obj
+         Debug\PacketOutputWindowLogger.obj
+         Debug\PluginInterface2.obj
+         Debug\PS4Includes.obj
+         Debug\Rackspace.obj
+         Debug\RakMemoryOverride.obj
+         Debug\RakNetCommandParser.obj
+         Debug\RakNetSocket.obj
+         Debug\RakNetSocket2.obj
+         Debug\RakNetSocket2_360_720.obj
+         Debug\RakNetSocket2_Berkley.obj
+         Debug\RakNetSocket2_Berkley_NativeClient.obj
+         Debug\RakNetSocket2_NativeClient.obj
+         Debug\RakNetSocket2_PS3_PS4.obj
+         Debug\RakNetSocket2_PS4.obj
+         Debug\RakNetSocket2_Vita.obj
+         Debug\RakNetSocket2_WindowsStore8.obj
+         Debug\RakNetSocket2_Windows_Linux.obj
+         Debug\RakNetSocket2_Windows_Linux_360.obj
+         Debug\RakNetStatistics.obj
+         Debug\RakNetTransport2.obj
+         Debug\RakNetTypes.obj
+         Debug\RakPeer.obj
+         Debug\RakSleep.obj
+         Debug\RakString.obj
+         Debug\RakThread.obj
+         Debug\RakWString.obj
+         Debug\Rand.obj
+         Debug\RandSync.obj
+         Debug\ReadyEvent.obj
+         Debug\RelayPlugin.obj
+         Debug\ReliabilityLayer.obj
+         Debug\ReplicaManager3.obj
+         Debug\Router2.obj
+         Debug\RPC4Plugin.obj
+         Debug\SecureHandshake.obj
+         Debug\SendToThread.obj
+         Debug\SignaledEvent.obj
+         Debug\SimpleMutex.obj
+         Debug\SocketLayer.obj
+         Debug\StatisticsHistory.obj
+         Debug\StringCompressor.obj
+         Debug\StringTable.obj
+         Debug\SuperFastHash.obj
+         Debug\TableSerializer.obj
+         Debug\TCPInterface.obj
+         Debug\TeamBalancer.obj
+         Debug\TeamManager.obj
+         Debug\TelnetTransport.obj
+         Debug\ThreadsafePacketLogger.obj
+         Debug\TwoWayAuthentication.obj
+         Debug\UDPForwarder.obj
+         Debug\UDPProxyClient.obj
+         Debug\UDPProxyCoordinator.obj
+         Debug\UDPProxyServer.obj
+         Debug\VariableDeltaSerializer.obj
+         Debug\VariableListDeltaTracker.obj
+         Debug\VariadicSQLParser.obj
+         Debug\VitaIncludes.obj
+         Debug\WSAStartupSingleton.obj
+         Debug\_FindFirst.obj
+         Debug\active.obj
          Debug\backbuffer.obj
          Debug\buff.obj
          Debug\entity.obj
          Debug\game.obj
+         Debug\gameMap.obj
          Debug\inputhandler.obj
          Debug\logmanager.obj
          Debug\main.obj
          Debug\map.obj
          Debug\passive.obj
          Debug\player.obj
+         Debug\room.obj
          Debug\sprite.obj
          Debug\texture.obj
          Debug\texturemanager.obj
          Debug\weapon.obj
-         Framework.vcxproj -> C:\Batteries_Not_Included\BatteriesNotIncluded\Debug\Framework.exe
-     1>Done Building Project "C:\Batteries_Not_Included\BatteriesNotIncluded\Framework\Framework.vcxproj" (Build target(s)).
+         Framework.vcxproj -> C:\Users\gjv5453\Desktop\Batteries_Not_Included-master\BatteriesNotIncluded\Debug\Framework.exe
+     1>Done Building Project "C:\Users\gjv5453\Desktop\Batteries_Not_Included-master\BatteriesNotIncluded\Framework\Framework.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.56
+Time Elapsed 00:00:02.23

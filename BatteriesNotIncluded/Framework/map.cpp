@@ -6,13 +6,13 @@
 Map::Map()
 : ma_bossTimer(0)
 , ma_itemTimer(0)
-, ma_layout()
-, ma_room()
-, ma_bossActivate()
-, ma_itemActivate()
-, ma_playerDuel()
+, ma_room(fourDoors)
+, ma_bossActivate(false)
+, ma_itemActivate(false)
+, ma_playerDuel(false)
+//, ma_layout()
 {
-
+	parseFile();
 }
 
 Map::~Map()
@@ -23,99 +23,109 @@ Map::~Map()
 void
 Map::parseFile()
 {
-	BackBuffer* backbuffer;
+	//BackBuffer* backbuffer;
 	ma_layout[9][9];
 	std::ifstream mapfile;
-	mapfile.open("assets\\map_1.txt");
+	mapfile.open("assets\\map_2.txt");
 
 	for (size_t i = 0; i < 9; i++)
 	{
 		for (size_t j = 0; j < 9; j++)
 		{
-			Sprite* sprite;
+			//Sprite* sprite;
 			char c;
 			mapfile >> c;
 			if ((int)c == 48)
 			{
-				Room ma_room = fourDoors;
+				Rooms ma_room = fourDoors;
 				ma_layout[i][j] = ma_room;
 				//sprite = backbuffer->CreateSprite("");
 			}
 			if ((int)c == 49)
 			{
-				Room ma_room = threeDoorsTopWall;
+				Rooms ma_room = threeDoorsTopWall;
 				ma_layout[i][j] = ma_room;
 			}
 			if ((int)c == 50)
 			{
-				Room ma_room = threeDoorsBottomWall;
+				Rooms ma_room = threeDoorsBottomWall;
 				ma_layout[i][j] = ma_room;
 			}
 			if ((int)c == 51)
 			{
-				Room ma_room = threeDoorsLeftWall;
+				Rooms ma_room = threeDoorsLeftWall;
 				ma_layout[i][j] = ma_room;
 			}
 			if ((int)c == 52)
 			{
-				Room ma_room = threeDoorsRightWall;
+				Rooms ma_room = threeDoorsRightWall;
 				ma_layout[i][j] = ma_room;
 			}
 			if ((int)c == 53)
 			{
-				Room ma_room = twoDoorsTopLeftWalls;
+				Rooms ma_room = twoDoorsTopLeftWalls;
 				ma_layout[i][j] = ma_room;
 			}
 			if ((int)c == 54)
 			{
-				Room ma_room = twoDoorsTopRightWalls;
+				Rooms ma_room = twoDoorsTopRightWalls;
 				ma_layout[i][j] = ma_room;
 			}
 			if ((int)c == 55)
 			{
-				Room ma_room = twoDoorsBottomLeftWalls;
+				Rooms ma_room = twoDoorsBottomLeftWalls;
 				ma_layout[i][j] = ma_room;
 			}
 			if ((int)c == 56)
 			{
-				Room ma_room = twoDoorsBottomRightWalls;
+				Rooms ma_room = twoDoorsBottomRightWalls;
 				ma_layout[i][j] = ma_room;
 			}
 			if ((int)c == 57)
 			{
-				Room ma_room = twoDoorsSplitHorizontal;
+				Rooms ma_room = twoDoorsSplitHorizontal;
 				ma_layout[i][j] = ma_room;
 			}
 			if ((int)c == 97)
 			{
-				Room ma_room = twoDoorsSplitVertical;
+				Rooms ma_room = twoDoorsSplitVertical;
 				ma_layout[i][j] = ma_room;
 			}
 			if ((int)c == 98)
 			{
-				Room ma_room = oneDoorAtBottom;
+				Rooms ma_room = oneDoorAtBottom;
 				ma_layout[i][j] = ma_room;
 			}
 			if ((int)c == 99)
 			{
-				Room ma_room = oneDoorAtTop;
+				Rooms ma_room = oneDoorAtTop;
 				ma_layout[i][j] = ma_room;
 			}
 			if ((int)c == 100)
 			{
-				Room ma_room = oneDoorOnRight;
+				Rooms ma_room = oneDoorOnRight;
 				ma_layout[i][j] = ma_room;
 			}
 			if ((int)c == 101)
 			{
-				Room ma_room = oneDoorOnLeft;
+				Rooms ma_room = oneDoorOnLeft;
 				ma_layout[i][j] = ma_room;
 			}
 			if ((int)c == 102)
 			{
-				Room ma_room = blank;
+				Rooms ma_room = blank;
 				ma_layout[i][j] = ma_room;
 			}
 		}
 	}
+}
+
+int 
+Map::getNumItemAt(int i, int j){
+	return ma_layout[i][j];
+}
+
+void 
+Map::setNumItemAt(int i, int j, Rooms value){
+	ma_layout[i][j] = value;
 }

@@ -47,7 +47,7 @@ InputHandler::ProcessInput(Game& game)
 			game.Quit();
 		}
 
-		if (/*game state == main menu*/ false){
+		if (game.ga_gameState == GameState::MAINMENU){
 			if (e.type == SDL_MOUSEBUTTONDOWN){
 				//remember to uncomment the related bracket
 
@@ -56,57 +56,68 @@ InputHandler::ProcessInput(Game& game)
 				SDL_GetMouseState(&x, &y);
 				if (460 < x && x < 820 && 578 < y && y < 648){
 					//quit game via menu
+					game.Quit();
 				}
 				if (460 < x && x < 820 && 457 < y && y < 528){
 					//go options menu
 				}
 				if (460 < x && x < 820 && 336 < y && y < 407){
 					//go to multiplayer lobby
+					game.ga_gameState = GameState::RUNNING;
 				}
 				if (460 < x && x < 820 && 216 < y && y < 286){
 					//go to training map
+					game.ga_gameState = GameState::RUNNING;
 				}
 			}	//main menu bracket
 
 		}
-		if (/*&& game state is == ingame*/ true){
-			if (e.type == SDLK_w){
-				//insert method to move player up
+		if (game.ga_gameState == GameState::RUNNING){
+			if (e.type == SDL_KEYDOWN){
+				if (e.key.keysym.sym == SDLK_u)
+				{
+					game.initiateServer();
+				}
+				else if (e.key.keysym.sym == SDLK_i)
+				{
+					game.initiateClient();
+				}
+				else if (e.key.keysym.sym == SDLK_d)
+				{
+					game.MoveSpaceShipHor(100);
+				}
+				else if (e.key.keysym.sym == SDLK_a)
+				{
+					game.MoveSpaceShipHor(-100);
+				}
+				else if (e.key.keysym.sym == SDLK_w)
+				{
+					game.MoveSpaceShipVert(-100);
+				}
+				else if (e.key.keysym.sym == SDLK_s)
+				{
+					game.MoveSpaceShipVert(100);
+				}
 			}
-			if (e.type == SDLK_s){
-				//insert method to move player down
-			}
-			if (e.type == SDLK_d){
-				//insert method to move player right
-			}
-			if (e.type == SDLK_a){
-				//insert method to move player left
-			}
-			if (e.type == SDLK_UP){
-				//insert method to move attack upwards
-			}
-			if (e.type == SDLK_RIGHT){
-				//insert method to attack rightwards
-			}
-			if (e.type == SDLK_LEFT){
-				//insert method to attack leftwards
-			}
-			if (e.type == SDLK_DOWN){
-				//insert method to attack downwards
-			}
-			if (e.type == SDLK_q){
-				//insert method to cycle passives left
-			}
-			if (e.type == SDLK_e){
-				//insert method to cycle passives right
-			}
-			if (e.type == SDLK_SPACE){
-				//method to use active class ability
-			}
-			if (e.type == SDLK_f){
-				//method to drop passive
-			}
+			else if (e.type == SDL_KEYUP){
 
+				if (e.key.keysym.sym == SDLK_d)
+				{
+					game.MoveSpaceShipHor(0);
+				}
+				else if (e.key.keysym.sym == SDLK_a)
+				{
+					game.MoveSpaceShipHor(0);
+				}
+				else if (e.key.keysym.sym == SDLK_w)
+				{
+					game.MoveSpaceShipVert(0);
+				}
+				else if (e.key.keysym.sym == SDLK_s)
+				{
+					game.MoveSpaceShipVert(0);
+				}
+			}
 		}	
 	}
 }
