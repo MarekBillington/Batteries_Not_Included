@@ -38,7 +38,7 @@
 
 #define SERVER_PORT 12345
 #define MAX_CONNS 2000
-#define SERVER_ADDR "156.62.62.31"
+#define SERVER_ADDR "127.0.0.1"
 
 // Static Members:
 Game* Game::sm_pInstance = 0;
@@ -60,6 +60,7 @@ RakNet::RakPeerInterface *peer = RakNet::RakPeerInterface::GetInstance();
 RakNet::Packet *packet;
 bool isServer = false;
 bool sending = true;
+float serverCounter = 0;
 char str[512];
 bool isRunning;
 std::map<int, RakNet::SystemAddress> netClients;
@@ -74,7 +75,8 @@ enum GameMessages
 {
 	NEW_PLAYER = ID_USER_PACKET_ENUM + 1,
 	PLAYER_MOVE = ID_USER_PACKET_ENUM + 2,
-	PLAYER_LIST = ID_USER_PACKET_ENUM + 3
+	PLAYER_LIST = ID_USER_PACKET_ENUM + 3,
+	NET_UPDATE = ID_USER_PACKET_ENUM + 4
 };
 
 Game&
@@ -179,12 +181,6 @@ Game::Initialise()
 	}
 
 	/////////////////////////////////
-	result = systemFMOD->playSound(sound1, 0, false, &channel);
-	if (result != FMOD_OK)
-	{
-		printf("FMOD error! (%d) %s\n", result, FMOD_ErrorString(result));
-		exit(-1);
-	}
 
 	result = sound1->setMode(FMOD_LOOP_NORMAL);
 	if (result != FMOD_OK)
@@ -193,17 +189,26 @@ Game::Initialise()
 		exit(-1);
 	}
 
-
-	
-
-	result = systemFMOD->playSound(sound2, 0, false, &channel2);
+	result = systemFMOD->playSound(sound1, 0, false, &channel);
 	if (result != FMOD_OK)
 	{
 		printf("FMOD error! (%d) %s\n", result, FMOD_ErrorString(result));
 		exit(-1);
 	}
 
+	
+
+
 	result = sound2->setMode(FMOD_LOOP_NORMAL);
+	if (result != FMOD_OK)
+	{
+		printf("FMOD error! (%d) %s\n", result, FMOD_ErrorString(result));
+		exit(-1);
+	}
+
+
+
+	result = systemFMOD->playSound(sound2, 0, false, &channel2);
 	if (result != FMOD_OK)
 	{
 		printf("FMOD error! (%d) %s\n", result, FMOD_ErrorString(result));
@@ -292,6 +297,31 @@ Game::Process(float deltaTime)
 {
 	// Count total simulation time elapsed:
 	m_elapsedSeconds += deltaTime;
+	if (isServer)
+	{
+		serverCounter += deltaTime;
+		if (serverCounter > 0.1)
+		{
+			RakNet::BitStream bsOut;
+			bsOut.Write((RakNet::MessageID)NET_UPDATE);
+			int plSize = playerList.size();
+			bsOut.Write(plSize);
+
+			for (it_players iterator = playerList.begin(); iterator != playerList.end(); iterator++)
+			{
+				Player* e = iterator->second;
+
+				bsOut.Write(e->GetPositionX());
+				bsOut.Write(e->GetPositionY());
+			}
+
+			for (it_sysaddr iterator = netClients.begin(); iterator != netClients.end(); iterator++)
+			{
+				peer->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, iterator->second, false);
+			}
+			serverCounter = 0;
+		}
+	}
 
 	// Frame Counter:
 	if (m_elapsedSeconds > 1)
@@ -390,13 +420,17 @@ Game::MoveSpaceShipHor(float speed)
 
 		playerList.at(0)->SetHorizontalVelocity(speed);
 	}
-	// Ex006.2: Tell the player ship to move left.  
-	RakNet::BitStream bsOut;
-	bsOut.Write((RakNet::MessageID)PLAYER_MOVE);
-	//float test = 100.0;
-	bsOut.Write(0);
-	bsOut.Write(speed);
-	peer->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, ServerName, false);
+	else
+	{
+		// Ex006.2: Tell the player ship to move left.  
+		RakNet::BitStream bsOut;
+		bsOut.Write((RakNet::MessageID)PLAYER_MOVE);
+		//float test = 100.0;
+		bsOut.Write(0);
+		bsOut.Write(speed);
+		peer->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, ServerName, false);
+	}
+	
 }
 
 void
@@ -414,13 +448,16 @@ Game::MoveSpaceShipVert(float speed)
 		}
 			playerList.at(0)->SetVerticalVelocity(speed);
 	}
-
-	RakNet::BitStream bsOut;
-	bsOut.Write((RakNet::MessageID)PLAYER_MOVE);
-	//float test = 100.0;
-	bsOut.Write(1);
-	bsOut.Write(speed);
-	peer->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, ServerName, false);
+	else
+	{
+		RakNet::BitStream bsOut;
+		bsOut.Write((RakNet::MessageID)PLAYER_MOVE);
+		//float test = 100.0;
+		bsOut.Write(1);
+		bsOut.Write(speed);
+		peer->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, ServerName, false);
+	}
+	
 }
 
 // Ex006.2: Add the method to tell the player ship to move right...
@@ -482,6 +519,7 @@ Game::initiateClient()
 	}
 }
 
+/////// Liam
 void
 NetworkThread()
 {
@@ -521,14 +559,12 @@ NetworkThread()
 					pl->Initialise(pPlayerSprite);
 					pl->SetPositionX(x);
 					pl->SetPositionY(y);
-					int i = 0;
-					for (it_players iterator = playerList.begin(); iterator != playerList.end(); iterator++)
-					{
 
-						// std::string s = std::to_string(i);
-						playerList[1] = pl;
+					int i = playerList.size();
+					playerList[i] = pl;
+					
 
-					}
+
 
 					RakNet::BitStream bsOut;
 					bsOut.Write((RakNet::MessageID)PLAYER_LIST);
@@ -542,11 +578,10 @@ NetworkThread()
 						bsOut.Write(e->GetPositionX());
 						bsOut.Write(e->GetPositionY());
 					}
-
-					peer->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, packet->systemAddress, false);
-
-
-
+					for (it_sysaddr iterator = netClients.begin(); iterator != netClients.end(); iterator++)
+					{
+						peer->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, iterator->second, false);
+					}
 				}
 					break;
 				case PLAYER_MOVE:
@@ -583,6 +618,11 @@ NetworkThread()
 						playerList.at(i)->SetVerticalVelocity(speed);
 				}
 					break;
+				case NET_UPDATE:
+				{
+
+				}
+					break;
 				}
 			}
 		}
@@ -601,14 +641,7 @@ NetworkThread()
 					float x, y;
 					x = 300.0;
 					y = 200.0;
-					Game& game = Game::GetGame();
-					//game.MoveSpaceShipRight(y);
-					BackBuffer* backBuffer = game.CallBackBuffer();
-					Sprite* pPlayerSprite = backBuffer->CreateSprite("assets\\playership.png");
-					Player* pl = new Player();
-					pl->Initialise(pPlayerSprite);
-					pl->SetPositionX(x);
-					pl->SetPositionY(y);
+
 
 					bsOut.Write((RakNet::MessageID)NEW_PLAYER);
 					bsOut.Write(x);
@@ -662,27 +695,31 @@ NetworkThread()
 					else if (dirCheck == 1)
 						playerList.at(i)->SetVerticalVelocity(speed);
 
-					//playerList.at(playerID)->SetHorizontalVelocity(speed);
-
-					//Entity* e = playerList.find("1")->second;
-					//e->SetHorizontalVelocity(speed);
-					//RakNet::BitStream bsIn(packet->data, packet->length, false);
-					//bsIn.IgnoreBytes(sizeof(RakNet::MessageID));
-					//bsIn.Read(playerID);
-					//bsIn.Read(speed);
-
-					//for (it_players iterator = playerList.begin(); iterator != playerList.end(); iterator++){
-					//	if (iterator->first == playerID)
-					//{
-					//	Entity* e = iterator->second;
-					//	e->SetHorizontalVelocity(speed);
-					//	}
-					//}
-
-					//	Entity* e = playerList.find(playerID)->second;
+				
 
 				}
 					break;
+				case NET_UPDATE:
+				{
+								   int plSize;
+
+								   RakNet::BitStream bsIn(packet->data, packet->length, false);
+								   bsIn.IgnoreBytes(sizeof(RakNet::MessageID));
+								   bsIn.Read(plSize);
+
+								   for (it_players iterator = playerList.begin(); iterator != playerList.end(); iterator++)
+								   {
+									   float x, y;
+									   bsIn.Read(x);
+									   bsIn.Read(y);
+
+									   iterator->second->SetPositionX(x);
+									   iterator->second->SetPositionY(y);
+								   }
+									
+								   
+				}
+					  break;
 
 				}
 
