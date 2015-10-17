@@ -238,6 +238,7 @@
     <ClInclude Include="backbuffer.h" />
     <ClInclude Include="buff.h" />
     <ClInclude Include="entity.h" />
+    <ClInclude Include="fmodhelper.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="gameMap.h" />
     <ClInclude Include="inputhandler.h" />
@@ -366,6 +367,7 @@
     <ClCompile Include="backbuffer.cpp" />
     <ClCompile Include="buff.cpp" />
     <ClCompile Include="entity.cpp" />
+    <ClCompile Include="fmodhelper.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="gameMap.cpp" />
     <ClCompile Include="inputhandler.cpp" />

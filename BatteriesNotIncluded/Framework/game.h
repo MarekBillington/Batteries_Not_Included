@@ -10,6 +10,7 @@ class Sprite;
 class Entity;
 class Player;
 class GameMap;
+class FMODHelper;
 
 enum GameState
 {
@@ -50,6 +51,7 @@ public:
 
 	//tom
 	void updateCamera();
+	FMODHelper* ga_fmodhelp;
 	
 protected:
 	void Process(float deltaTime);

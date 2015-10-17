@@ -26,11 +26,7 @@
 #include "gameMap.h"
 #include "entity.h"
 #include "player.h"
-
-#include "fmod.hpp"
-#include "fmod_errors.h"
-#include "fmod_common.h"
-
+#include "fmodhelper.h"
 
 // Library includes:
 #include <cassert>
@@ -45,14 +41,6 @@
 Game* Game::sm_pInstance = 0;
 
 
-/////////////
-FMOD::System *systemFMOD = NULL;
-FMOD::Sound      *sound1, *sound2;
-FMOD::Channel    *channel, *channel2;
-FMOD_RESULT result;
-
-
-/////////////
 //Liam Shit
 RakNet::SystemAddress ServerName;
 
@@ -142,8 +130,7 @@ Game::~Game()
 bool 
 Game::Initialise()
 {
-	/*const int width = 1280;
-	const int height = 720;*/
+	
 	screenWidth = 1280;
 	screenHeight = 720;
 
@@ -161,87 +148,10 @@ Game::Initialise()
 		return (false);
 	}
 
+	//FMOD CLASS TOM MADE
+	ga_fmodhelp = new FMODHelper();
+	ga_fmodhelp->playBackgroundMusic(1);
 
-	////////////////fmod
-
-	result = FMOD::System_Create(&systemFMOD);      // Create the main system object.
-	if (result != FMOD_OK)
-	{
-		printf("FMOD error! (%d) %s\n", result, FMOD_ErrorString(result));
-
-		exit(-1);
-	}
-
-	result = systemFMOD->init(512, FMOD_INIT_NORMAL, 0);    // Initialize FMOD.
-	if (result != FMOD_OK)
-	{
-		printf("FMOD error! (%d) %s\n", result, FMOD_ErrorString(result));
-		exit(-1);
-	}
-
-
-
-	result = systemFMOD->createSound("assets\\opening.wav", FMOD_DEFAULT, 0, &sound1);
-	if (result != FMOD_OK)
-	{
-		printf("FMOD error! (%d) %s\n", result, FMOD_ErrorString(result));
-		exit(-1);
-	}
-
-	result = systemFMOD->createSound("assets\\battle.wav", FMOD_DEFAULT, 0, &sound2);
-	if (result != FMOD_OK)
-	{
-		printf("FMOD error! (%d) %s\n", result, FMOD_ErrorString(result));
-		exit(-1);
-	}
-
-	/////////////////////////////////
-
-	result = sound1->setMode(FMOD_LOOP_NORMAL);
-	if (result != FMOD_OK)
-	{
-		printf("FMOD error! (%d) %s\n", result, FMOD_ErrorString(result));
-		exit(-1);
-	}
-
-
-	result = systemFMOD->playSound(sound1, 0, false, &channel);
-	if (result != FMOD_OK)
-	{
-		printf("FMOD error! (%d) %s\n", result, FMOD_ErrorString(result));
-		exit(-1);
-	}
-	
-	result = sound2->setMode(FMOD_LOOP_NORMAL);
-	if (result != FMOD_OK)
-	{
-		printf("FMOD error! (%d) %s\n", result, FMOD_ErrorString(result));
-		exit(-1);
-	}
-
-
-	result = systemFMOD->playSound(sound2, 0, false, &channel2);
-	if (result != FMOD_OK)
-	{
-		printf("FMOD error! (%d) %s\n", result, FMOD_ErrorString(result));
-		exit(-1);
-	}
-
-	
-	channel->setPaused(true);
-	channel2->setPaused(true);
-
-
-	// Ex006.2: Load the player ship sprite.
-	// For example: Sprite* pPlayerSprite = m_pBackBuffer->CreateSprite("assets\\playership.png");
-
-	// Ex006.2: Create the player ship instance.
-
-	// Ex006.3: Spawn four rows of 14 alien enemies.
-
-	// Ex006.3: Fill the container with these new enemies.
-
-	// Ex006.2: Load the player ship sprite.
 	Sprite* pPlayerSprite = m_pBackBuffer->CreateSprite("assets\\playership.png");
 
 
@@ -254,7 +164,7 @@ Game::Initialise()
 	ga_gameState = MAINMENU;
 	ga_mainMenu = m_pBackBuffer->CreateSprite("assets\\Menu maybe.png");
 
-	//////////Tom////////////////////////////////////////////////////////////////////////////////////////////
+	//////////Tom///////////////////////////////////
 	ga_gameMap = new GameMap();	
 	ga_gameMap->parseFile();
 
@@ -312,17 +222,6 @@ Game::Process(float deltaTime)
 		m_elapsedSeconds -= 1;
 		m_FPS = m_frameCount;
 		m_frameCount = 0;
-	}
-
-	if (ga_gameState == MAINMENU){
-		channel->setPaused(false);
-		channel2->setPaused(true);
-	}
-	else {
-		if (ga_gameState == RUNNING){
-			channel->setPaused(true);
-			channel2->setPaused(false);
-		}
 	}
 
 	for (it_players iterator = playerList.begin(); iterator != playerList.end(); iterator++)
@@ -419,30 +318,17 @@ Game::MoveSpaceShipVert(float speed)
 	peer->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, ServerName, false);
 }
 
-// Ex006.2: Add the method to tell the player ship to move right...
 
-// Ex006.4: Space a Bullet in game.
 void 
 Game::FireSpaceShipBullet()
 {
-	// Ex006.4: Load the player bullet sprite.      
-
-	// Ex006.4: Create a new bullet object.
-
-	// Ex006.4: Set the bullets vertical velocity.
-
-	// Ex006.4: Add the new bullet to the bullet container.
+	
 }
 
-// Ex006.3: Spawn a Enemy in game.
 void 
 Game::SpawnEnemy(int x, int y)
 {
-	// Ex006.3: Load the alien enemy sprite file.
-
-	// Ex006.3: Create a new Enemy object. 
-
-	// Ex006.3: Add the new Enemy to the enemy container.
+	
 }
 
 

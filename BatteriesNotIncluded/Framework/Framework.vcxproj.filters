@@ -528,6 +528,9 @@
     <ClInclude Include="terrain.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="fmodhelper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="backbuffer.cpp">
@@ -909,6 +912,9 @@
       <Filter>RakNet</Filter>
     </ClCompile>
     <ClCompile Include="terrain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="fmodhelper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
