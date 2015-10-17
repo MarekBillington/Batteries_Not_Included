@@ -23,6 +23,8 @@ BackBuffer::BackBuffer()
 , m_clearRed(0xFF)
 , m_clearGreen(0xFF)
 , m_clearBlue(0xFF)
+, m_bCameraX(0)
+, m_bCameraY(0)
 {
 
 }
@@ -118,8 +120,8 @@ BackBuffer::DrawSprite(Sprite& sprite)
 {
 	SDL_Rect dest;
 
-	dest.x = sprite.GetX();
-	dest.y = sprite.GetY();
+	dest.x = sprite.GetX()- m_bCameraX;
+	dest.y = sprite.GetY()- m_bCameraY;
 	dest.w = sprite.GetWidth();
 	dest.h = sprite.GetHeight();
 
@@ -173,4 +175,25 @@ BackBuffer::SetClearColour(unsigned char r, unsigned char g, unsigned char b)
 	m_clearRed = r;
 	m_clearGreen = g;
 	m_clearBlue = b;
+}
+
+
+void
+BackBuffer::SetCameraX(float px){
+	m_bCameraX = px;
+}
+
+void
+BackBuffer::SetCameraY(float py){
+	m_bCameraY = py;
+}
+
+float
+BackBuffer::GetCameraX(){
+	return m_bCameraX;
+}
+
+float
+BackBuffer::GetCameraY(){
+	return m_bCameraY;
 }

@@ -22,7 +22,8 @@
 #include "inputhandler.h"
 #include "logmanager.h"
 #include "sprite.h"
-#include "map.h"
+//#include "map.h"
+#include "gameMap.h"
 #include "entity.h"
 #include "player.h"
 
@@ -68,6 +69,20 @@ std::map<int, Player*> playerList;
 typedef std::map<int, Player*>::iterator it_players;
 
 void NetworkThread();
+
+
+//////////////////////////////////////////////////////////////////////////
+//needs to be done
+//
+//
+//Move fmod into methods so it dont look so ugly
+//rework them maps
+//
+//
+//
+//
+//////////////////////////////////////////////////////////////////////
+
 
 
 enum GameMessages
@@ -127,11 +142,13 @@ Game::~Game()
 bool 
 Game::Initialise()
 {
-	const int width = 1280;
-	const int height = 720;
+	/*const int width = 1280;
+	const int height = 720;*/
+	screenWidth = 1280;
+	screenHeight = 720;
 
 	m_pBackBuffer = new BackBuffer();
-	if (!m_pBackBuffer->Initialise(width, height))
+	if (!m_pBackBuffer->Initialise(screenWidth, screenHeight))
 	{
 		LogManager::GetInstance().Log("BackBuffer Init Fail!");
 		return (false);
@@ -179,12 +196,6 @@ Game::Initialise()
 	}
 
 	/////////////////////////////////
-	result = systemFMOD->playSound(sound1, 0, false, &channel);
-	if (result != FMOD_OK)
-	{
-		printf("FMOD error! (%d) %s\n", result, FMOD_ErrorString(result));
-		exit(-1);
-	}
 
 	result = sound1->setMode(FMOD_LOOP_NORMAL);
 	if (result != FMOD_OK)
@@ -194,7 +205,20 @@ Game::Initialise()
 	}
 
 
+	result = systemFMOD->playSound(sound1, 0, false, &channel);
+	if (result != FMOD_OK)
+	{
+		printf("FMOD error! (%d) %s\n", result, FMOD_ErrorString(result));
+		exit(-1);
+	}
 	
+	result = sound2->setMode(FMOD_LOOP_NORMAL);
+	if (result != FMOD_OK)
+	{
+		printf("FMOD error! (%d) %s\n", result, FMOD_ErrorString(result));
+		exit(-1);
+	}
+
 
 	result = systemFMOD->playSound(sound2, 0, false, &channel2);
 	if (result != FMOD_OK)
@@ -203,13 +227,7 @@ Game::Initialise()
 		exit(-1);
 	}
 
-	result = sound2->setMode(FMOD_LOOP_NORMAL);
-	if (result != FMOD_OK)
-	{
-		printf("FMOD error! (%d) %s\n", result, FMOD_ErrorString(result));
-		exit(-1);
-	}
-
+	
 	channel->setPaused(true);
 	channel2->setPaused(true);
 
@@ -229,21 +247,16 @@ Game::Initialise()
 
 	player = new Player();
 	player->Initialise(pPlayerSprite);
-	player->SetPositionX(width / 2);
-	player->SetPositionY(height / 2);
+	player->SetPositionX(screenWidth / 2);
+	player->SetPositionY(screenHeight / 2);
 
 	////////ryan
 	ga_gameState = MAINMENU;
 	ga_mainMenu = m_pBackBuffer->CreateSprite("assets\\Menu maybe.png");
 
 	//////////Tom////////////////////////////////////////////////////////////////////////////////////////////
-	ga_gameMap = new Map();	
-	if (ga_gameMap->getNumItemAt(0,0) == 0){
-		ga_currentRoom = m_pBackBuffer->CreateSprite("assets\\AllDoorsClosedRoom1280.png");
-	}
-	else{
-		ga_currentRoom = m_pBackBuffer->CreateSprite("assets\\playership.png");
-	}
+	ga_gameMap = new GameMap();	
+	ga_gameMap->parseFile();
 
 	///////////////////////////////////////////////
 	m_lastTime = SDL_GetTicks();
@@ -318,25 +331,9 @@ Game::Process(float deltaTime)
 		e->Process(deltaTime);
 	}
 
-	// Update the game world simulation:
+	
+	updateCamera();
 
-	// Ex003.5: Process each alien enemy in the container.
-
-	// Ex006.4: Process each bullet in the container.
-
-	// Ex006.2: Update player...
-
-	// Ex006.4: Check for bullet vs alien enemy collisions...
-	// Ex006.4: For each bullet
-	// Ex006.4: For each alien enemy
-	// Ex006.4: Check collision between two entities.
-	// Ex006.4: If collided, destory both and spawn explosion.
-
-	// Ex006.4: Remove any dead bullets from the container...
-
-	// Ex006.4: Remove any dead enemy aliens from the container...
-
-	// Ex006.4: Remove any dead explosions from the container...
 }
 
 void 
@@ -346,16 +343,15 @@ Game::Draw(BackBuffer& backBuffer)
 
 	backBuffer.Clear();
 
-	// Ex006.3: Draw all enemy aliens in container...
-
-	// Ex006.4: Draw all bullets in container...
-
-	////testing
+	
 	if (ga_gameState == MAINMENU){
 		ga_mainMenu->Draw(backBuffer);
 	}
 	else if (ga_gameState == RUNNING){
-		ga_currentRoom->Draw(backBuffer);
+
+		ga_gameMap->draw(backBuffer);
+
+
 		for (it_players iterator = playerList.begin(); iterator != playerList.end(); iterator++)
 		{
 			Player* e = (Player*)iterator->second;
@@ -363,7 +359,7 @@ Game::Draw(BackBuffer& backBuffer)
 		}
 	}
 
-	// Ex006.2: Draw the player ship...
+	
 
 	backBuffer.Present();
 }
@@ -699,4 +695,19 @@ BackBuffer*
 Game::CallBackBuffer()
 {
 	return m_pBackBuffer;
+}
+
+
+void
+Game::updateCamera(){
+
+	float charPosX = player->GetPositionX();
+	float charPosY = player->GetPositionY();
+
+	int roomX = player->getCurrentRoomX();
+	int roomY = player->getCurrentRoomY();
+
+	m_pBackBuffer->SetCameraX(roomX*screenWidth);
+	m_pBackBuffer->SetCameraY(roomY*screenHeight);
+
 }

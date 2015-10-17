@@ -6,7 +6,7 @@ class BackBuffer;
 class Sprite;
 class Room;
 
-enum Rooms
+enum RoomType
 {
 	fourDoors,
 	threeDoorsTopWall,
@@ -35,35 +35,16 @@ public:
 
 	void parseFile();
 
-	Rooms getRoom();
-	void setRoom(Rooms room);
-
-	bool initialise(Sprite* sprite);
 	void process(float deltaTime);
-	void drawRoom(BackBuffer& backbuffer);
+	void draw(BackBuffer& backbuffer);
 
-	int getItemTimer();
-	void setItemTimer(int itemTimer);
-	int getBossTimer();
-	void setBossTimer(int bossTimer);
-
-	bool arePlayersDuelling();
-
-	bool isItemRoomActive();
-
-	bool isBossRoomActive();
-
-	int getNumItemAt(int i, int j);
-	void setNumItemAt(int i, int j, Rooms value);
+	Room* getRoomAt(int i, int j);
+	void setRoomAt(int i, int j, Room* value);
 
 private:
-	Room* ma_layout[9][9];
-	Rooms ma_room;
-	int ma_itemTimer;
-	int ma_bossTimer;
-	bool ma_playerDuel;
-	bool ma_itemActivate;
-	bool ma_bossActivate;
+	Room* gm_layout[9][9];
+	RoomType gm_room;
+
 };
 
 

@@ -9,6 +9,7 @@ class Sprite;
 class Map;
 class Entity;
 class Player;
+class GameMap;
 
 enum GameState
 {
@@ -46,6 +47,9 @@ public:
 
 	//ryan
 	GameState ga_gameState;
+
+	//tom
+	void updateCamera();
 	
 protected:
 	void Process(float deltaTime);
@@ -91,9 +95,11 @@ protected:
 
 	//james
 	//tom
-	Map* ga_gameMap;
-	Sprite* ga_currentRoom;
-
+	GameMap* ga_gameMap;
+	int screenWidth;
+	int screenHeight;
+	
+	
 private:
 
 };

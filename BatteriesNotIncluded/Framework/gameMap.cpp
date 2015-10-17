@@ -1,6 +1,8 @@
 #include "gameMap.h"
 #include "room.h"
 #include <fstream>
+#include "game.h"
+#include "backbuffer.h"
 
 GameMap::GameMap()
 {
@@ -15,94 +17,122 @@ void
 GameMap::parseFile()
 {
 	
-	ma_layout[9][9];
+	gm_layout[9][9];
 	std::ifstream mapfile;
 	mapfile.open("assets\\map_2.txt");
+
+	Game& game = Game::GetGame();
+	BackBuffer* backBuffer = game.CallBackBuffer();
 
 	for (size_t i = 0; i < 9; i++)
 	{
 		for (size_t j = 0; j < 9; j++)
 		{
-			Room* room = new Room();
-
+			
+			Sprite* roomSprite;
+			
 			char c;
 			mapfile >> c;
 			if ((int)c == 48)
 			{
-				ma_room = fourDoors;
+				gm_room = fourDoors;
+				roomSprite = backBuffer->CreateSprite("assets\\AllDoorsOpenRoom1280.png");
 			}
 			else if ((int)c == 49)
 			{
-				ma_room = threeDoorsTopWall;
+				gm_room = threeDoorsTopWall;
+				roomSprite = backBuffer->CreateSprite("assets\\AllDoorsOpenRoom1280-2.png");
 			}
 			else if ((int)c == 50)
 			{
-				ma_room = threeDoorsBottomWall;
+				gm_room = threeDoorsBottomWall;
+				roomSprite = backBuffer->CreateSprite("assets\\AllDoorsOpenRoom1280-3.png");
 			}
 			else if ((int)c == 51)
 			{
-				ma_room = threeDoorsLeftWall;
+				gm_room = threeDoorsLeftWall;
+				roomSprite = backBuffer->CreateSprite("assets\\AllDoorsOpenRoom1280-4.png");
 			}
 			else if ((int)c == 52)
 			{
-				ma_room = threeDoorsRightWall;
+				gm_room = threeDoorsRightWall;
 			}
 			else if ((int)c == 53)
 			{
-				ma_room = twoDoorsTopLeftWalls;
+				gm_room = twoDoorsTopLeftWalls;
 			}
 			else if ((int)c == 54)
 			{
-				 ma_room = twoDoorsTopRightWalls;
+				gm_room = twoDoorsTopRightWalls;
 			}
 			else if ((int)c == 55)
 			{
-				ma_room = twoDoorsBottomLeftWalls;
+				gm_room = twoDoorsBottomLeftWalls;
 			}
 			else if ((int)c == 56)
 			{
-				ma_room = twoDoorsBottomRightWalls;
+				gm_room = twoDoorsBottomRightWalls;
 			}
 			else if ((int)c == 57)
 			{
-				 ma_room = twoDoorsSplitHorizontal;
+				gm_room = twoDoorsSplitHorizontal;
 			}
 			else if ((int)c == 97)
 			{
-				ma_room = twoDoorsSplitVertical;
+				gm_room = twoDoorsSplitVertical;
 			}
 			else if ((int)c == 98)
 			{
-				ma_room = oneDoorAtBottom;
+				gm_room = oneDoorAtBottom;
 			}
 			else if ((int)c == 99)
 			{
-				ma_room = oneDoorAtTop;
+				gm_room = oneDoorAtTop;
 			}
 			else if ((int)c == 100)
 			{
-				ma_room = oneDoorOnRight;
+				gm_room = oneDoorOnRight;
 			}
 			else if ((int)c == 101)
 			{
-				ma_room = oneDoorOnLeft;
+				gm_room = oneDoorOnLeft;
 			}
 			else 
 			{
-				ma_room = blank;
+				gm_room = blank;
+				roomSprite = backBuffer->CreateSprite("assets\\AllDoorsClosedRoom1280.png");
 			}
-			room->setRoomNumber(ma_room);
-			ma_layout[i][j] = room;
+
+			Room* room = new Room(i,j);
+			room->Initialise(roomSprite);
+			room->setRoomNumber(gm_room);
+			gm_layout[i][j] = room;
 		}
 	}
 }
 
-int
-GameMap::getNumItemAt(int i, int j){
-	return ma_layout[i][j]->getRoomNumber();
+
+void
+GameMap::draw(BackBuffer& backbuffer){
+	for (size_t i = 0; i < 9; i++)
+	{
+		for (size_t j = 0; j < 9; j++)
+		{
+			gm_layout[i][j]->Draw(backbuffer);
+		}
+	}
+}
+
+
+
+
+
+Room*
+GameMap::getRoomAt(int i, int j){
+	return gm_layout[i][j];
 }
 
 void
-GameMap::setNumItemAt(int i, int j, Rooms value){
-	ma_layout[i][j]->setRoomNumber(value);
+GameMap::setRoomAt(int i, int j, Room* value){
+	gm_layout[i][j] = value;
 }

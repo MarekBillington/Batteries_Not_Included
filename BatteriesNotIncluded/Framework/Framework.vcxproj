@@ -247,6 +247,7 @@
     <ClInclude Include="player.h" />
     <ClInclude Include="room.h" />
     <ClInclude Include="sprite.h" />
+    <ClInclude Include="terrain.h" />
     <ClInclude Include="texture.h" />
     <ClInclude Include="texturemanager.h" />
     <ClInclude Include="weapon.h" />
@@ -376,6 +377,7 @@
     <ClCompile Include="player.cpp" />
     <ClCompile Include="room.cpp" />
     <ClCompile Include="sprite.cpp" />
+    <ClCompile Include="terrain.cpp" />
     <ClCompile Include="texture.cpp" />
     <ClCompile Include="texturemanager.cpp" />
     <ClCompile Include="weapon.cpp" />

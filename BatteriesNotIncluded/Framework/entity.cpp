@@ -31,7 +31,8 @@ Entity::Initialise(Sprite* sprite)
 {
 	assert(sprite);
 	m_pSprite = sprite;
-
+	m_pSprite->SetX(static_cast<int>(m_x));
+	m_pSprite->SetY(static_cast<int>(m_y));
 	return (true);
 }
 
