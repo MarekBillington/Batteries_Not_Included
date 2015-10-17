@@ -1,12 +1,18 @@
-﻿Build started 17/10/2015 10:44:30 PM.
+﻿Build started 17/10/2015 10:55:36 PM.
      1>Project "C:\Users\tomcl\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\Framework\Framework.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\tomcl\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\\SDL\SDL2-2.0.3\include\\" /I"C:\Users\tomcl\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\\SDL\SDL2_image-2.0.0\include" /I"C:\Users\tomcl\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\\RakNet-master\Source" /IC:\Users\tomcl\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\\FMOD\inc /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt game.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\tomcl\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\\SDL\SDL2-2.0.3\include\\" /I"C:\Users\tomcl\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\\SDL\SDL2_image-2.0.0\include" /I"C:\Users\tomcl\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\\RakNet-master\Source" /IC:\Users\tomcl\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\\FMOD\inc /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt game.cpp gameMap.cpp inputhandler.cpp main.cpp
          game.cpp
      1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\game.cpp(250): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
      1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\game.cpp(251): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
      1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\game.cpp(710): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
      1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\game.cpp(711): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+         Generating Code...
+         Compiling...
+         main.cpp
+         inputhandler.cpp
+         gameMap.cpp
+         Generating Code...
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\tomcl\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\Debug\Framework.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Users\tomcl\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\\SDL\SDL2-2.0.3\lib\x86" /LIBPATH:"C:\Users\tomcl\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\\SDL\SDL2_image-2.0.0\lib\x86" /LIBPATH:C:\Users\tomcl\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\\FMOD\lib SDL2.lib SDL2main.lib SDL2_image.lib fmodl_vc.lib ws2_32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\tomcl\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\Debug\Framework.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\tomcl\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\Debug\Framework.lib" /MACHINE:X86 Debug\Base64Encoder.obj
          Debug\BitStream.obj
@@ -127,7 +133,6 @@
          Debug\inputhandler.obj
          Debug\logmanager.obj
          Debug\main.obj
-         Debug\map.obj
          Debug\passive.obj
          Debug\player.obj
          Debug\room.obj
@@ -141,4 +146,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:02.02
+Time Elapsed 00:00:02.20

@@ -242,7 +242,6 @@
     <ClInclude Include="gameMap.h" />
     <ClInclude Include="inputhandler.h" />
     <ClInclude Include="logmanager.h" />
-    <ClInclude Include="map.h" />
     <ClInclude Include="passive.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="room.h" />
@@ -372,7 +371,6 @@
     <ClCompile Include="inputhandler.cpp" />
     <ClCompile Include="logmanager.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="map.cpp" />
     <ClCompile Include="passive.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="room.cpp" />

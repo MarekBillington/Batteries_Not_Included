@@ -22,7 +22,7 @@
 #include "inputhandler.h"
 #include "logmanager.h"
 #include "sprite.h"
-//#include "map.h"
+
 #include "gameMap.h"
 #include "entity.h"
 #include "player.h"

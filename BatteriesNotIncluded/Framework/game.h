@@ -6,7 +6,7 @@
 class BackBuffer;
 class InputHandler;
 class Sprite;
-class Map;
+
 class Entity;
 class Player;
 class GameMap;
