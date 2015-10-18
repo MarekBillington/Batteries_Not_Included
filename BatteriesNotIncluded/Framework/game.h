@@ -6,9 +6,11 @@
 class BackBuffer;
 class InputHandler;
 class Sprite;
-class Map;
+
 class Entity;
 class Player;
+class GameMap;
+class FMODHelper;
 
 enum GameState
 {
@@ -44,8 +46,14 @@ public:
 	void initiateServer();
 	void initiateClient();
 
+	void disconnectClient();
+
 	//ryan
 	GameState ga_gameState;
+
+	//tom
+	void updateCamera();
+	FMODHelper* ga_fmodhelp;
 	
 protected:
 	void Process(float deltaTime);
@@ -91,9 +99,11 @@ protected:
 
 	//james
 	//tom
-	Map* ga_gameMap;
-	Sprite* ga_currentRoom;
-
+	GameMap* ga_gameMap;
+	int screenWidth;
+	int screenHeight;
+	
+	
 private:
 
 };

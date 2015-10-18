@@ -8,6 +8,7 @@ class Room: public Entity
 {
 public:
 	Room();
+	Room(int i, int j);
 	~Room();
 
 	void setRoomNumber(int num);

@@ -36,9 +36,6 @@
     <ClInclude Include="texturemanager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="map.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="active.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -528,6 +525,12 @@
     <ClInclude Include="..\RakNet-master\Source\XBox360Includes.h">
       <Filter>RakNet</Filter>
     </ClInclude>
+    <ClInclude Include="terrain.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fmodhelper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="backbuffer.cpp">
@@ -555,9 +558,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="texturemanager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="map.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="active.cpp">
@@ -910,6 +910,12 @@
     </ClCompile>
     <ClCompile Include="..\RakNet-master\Source\WSAStartupSingleton.cpp">
       <Filter>RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="terrain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="fmodhelper.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

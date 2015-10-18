@@ -2,6 +2,8 @@
 #include"player.h"
 
 Player::Player()
+	:pl_currentRoomX(0)
+	,pl_currentRoomY(0)
 {
 }
 
@@ -28,6 +30,9 @@ Player::Process(float deltaTime)
 
 	m_x += m_velocityX*deltaTime;
 	m_y += m_velocityY*deltaTime;
+
+	pl_currentRoomX = (m_x / 1280);
+	pl_currentRoomY = (m_y / 720);
 
 }
 

@@ -5,7 +5,7 @@
 
 // Local includes:
 #include "game.h"
-
+#include "fmodhelper.h"
 // Library includes:
 #include <cassert>
 
@@ -64,10 +64,12 @@ InputHandler::ProcessInput(Game& game)
 				if (460 < x && x < 820 && 336 < y && y < 407){
 					//go to multiplayer lobby
 					game.ga_gameState = GameState::RUNNING;
+					game.ga_fmodhelp->playBackgroundMusic(2);
 				}
 				if (460 < x && x < 820 && 216 < y && y < 286){
 					//go to training map
 					game.ga_gameState = GameState::RUNNING;
+					game.ga_fmodhelp->playBackgroundMusic(2);
 				}
 			}	//main menu bracket
 
@@ -81,6 +83,10 @@ InputHandler::ProcessInput(Game& game)
 				else if (e.key.keysym.sym == SDLK_i)
 				{
 					game.initiateClient();
+				}
+				else if (e.key.keysym.sym == SDLK_o)
+				{
+					game.disconnectClient();
 				}
 				else if (e.key.keysym.sym == SDLK_d)
 				{
