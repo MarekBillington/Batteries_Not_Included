@@ -22,14 +22,11 @@
 #include "inputhandler.h"
 #include "logmanager.h"
 #include "sprite.h"
-#include "map.h"
+
+#include "gameMap.h"
 #include "entity.h"
 #include "player.h"
-
-#include "fmod.hpp"
-#include "fmod_errors.h"
-#include "fmod_common.h"
-
+#include "fmodhelper.h"
 
 // Library includes:
 #include <cassert>
@@ -44,14 +41,6 @@
 Game* Game::sm_pInstance = 0;
 
 
-/////////////
-FMOD::System *systemFMOD = NULL;
-FMOD::Sound      *sound1, *sound2;
-FMOD::Channel    *channel, *channel2;
-FMOD_RESULT result;
-
-
-/////////////
 //Liam Shit
 RakNet::SystemAddress ServerName;
 
@@ -69,6 +58,20 @@ std::map<int, Player*> playerList;
 typedef std::map<int, Player*>::iterator it_players;
 
 void NetworkThread();
+
+
+//////////////////////////////////////////////////////////////////////////
+//needs to be done
+//
+//
+//Move fmod into methods so it dont look so ugly
+//rework them maps
+//
+//
+//
+//
+//////////////////////////////////////////////////////////////////////
+
 
 
 enum GameMessages
@@ -129,11 +132,12 @@ Game::~Game()
 bool 
 Game::Initialise()
 {
-	const int width = 1280;
-	const int height = 720;
+	
+	screenWidth = 1280;
+	screenHeight = 720;
 
 	m_pBackBuffer = new BackBuffer();
-	if (!m_pBackBuffer->Initialise(width, height))
+	if (!m_pBackBuffer->Initialise(screenWidth, screenHeight))
 	{
 		LogManager::GetInstance().Log("BackBuffer Init Fail!");
 		return (false);
@@ -146,7 +150,11 @@ Game::Initialise()
 		return (false);
 	}
 
+	//FMOD CLASS TOM MADE
+	ga_fmodhelp = new FMODHelper();
+	ga_fmodhelp->playBackgroundMusic(1);
 
+<<<<<<< HEAD
 	////////////////fmod
 
 	result = FMOD::System_Create(&systemFMOD);      // Create the main system object.
@@ -229,26 +237,23 @@ Game::Initialise()
 	// Ex006.3: Fill the container with these new enemies.
 
 	// Ex006.2: Load the player ship sprite.
+=======
+>>>>>>> origin/master
 	Sprite* pPlayerSprite = m_pBackBuffer->CreateSprite("assets\\playership.png");
 
 
 	player = new Player();
 	player->Initialise(pPlayerSprite);
-	player->SetPositionX(width / 2);
-	player->SetPositionY(height / 2);
+	player->SetPositionX(screenWidth / 2);
+	player->SetPositionY(screenHeight / 2);
 
 	////////ryan
 	ga_gameState = MAINMENU;
 	ga_mainMenu = m_pBackBuffer->CreateSprite("assets\\Menu maybe.png");
 
-	//////////Tom////////////////////////////////////////////////////////////////////////////////////////////
-	ga_gameMap = new Map();	
-	if (ga_gameMap->getNumItemAt(0,0) == 0){
-		ga_currentRoom = m_pBackBuffer->CreateSprite("assets\\AllDoorsClosedRoom1280.png");
-	}
-	else{
-		ga_currentRoom = m_pBackBuffer->CreateSprite("assets\\playership.png");
-	}
+	//////////Tom///////////////////////////////////
+	ga_gameMap = new GameMap();	
+	ga_gameMap->parseFile();
 
 	///////////////////////////////////////////////
 	m_lastTime = SDL_GetTicks();
@@ -331,42 +336,15 @@ Game::Process(float deltaTime)
 		m_frameCount = 0;
 	}
 
-	if (ga_gameState == MAINMENU){
-		channel->setPaused(false);
-		channel2->setPaused(true);
-	}
-	else {
-		if (ga_gameState == RUNNING){
-			channel->setPaused(true);
-			channel2->setPaused(false);
-		}
-	}
-
 	for (it_players iterator = playerList.begin(); iterator != playerList.end(); iterator++)
 	{
 		Player* e = (Player*)iterator->second;
 		e->Process(deltaTime);
 	}
 
-	// Update the game world simulation:
+	
+	updateCamera();
 
-	// Ex003.5: Process each alien enemy in the container.
-
-	// Ex006.4: Process each bullet in the container.
-
-	// Ex006.2: Update player...
-
-	// Ex006.4: Check for bullet vs alien enemy collisions...
-	// Ex006.4: For each bullet
-	// Ex006.4: For each alien enemy
-	// Ex006.4: Check collision between two entities.
-	// Ex006.4: If collided, destory both and spawn explosion.
-
-	// Ex006.4: Remove any dead bullets from the container...
-
-	// Ex006.4: Remove any dead enemy aliens from the container...
-
-	// Ex006.4: Remove any dead explosions from the container...
 }
 
 void 
@@ -376,16 +354,15 @@ Game::Draw(BackBuffer& backBuffer)
 
 	backBuffer.Clear();
 
-	// Ex006.3: Draw all enemy aliens in container...
-
-	// Ex006.4: Draw all bullets in container...
-
-	////testing
+	
 	if (ga_gameState == MAINMENU){
 		ga_mainMenu->Draw(backBuffer);
 	}
 	else if (ga_gameState == RUNNING){
-		ga_currentRoom->Draw(backBuffer);
+
+		ga_gameMap->draw(backBuffer);
+
+
 		for (it_players iterator = playerList.begin(); iterator != playerList.end(); iterator++)
 		{
 			Player* e = (Player*)iterator->second;
@@ -393,7 +370,7 @@ Game::Draw(BackBuffer& backBuffer)
 		}
 	}
 
-	// Ex006.2: Draw the player ship...
+	
 
 	backBuffer.Present();
 }
@@ -460,30 +437,17 @@ Game::MoveSpaceShipVert(float speed)
 	
 }
 
-// Ex006.2: Add the method to tell the player ship to move right...
 
-// Ex006.4: Space a Bullet in game.
 void 
 Game::FireSpaceShipBullet()
 {
-	// Ex006.4: Load the player bullet sprite.      
-
-	// Ex006.4: Create a new bullet object.
-
-	// Ex006.4: Set the bullets vertical velocity.
-
-	// Ex006.4: Add the new bullet to the bullet container.
+	
 }
 
-// Ex006.3: Spawn a Enemy in game.
 void 
 Game::SpawnEnemy(int x, int y)
 {
-	// Ex006.3: Load the alien enemy sprite file.
-
-	// Ex006.3: Create a new Enemy object. 
-
-	// Ex006.3: Add the new Enemy to the enemy container.
+	
 }
 
 
@@ -736,4 +700,19 @@ BackBuffer*
 Game::CallBackBuffer()
 {
 	return m_pBackBuffer;
+}
+
+
+void
+Game::updateCamera(){
+
+	float charPosX = player->GetPositionX();
+	float charPosY = player->GetPositionY();
+
+	int roomX = player->getCurrentRoomX();
+	int roomY = player->getCurrentRoomY();
+
+	m_pBackBuffer->SetCameraX(roomX*screenWidth);
+	m_pBackBuffer->SetCameraY(roomY*screenHeight);
+
 }
