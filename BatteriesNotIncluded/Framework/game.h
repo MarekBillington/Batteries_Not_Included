@@ -94,7 +94,7 @@ protected:
 	//liam
 	//ryan
 	Sprite* ga_mainMenu;
-	Player* player;
+	//Player* player;
 
 
 	//james

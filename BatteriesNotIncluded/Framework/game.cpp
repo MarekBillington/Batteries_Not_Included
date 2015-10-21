@@ -50,6 +50,7 @@ float serverCounter = 0.0;
 RakNet::RakPeerInterface *peer = RakNet::RakPeerInterface::GetInstance();
 RakNet::Packet *packet;
 bool isServer = false;
+bool serverInitiated = false;
 bool sending = true;
 char str[512];
 bool isRunning;
@@ -82,7 +83,8 @@ enum GameMessages
 	PLAYER_LIST = ID_USER_PACKET_ENUM + 3,
 	NET_UPDATE = ID_USER_PACKET_ENUM + 4,
 	PLAYER_DISCONNECT = ID_USER_PACKET_ENUM + 5,
-	CLIENT_ID = ID_USER_PACKET_ENUM + 6
+	CLIENT_ID = ID_USER_PACKET_ENUM + 6,
+	CLIENT_END = ID_USER_PACKET_ENUM + 7
 };
 
 Game&
@@ -157,13 +159,7 @@ Game::Initialise()
 	ga_fmodhelp = new FMODHelper();
 	ga_fmodhelp->playBackgroundMusic(1);
 
-	Sprite* pPlayerSprite = m_pBackBuffer->CreateSprite("assets\\playership.png");
 
-
-	player = new Player();
-	player->Initialise(pPlayerSprite);
-	player->SetPositionX(screenWidth / 2);
-	player->SetPositionY(screenHeight / 2);
 
 	////////ryan
 	ga_gameState = MAINMENU;
@@ -252,6 +248,7 @@ Game::Process(float deltaTime)
 		m_elapsedSeconds -= 1;
 		m_FPS = m_frameCount;
 		m_frameCount = 0;
+
 	}
 
 	for (it_players iterator = playerList.begin(); iterator != playerList.end(); iterator++)
@@ -365,10 +362,20 @@ Game::SpawnEnemy(int x, int y)
 void
 Game::initiateServer()
 {
+	Sprite* pPlayerSprite = m_pBackBuffer->CreateSprite("assets\\playership.png");
+
+
+	Player* player = new Player();
+	player->Initialise(pPlayerSprite);
+	player->SetPositionX(screenWidth / 2);
+	player->SetPositionY(screenHeight / 2);
+
+
 	RakNet::SocketDescriptor sd(SERVER_PORT, 0);
 	peer->SetMaximumIncomingConnections(MAX_CONNS);
 	peer->Startup(MAX_CONNS, &sd, 1);
 	isServer = true;
+	serverInitiated = true;
 	printf("Server is ready to receive connections.\n");
 
 	playerList[0] = player;
@@ -381,15 +388,15 @@ Game::initiateServer()
 void
 Game::disconnectClient()
 {
-	//for (it_players iterator = playerList.begin(); iterator != playerList.end(); iterator++)
-	//{
-		//if (clientID == iterator->first)
-		//{
-		//	playerList.erase(iterator->first);
-		//}
-		//iterator->second->SetPositionX(x);
-		//iterator->second->SetPositionY(y);
-	//}
+	RakNet::BitStream bsOut;
+	bsOut.Write((RakNet::MessageID)PLAYER_DISCONNECT);
+	bsOut.Write(clientID);
+	peer->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, ServerName, false);
+
+
+	
+	
+
 }
 
 void
@@ -401,7 +408,7 @@ Game::initiateClient()
 		isServer = false;
 		printf("Client is connecting to %s:%d\n", SERVER_ADDR, SERVER_PORT);
 		peer->Connect(SERVER_ADDR, SERVER_PORT, 0, 0);
-
+		
 		std::thread nt(NetworkThread);
 
 		nt.detach();
@@ -413,7 +420,7 @@ void
 NetworkThread()
 {
 
-
+	
 	isRunning = true;
 	while (isRunning){
 		if (isServer){
@@ -431,7 +438,9 @@ NetworkThread()
 					printf("A remote system has disconnected.\n");
 					break;
 				case ID_CONNECTION_LOST:
-					printf("A remote system lost the connection.\n");
+				{
+											printf("A remote system lost the connection.\n");
+				}
 					break;
 				case NEW_PLAYER:
 				{
@@ -454,7 +463,7 @@ NetworkThread()
 
 
 								   RakNet::BitStream IDreturn;
-								   IDreturn.Write((RakNet::MessageID)PLAYER_LIST);
+								   IDreturn.Write((RakNet::MessageID)CLIENT_ID);
 								   IDreturn.Write(i);
 								   peer->Send(&IDreturn, HIGH_PRIORITY, RELIABLE_ORDERED, 0, packet->systemAddress, false);
 
@@ -474,6 +483,8 @@ NetworkThread()
 								   {
 									   peer->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, iterator->second, false);
 								   }
+
+								   
 				}
 					break;
 				case PLAYER_MOVE:
@@ -514,6 +525,55 @@ NetworkThread()
 				{
 
 				}
+				case PLAYER_DISCONNECT:
+				{
+						int id;
+						RakNet::BitStream bsIn(packet->data, packet->length, false);
+						bsIn.IgnoreBytes(sizeof(RakNet::MessageID));
+						bsIn.Read(id);
+						netClients.erase(id);
+						playerList.erase(id);
+
+						for (it_players iterator = playerList.begin(); iterator != playerList.end(); iterator++)
+						{
+							if (iterator->first > id){
+								netClients[iterator->first - 1] = netClients.at(iterator->first);
+								playerList[iterator->first - 1] = iterator->second;
+							}
+						}
+
+						netClients.erase(playerList.size() + 1);
+						playerList.erase(playerList.size() + 1);
+
+				
+
+						RakNet::BitStream bsOut;
+						bsOut.Write((RakNet::MessageID)PLAYER_DISCONNECT);
+						int plSize = playerList.size();
+						bsOut.Write(plSize);
+
+						for (it_players iterator = playerList.begin(); iterator != playerList.end(); iterator++)
+						{
+							Player* e = iterator->second;
+
+							bsOut.Write(e->GetPositionX());
+							bsOut.Write(e->GetPositionY());
+						}
+						for (it_sysaddr iterator = netClients.begin(); iterator != netClients.end(); iterator++)
+						{
+							peer->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, iterator->second, false);
+						}
+
+						RakNet::BitStream bsReturn;
+						bsReturn.Write((RakNet::MessageID)CLIENT_END);
+						bool endVal = true;
+						bsReturn.Write(endVal);
+						peer->Send(&bsReturn, HIGH_PRIORITY, RELIABLE_ORDERED, 0, packet->systemAddress, false);
+
+
+
+
+				}
 					break;
 				}
 			}
@@ -543,6 +603,7 @@ NetworkThread()
 					break;
 				case PLAYER_LIST:
 				{
+									//playerList.clear();
 									int plSize;
 									RakNet::BitStream bsIn(packet->data, packet->length, false);
 									bsIn.IgnoreBytes(sizeof(RakNet::MessageID));
@@ -565,7 +626,8 @@ NetworkThread()
 										playerList[i] = pl;
 									}
 
-
+								
+									serverInitiated = true;
 
 				}
 					break;
@@ -620,6 +682,44 @@ NetworkThread()
 								  bsIn.Read(clientID);
 				}
 					break;
+				case PLAYER_DISCONNECT:
+				{
+										  playerList.clear();
+										  //playerList.clear();
+										  int plSize;
+										  RakNet::BitStream bsIn(packet->data, packet->length, false);
+										  bsIn.IgnoreBytes(sizeof(RakNet::MessageID));
+										  bsIn.Read(plSize);
+										  for (int i = 0; i < plSize; i++)
+										  {
+											  Game& game = Game::GetGame();
+											  //game.MoveSpaceShipRight(y);
+											  BackBuffer* backBuffer = game.CallBackBuffer();
+											  Sprite* pPlayerSprite = backBuffer->CreateSprite("assets\\playership.png");
+											  Player* pl = new Player();
+											  pl->Initialise(pPlayerSprite);
+											  float x, y;
+											  bsIn.Read(x);
+											  bsIn.Read(y);
+
+											  pl->SetPositionX(x);
+											  pl->SetPositionY(y);
+
+											  playerList[i] = pl;
+										  }
+
+										  serverInitiated = true;
+				}
+					break;
+				case CLIENT_END:
+				{
+								  
+								   serverInitiated = false;
+								   isRunning = false;
+
+
+				}
+					break;
 				}
 
 			}
@@ -627,8 +727,16 @@ NetworkThread()
 
 		}
 		Sleep(10);
+	
 	}
+	netClients.clear();
+	playerList.clear();
+
+	//peer->CloseConnection(ServerName, 0);
+
 	RakNet::RakPeerInterface::DestroyInstance(peer);
+
+	peer = RakNet::RakPeerInterface::GetInstance();
 }
 
 BackBuffer*
@@ -640,14 +748,15 @@ Game::CallBackBuffer()
 
 void
 Game::updateCamera(){
+	if (ga_gameState == RUNNING && serverInitiated){
+		float charPosX = playerList[clientID]->GetPositionX();
+		float charPosY = playerList[clientID]->GetPositionY();
 
-	float charPosX = player->GetPositionX();
-	float charPosY = player->GetPositionY();
+		int roomX = playerList[clientID]->getCurrentRoomX();
+		int roomY = playerList[clientID]->getCurrentRoomY();
 
-	int roomX = player->getCurrentRoomX();
-	int roomY = player->getCurrentRoomY();
-
-	m_pBackBuffer->SetCameraX(roomX*screenWidth);
-	m_pBackBuffer->SetCameraY(roomY*screenHeight);
+		m_pBackBuffer->SetCameraX(roomX*screenWidth);
+		m_pBackBuffer->SetCameraY(roomY*screenHeight);
+	}
 
 }
