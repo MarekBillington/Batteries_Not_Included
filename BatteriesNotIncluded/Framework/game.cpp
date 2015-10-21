@@ -35,7 +35,7 @@
 
 #define SERVER_PORT 12345
 #define MAX_CONNS 2000
-#define SERVER_ADDR "127.0.0.1"
+#define SERVER_ADDR "172.28.21.55"
 
 // Static Members:
 Game* Game::sm_pInstance = 0;
@@ -54,6 +54,9 @@ bool serverInitiated = false;
 bool sending = true;
 char str[512];
 bool isRunning;
+//std::map<int, RakNet::SystemAddress> netClients;
+std::map<int, char[]> clientNames;
+typedef std::map<int, char[]>::iterator it_names;
 std::map<int, RakNet::SystemAddress> netClients;
 typedef std::map<int, RakNet::SystemAddress>::iterator it_sysaddr;
 std::map<int, Player*> playerList;
@@ -435,11 +438,102 @@ NetworkThread()
 				}
 					break;
 				case ID_DISCONNECTION_NOTIFICATION:
-					printf("A remote system has disconnected.\n");
+				{
+								printf("A remote system has disconnected.\n");
+
+								int id;
+								for (it_sysaddr iterator = netClients.begin(); iterator != netClients.end(); iterator++)
+								{
+									if (packet->systemAddress == iterator->second)
+									{
+										id = iterator->first;
+									}
+								}
+
+								netClients.erase(id);
+								playerList.erase(id);
+
+								for (it_players iterator = playerList.begin(); iterator != playerList.end(); iterator++)
+								{
+									if (iterator->first > id){
+										netClients[iterator->first - 1] = netClients.at(iterator->first);
+										playerList[iterator->first - 1] = iterator->second;
+									}
+								}
+
+								netClients.erase(playerList.size() + 1);
+								playerList.erase(playerList.size() + 1);
+
+
+
+								RakNet::BitStream bsOut;
+								bsOut.Write((RakNet::MessageID)PLAYER_DISCONNECT);
+								int plSize = playerList.size();
+								bsOut.Write(plSize);
+
+								for (it_players iterator = playerList.begin(); iterator != playerList.end(); iterator++)
+								{
+									Player* e = iterator->second;
+
+									bsOut.Write(e->GetPositionX());
+									bsOut.Write(e->GetPositionY());
+								}
+								for (it_sysaddr iterator = netClients.begin(); iterator != netClients.end(); iterator++)
+								{
+									peer->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, iterator->second, false);
+								}
+				}
+
+
+
 					break;
 				case ID_CONNECTION_LOST:
 				{
-											printf("A remote system lost the connection.\n");
+					printf("A remote system lost the connection.\n");
+					int id;
+					for (it_sysaddr iterator = netClients.begin(); iterator != netClients.end(); iterator++)
+					{
+						if (packet->systemAddress == iterator->second)
+						{
+							id = iterator->first;
+						}
+					}
+
+					netClients.erase(id);
+					playerList.erase(id);
+
+					for (it_players iterator = playerList.begin(); iterator != playerList.end(); iterator++)
+					{
+						if (iterator->first > id){
+							netClients[iterator->first - 1] = netClients.at(iterator->first);
+							playerList[iterator->first - 1] = iterator->second;
+						}
+					}
+
+					netClients.erase(playerList.size() + 1);
+					playerList.erase(playerList.size() + 1);
+
+
+
+					RakNet::BitStream bsOut;
+					bsOut.Write((RakNet::MessageID)PLAYER_DISCONNECT);
+					int plSize = playerList.size();
+					bsOut.Write(plSize);
+
+					for (it_players iterator = playerList.begin(); iterator != playerList.end(); iterator++)
+					{
+						Player* e = iterator->second;
+
+						bsOut.Write(e->GetPositionX());
+						bsOut.Write(e->GetPositionY());
+					}
+					for (it_sysaddr iterator = netClients.begin(); iterator != netClients.end(); iterator++)
+					{
+						peer->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, iterator->second, false);
+					}
+
+					
+					
 				}
 					break;
 				case NEW_PLAYER:
