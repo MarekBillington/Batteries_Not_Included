@@ -52,13 +52,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)\SDL\SDL2-2.0.3\include\;$(SolutionDir)\SDL\SDL2_image-2.0.0\include;$(SolutionDir)\RakNet-master\Source;$(SolutionDir)\FMOD\inc</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\SDL\SDL2_ttf-2.0.12\include\;$(SolutionDir)\SDL\SDL2-2.0.3\include\;$(SolutionDir)\SDL\SDL2_image-2.0.0\include;$(SolutionDir)\RakNet-master\Source;$(SolutionDir)\FMOD\inc</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)\SDL\SDL2-2.0.3\lib\x86;$(SolutionDir)\SDL\SDL2_image-2.0.0\lib\x86;$(SolutionDir)\FMOD\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;fmodl_vc.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)\SDL\SDL2-2.0.3\lib\x86;$(SolutionDir)\SDL\SDL2_image-2.0.0\lib\x86;$(SolutionDir)\SDL\SDL2_ttf-2.0.12\lib\x86;$(SolutionDir)\FMOD\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;fmodl_vc.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
