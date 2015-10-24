@@ -4,6 +4,8 @@
 
 // Library includes:
 #include <SDL.h>
+#include <SDL_ttf.h>
+#include "string"
 
 class Texture
 {
@@ -13,6 +15,8 @@ public:
 	~Texture();
 
 	bool Initialise(const char* pcFilename, SDL_Renderer* pRenderer);
+
+	bool loadText(SDL_Renderer* pRenderer, std::string textureText, SDL_Color textColor, std::string textFont, int textSize);
 
 	int GetWidth() const;
 	int GetHeight() const;

@@ -2,6 +2,10 @@
 #ifndef __BACKBUFFER_H__
 #define __BACKBUFFER_H__
 
+#include <SDL.h>
+#include <SDL_ttf.h>
+#include <string>
+
 // Forward Declarations:
 class TextureManager;
 class Sprite;
@@ -30,7 +34,7 @@ public:
 	void DrawLine(int x1, int y1, int x2, int y2);
 
 	Sprite* CreateSprite(const char* pcFilename);
-
+	Sprite* CreateText(std::string textureText, SDL_Color textColor, std::string textFont, int textSize);
 
 
 	//tom

@@ -9,6 +9,7 @@
 
 // Library includes:
 #include <SDL.h>
+#include <SDL_ttf.h>
 
 TextureManager::TextureManager()
 : m_pRenderer(0)
@@ -50,6 +51,32 @@ TextureManager::GetTexture(const char* pcFilename)
 		// Is already loaded...
 		pTexture = m_pLoadedTextures[pcFilename];
 	}
+
+	return (pTexture);
+}
+
+Texture*
+TextureManager::GetText(std::string textureText, SDL_Color textColor, std::string textFont, int textSize)
+{
+	Texture* pTexture = 0;
+
+	if (m_pLoadedTextures.find(textureText.c_str()) == m_pLoadedTextures.end())
+	{
+		// Not already loaded... so load...
+		pTexture = new Texture();
+		if (!pTexture->loadText(m_pRenderer, textureText, textColor, textFont, textSize))
+		{
+			LogManager::GetInstance().Log("Texture Failed to Init!");
+		}
+
+		m_pLoadedTextures[textureText.c_str()] = pTexture;
+	}
+	else
+	{
+		// Is already loaded...
+		pTexture = m_pLoadedTextures[textureText.c_str()];
+	}
+
 
 	return (pTexture);
 }

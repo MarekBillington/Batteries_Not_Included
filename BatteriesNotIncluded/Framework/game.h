@@ -15,7 +15,9 @@ class FMODHelper;
 enum GameState
 {
 	MAINMENU,
-	RUNNING
+	LOBBY_CHOOSE,
+	RUNNING,
+	LOBBY
 };
 
 class Game
@@ -45,6 +47,7 @@ public:
 
 	void initiateServer();
 	void initiateClient();
+	void startGame();
 
 	void disconnectClient();
 
@@ -94,6 +97,10 @@ protected:
 	//liam
 	//ryan
 	Sprite* ga_mainMenu;
+	Sprite* ga_lobbyChoose;
+	Sprite* ga_lobbyWait;
+
+	Sprite* currentIP;
 	//Player* player;
 
 

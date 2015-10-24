@@ -4,6 +4,8 @@
 
 // Library Includes:
 #include <string>
+#include <SDL.h>
+#include <SDL_ttf.h>
 #include <map>
 
 // Forward Declarations:
@@ -20,6 +22,8 @@ public:
 	bool Initialise(SDL_Renderer* pRenderer);
 
 	Texture* GetTexture(const char* pcFilename);
+
+	Texture* GetText(std::string textureText, SDL_Color textColor, std::string textFont, int textSize);
 
 protected:
 

@@ -63,7 +63,7 @@ InputHandler::ProcessInput(Game& game)
 				}
 				if (460 < x && x < 820 && 336 < y && y < 407){
 					//go to multiplayer lobby
-					game.ga_gameState = GameState::RUNNING;
+					game.ga_gameState = GameState::LOBBY_CHOOSE;
 					game.ga_fmodhelp->playBackgroundMusic(2);
 				}
 				if (460 < x && x < 820 && 216 < y && y < 286){
@@ -73,6 +73,42 @@ InputHandler::ProcessInput(Game& game)
 				}
 			}	//main menu bracket
 
+		}
+		if (game.ga_gameState == LOBBY_CHOOSE)
+		{
+			if (e.type == SDL_MOUSEBUTTONDOWN){
+				//remember to uncomment the related brackeT
+				int x;
+				int y;
+				SDL_GetMouseState(&x, &y);
+				if (460 < x && x < 820 && 216 < y && y < 286){
+					//Host lobby
+					game.initiateServer();
+				}
+
+				if (460 < x && x < 820 && 457 < y && y < 528){
+					//Join lobby
+					game.initiateClient();
+				}
+			}
+		}
+		if (game.ga_gameState == LOBBY)
+		{
+			if (e.type == SDL_MOUSEBUTTONDOWN){
+				//remember to uncomment the related bracket
+
+				int x;
+				int y;
+				SDL_GetMouseState(&x, &y);
+				if (200 < x && x < 600 && 600 < y && y < 700){
+					//Start Lobby Game
+					
+					game.ga_gameState = GameState::RUNNING;
+					game.ga_fmodhelp->playBackgroundMusic(2);
+					game.startGame();
+				}
+				
+			}	//lobby bracket
 		}
 		if (game.ga_gameState == GameState::RUNNING){
 			if (e.type == SDL_KEYDOWN){

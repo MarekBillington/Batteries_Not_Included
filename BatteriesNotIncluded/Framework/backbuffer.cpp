@@ -13,6 +13,8 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <cassert>
+#include <SDL_ttf.h>
+#include <string>
 
 BackBuffer::BackBuffer()
 : m_pTextureManager(0)
@@ -159,6 +161,22 @@ BackBuffer::CreateSprite(const char* pcFilename)
 	assert(m_pTextureManager);
 
 	Texture* pTexture = m_pTextureManager->GetTexture(pcFilename);
+
+	Sprite* pSprite = new Sprite();
+	if (!pSprite->Initialise(*pTexture))
+	{
+		LogManager::GetInstance().Log("Sprite Failed to Create!");
+	}
+
+	return (pSprite);
+}
+
+Sprite*
+BackBuffer::CreateText(std::string textureText, SDL_Color textColor, std::string textFont, int textSize)
+{
+	assert(m_pTextureManager);
+
+	Texture* pTexture = m_pTextureManager->GetText(textureText, textColor, textFont, textSize);
 
 	Sprite* pSprite = new Sprite();
 	if (!pSprite->Initialise(*pTexture))
