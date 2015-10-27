@@ -55,6 +55,8 @@ bool sending = true;
 char str[512];
 bool isRunning;
 char* name = "";
+char* serverAdd = "IP";
+std::string serverIP = "";
 
 std::map<int, char*> clientNames;
 typedef std::map<int, char[]>::iterator it_names;
@@ -166,6 +168,9 @@ Game::Initialise()
 	ga_fmodhelp = new FMODHelper();
 	ga_fmodhelp->playBackgroundMusic(1);
 
+	SDL_Color color = { 0xFF, 0x99, 0x00, 0xFF };
+	
+
 
 	
 
@@ -174,6 +179,19 @@ Game::Initialise()
 	ga_mainMenu = m_pBackBuffer->CreateSprite("assets\\Menu maybe.png");
 	ga_lobbyChoose = m_pBackBuffer->CreateSprite("assets\\lobbychoose.png");
 	ga_lobbyWait = m_pBackBuffer->CreateSprite("assets\\lobby.png");
+	ga_lobbyHost = m_pBackBuffer->CreateSprite("assets\\ipshow.png");
+
+	ga_lobbyHost->SetX(screenWidth / 2 - 300);
+	ga_lobbyHost->SetY(screenHeight / 2 - 200);
+
+
+	ga_hostText1 = m_pBackBuffer->CreateText("Type the IP you want to join: ", color, "assets\\dkjalebi.otf", 42);
+	ga_hostText1->SetX(450);
+	ga_hostText1->SetY(250);
+
+	ga_hostText2 = m_pBackBuffer->CreateText(serverAdd, color, "assets\\dkjalebi.otf", 42);
+	ga_hostText2->SetX(550);
+	ga_hostText2->SetY(350);
 
 	//////////Tom///////////////////////////////////
 	ga_gameMap = new GameMap();	
@@ -287,6 +305,20 @@ Game::Draw(BackBuffer& backBuffer)
 	{
 		ga_lobbyChoose->Draw(backBuffer);
 	}
+	else if (ga_gameState == LOBBY_HOST)
+	{
+		ga_lobbyChoose->Draw(backBuffer);
+		ga_lobbyHost->Draw(backBuffer);
+		ga_hostText1->Draw(backBuffer);
+		ga_hostText2->Draw(backBuffer);
+	}
+	else if (ga_gameState == LOBBY_JOIN)
+	{
+		ga_lobbyChoose->Draw(backBuffer);
+		ga_lobbyHost->Draw(backBuffer);
+		ga_hostText1->Draw(backBuffer);
+		ga_hostText2->Draw(backBuffer);
+	}
 	else if (ga_gameState == LOBBY)
 	{
 		ga_lobbyWait->Draw(backBuffer);
@@ -379,6 +411,30 @@ Game::SpawnEnemy(int x, int y)
 	
 }
 
+void
+Game::enterServerName(char* name)
+{
+	if (serverAdd == "IP")
+	{
+		SDL_Color color = { 0xFF, 0x99, 0x00, 0xFF };
+		serverAdd = name;
+		serverIP = name;
+		ga_hostText2 = m_pBackBuffer->CreateText(serverAdd, color, "assets\\dkjalebi.otf", 42);
+		ga_hostText2->SetX(550);
+		ga_hostText2->SetY(350);
+	}
+	else
+	{
+		SDL_Color color = { 0xFF, 0x99, 0x00, 0xFF };
+		serverIP += name;
+		serverAdd = &serverIP[0u];
+		ga_hostText2 = m_pBackBuffer->CreateText(serverAdd, color, "assets\\dkjalebi.otf", 42);
+		ga_hostText2->SetX(550);
+		ga_hostText2->SetY(350);
+	}
+	
+}
+
 
 void
 Game::initiateServer()
@@ -399,6 +455,7 @@ Game::initiateServer()
 	//serverInitiated = true;
 	printf("Server is ready to receive connections.\n");
 	name = "Server";
+	serverAdd = (char*) peer->GetLocalIP(0);
 	//playerList[0] = player;
 	clientNames[0] = name;
 
@@ -407,8 +464,19 @@ Game::initiateServer()
 	pText->SetX(140);
 	pText->SetY(10 * clientID + 160);
 
+	ga_lobbyHost->SetX(screenWidth / 2 - 300);
+	ga_lobbyHost->SetY(screenHeight / 2 - 200);
+
+	ga_hostText1 = m_pBackBuffer->CreateText("Your ip is: ", color, "assets\\dkjalebi.otf", 42);
+	ga_hostText1->SetX(550);
+	ga_hostText1->SetY(250);
+
+	ga_hostText2 = m_pBackBuffer->CreateText(serverAdd, color, "assets\\dkjalebi.otf", 42);
+	ga_hostText2->SetX(550);
+	ga_hostText2->SetY(350);
+
 	playerL2TextList[0] = pText;
-	ga_gameState = LOBBY;
+	//ga_gameState = LOBBY;
 
 	std::thread nt(NetworkThread);
 
@@ -433,11 +501,14 @@ void
 Game::initiateClient()
 {
 	if (!isServer){
+		
+
+
 		RakNet::SocketDescriptor sd;
 		peer->Startup(1, &RakNet::SocketDescriptor(), 1);
 		isServer = false;
 		printf("Client is connecting to %s:%d\n", SERVER_ADDR, SERVER_PORT);
-		peer->Connect(SERVER_ADDR, SERVER_PORT, 0, 0);
+		peer->Connect(serverAdd, SERVER_PORT, 0, 0);
 		ga_gameState = LOBBY;
 		std::thread nt(NetworkThread);
 

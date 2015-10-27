@@ -16,6 +16,8 @@ enum GameState
 {
 	MAINMENU,
 	LOBBY_CHOOSE,
+	LOBBY_HOST,
+	LOBBY_JOIN,
 	RUNNING,
 	LOBBY
 };
@@ -48,6 +50,8 @@ public:
 	void initiateServer();
 	void initiateClient();
 	void startGame();
+
+	void enterServerName(char* name);
 
 	void disconnectClient();
 
@@ -99,6 +103,9 @@ protected:
 	Sprite* ga_mainMenu;
 	Sprite* ga_lobbyChoose;
 	Sprite* ga_lobbyWait;
+	Sprite* ga_lobbyHost;
+	Sprite* ga_hostText1;
+	Sprite* ga_hostText2;
 
 	Sprite* currentIP;
 	//Player* player;
