@@ -8,9 +8,6 @@
 #include "fmodhelper.h"
 // Library includes:
 #include <cassert>
-#include <string>
-
-char* text;
 
 InputHandler::InputHandler()
 : m_pGameController(0)
@@ -41,10 +38,6 @@ InputHandler::Initialise()
 void 
 InputHandler::ProcessInput(Game& game)
 {
-	if (game.ga_gameState == LOBBY_JOIN)
-	{
-		SDL_StartTextInput();
-	}
 	// Ex006.2: Receive Input Events below...
 	SDL_Event e;
 	while (SDL_PollEvent(&e) != 0)
@@ -90,48 +83,12 @@ InputHandler::ProcessInput(Game& game)
 				SDL_GetMouseState(&x, &y);
 				if (460 < x && x < 820 && 216 < y && y < 286){
 					//Host lobby
-					game.ga_gameState = LOBBY_HOST;
 					game.initiateServer();
 				}
 
 				if (460 < x && x < 820 && 457 < y && y < 528){
 					//Join lobby
-					game.ga_gameState = LOBBY_JOIN;
-					//game.initiateClient();
-				}
-			}
-		}
-		if (game.ga_gameState == LOBBY_HOST)
-		{
-			if (e.type == SDL_KEYDOWN){
-				if (e.key.keysym.sym == SDLK_RETURN)
-				{
-					//game.initiateServer();
-					game.ga_gameState = LOBBY;
-				}
-			}
-		}
-		if (game.ga_gameState == LOBBY_JOIN)
-		{
-			
-			if (e.type == SDL_TEXTINPUT)
-			{
-				if (text == NULL)
-				{
-					text = e.text.text;
-				}
-				game.enterServerName(text);
-				text = NULL;
-			//	printf("ok");
-			}
-			if (e.type == SDL_KEYDOWN){
-				
-				if (e.key.keysym.sym == SDLK_RETURN)
-				{
-					SDL_StopTextInput();
 					game.initiateClient();
-					//game.initiateServer();
-					//game.ga_gameState = LOBBY;
 				}
 			}
 		}
