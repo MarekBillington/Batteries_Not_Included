@@ -146,8 +146,7 @@ InputHandler::ProcessInput(Game& game)
 				if (200 < x && x < 600 && 600 < y && y < 700){
 					//Start Lobby Game
 					
-					game.ga_gameState = GameState::RUNNING;
-					game.ga_fmodhelp->playBackgroundMusic(2);
+					
 					game.startGame();
 				}
 				

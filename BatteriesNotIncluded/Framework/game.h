@@ -117,7 +117,7 @@ protected:
 	int screenWidth;
 	int screenHeight;
 	
-	
+	// stuff
 private:
 
 };

@@ -519,61 +519,67 @@ Game::initiateClient()
 void
 Game::startGame()
 {
-	srand(time(0));
-
-
-	Game& game = Game::GetGame();
-	//game.MoveSpaceShipRight(y);
-	BackBuffer* backBuffer = game.CallBackBuffer();
-	Sprite* pPlayerSprite = backBuffer->CreateSprite("assets\\playership.png");
-
-
-	Player* player = new Player();
-	player->Initialise(pPlayerSprite);
-	player->SetPositionX(screenWidth / 2);
-	player->SetPositionY(screenHeight / 2);
-
-	playerList[0] = player;
-	clientID = 0;
-
-
-	for (it_sysaddr iterator = netClients.begin(); iterator != netClients.end(); iterator++)
+	if (isServer)
 	{
-		int roomX = (rand()) % 10;
-		float roomY = static_cast <float> (rand()) / static_cast <float> (RAND_MAX / 400.0);
-		float x = static_cast <float> (rand()) / static_cast <float> (RAND_MAX / 400.0);
-		float y = static_cast <float> (rand()) / static_cast <float> (RAND_MAX / 400.0);
+		ga_gameState = RUNNING;
+		ga_fmodhelp->playBackgroundMusic(2);
+
+		srand(time(0));
+
+
+		Game& game = Game::GetGame();
+		//game.MoveSpaceShipRight(y);
+		BackBuffer* backBuffer = game.CallBackBuffer();
 		Sprite* pPlayerSprite = backBuffer->CreateSprite("assets\\playership.png");
-		Player* pl = new Player();
-		pl->Initialise(pPlayerSprite);
-		pl->SetPositionX(x);
-		pl->SetPositionY(y);
-		playerList[iterator->first] = pl;
-		RakNet::BitStream IDreturn;
-		IDreturn.Write((RakNet::MessageID)CLIENT_ID);
-		IDreturn.Write(iterator->first);
-		peer->Send(&IDreturn, HIGH_PRIORITY, RELIABLE_ORDERED, 0, iterator->second, false);
 
+
+		Player* player = new Player();
+		player->Initialise(pPlayerSprite);
+		player->SetPositionX(screenWidth / 2);
+		player->SetPositionY(screenHeight / 2);
+
+		playerList[0] = player;
+		clientID = 0;
+
+
+		for (it_sysaddr iterator = netClients.begin(); iterator != netClients.end(); iterator++)
+		{
+			int roomX = (rand()) % 10;
+			float roomY = static_cast <float> (rand()) / static_cast <float> (RAND_MAX / 400.0);
+			float x = static_cast <float> (rand()) / static_cast <float> (RAND_MAX / 400.0);
+			float y = static_cast <float> (rand()) / static_cast <float> (RAND_MAX / 400.0);
+			Sprite* pPlayerSprite = backBuffer->CreateSprite("assets\\playership.png");
+			Player* pl = new Player();
+			pl->Initialise(pPlayerSprite);
+			pl->SetPositionX(x);
+			pl->SetPositionY(y);
+			playerList[iterator->first] = pl;
+			RakNet::BitStream IDreturn;
+			IDreturn.Write((RakNet::MessageID)CLIENT_ID);
+			IDreturn.Write(iterator->first);
+			peer->Send(&IDreturn, HIGH_PRIORITY, RELIABLE_ORDERED, 0, iterator->second, false);
+
+		}
+
+		RakNet::BitStream bsOut;
+		bsOut.Write((RakNet::MessageID)PLAYER_LIST);
+		int plSize = playerList.size();
+		bsOut.Write(plSize);
+
+		for (it_players iterator = playerList.begin(); iterator != playerList.end(); iterator++)
+		{
+			Player* e = iterator->second;
+
+			bsOut.Write(e->GetPositionX());
+			bsOut.Write(e->GetPositionY());
+		}
+		for (it_sysaddr iterator = netClients.begin(); iterator != netClients.end(); iterator++)
+		{
+			peer->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, iterator->second, false);
+		}
+
+		serverInitiated = true;
 	}
-
-	RakNet::BitStream bsOut;
-	bsOut.Write((RakNet::MessageID)PLAYER_LIST);
-	int plSize = playerList.size();
-	bsOut.Write(plSize);
-
-	for (it_players iterator = playerList.begin(); iterator != playerList.end(); iterator++)
-	{
-		Player* e = iterator->second;
-
-		bsOut.Write(e->GetPositionX());
-		bsOut.Write(e->GetPositionY());
-	}
-	for (it_sysaddr iterator = netClients.begin(); iterator != netClients.end(); iterator++)
-	{
-		peer->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, iterator->second, false);
-	}
-
-	serverInitiated = true;
 }
 
 /////// Liam
