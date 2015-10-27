@@ -123,3 +123,8 @@ Entity::SetVerticalVelocity(float y)
 {
 	m_velocityY = y;
 }
+
+Sprite* 
+Entity::getSprite(){
+	return m_pSprite;
+}

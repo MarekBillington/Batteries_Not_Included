@@ -34,6 +34,8 @@ public:
 	float GetVerticalVelocity();
 	void SetVerticalVelocity(float y);
 
+	Sprite* getSprite();
+
 protected:
 
 private:
