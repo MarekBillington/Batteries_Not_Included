@@ -52,6 +52,7 @@ public:
 	void startGame();
 
 	void enterServerName(char* name);
+	void deleteServerIP();
 
 	void disconnectClient();
 

@@ -435,6 +435,32 @@ Game::enterServerName(char* name)
 	
 }
 
+void
+Game::deleteServerIP()
+{
+	SDL_Color color = { 0xFF, 0x99, 0x00, 0xFF };
+	if (serverIP.size() == 1 || serverIP.empty())
+	{
+		serverIP.clear();
+		serverIP = "";
+		serverAdd = "IP";
+		ga_hostText2 = m_pBackBuffer->CreateText(serverAdd, color, "assets\\dkjalebi.otf", 42);
+		ga_hostText2->SetX(550);
+		ga_hostText2->SetY(350);
+	}
+	else
+	{
+		serverIP.erase(serverIP.size()-1, 1);
+		serverAdd = &serverIP[0u];
+		ga_hostText2 = m_pBackBuffer->CreateText(serverAdd, color, "assets\\dkjalebi.otf", 42);
+		ga_hostText2->SetX(550);
+		ga_hostText2->SetY(350);
+	}
+	
+	
+
+}
+
 
 void
 Game::initiateServer()

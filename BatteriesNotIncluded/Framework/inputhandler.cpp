@@ -133,6 +133,19 @@ InputHandler::ProcessInput(Game& game)
 					//game.initiateServer();
 					//game.ga_gameState = LOBBY;
 				}
+				if (e.key.keysym.sym == SDLK_ESCAPE)
+				{
+					SDL_StopTextInput();
+					game.ga_gameState = GameState::LOBBY_CHOOSE;
+					//game.initiateServer();
+					//game.ga_gameState = LOBBY;
+				}
+				if (e.key.keysym.sym == SDLK_BACKSPACE)
+				{
+					game.deleteServerIP();
+					//game.initiateServer();
+					//game.ga_gameState = LOBBY;
+				}
 			}
 		}
 		if (game.ga_gameState == LOBBY)
@@ -151,6 +164,16 @@ InputHandler::ProcessInput(Game& game)
 				}
 				
 			}	//lobby bracket
+
+			if (e.type == SDL_KEYDOWN){
+				if (e.key.keysym.sym == SDLK_ESCAPE)
+				{
+					SDL_StopTextInput();
+					game.ga_gameState = GameState::MAINMENU;
+					//game.initiateServer();
+					//game.ga_gameState = LOBBY;
+				}
+			}
 		}
 		if (game.ga_gameState == GameState::RUNNING){
 			if (e.type == SDL_KEYDOWN){
