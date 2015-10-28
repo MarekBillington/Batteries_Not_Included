@@ -54,7 +54,7 @@ BackBuffer::Initialise(int width, int height)
 	}
 	else
 	{
-		m_pWindow = SDL_CreateWindow("717130 Game Framework", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_SHOWN);
+		m_pWindow = SDL_CreateWindow("Batteries Not Included", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_SHOWN);
 
 		if (m_pWindow == 0)
 		{
@@ -196,4 +196,17 @@ BackBuffer::GetCameraX(){
 float
 BackBuffer::GetCameraY(){
 	return m_bCameraY;
+}
+
+void
+BackBuffer::DrawWall(int x1, int y1, int x2, int y2)
+{
+	SDL_Rect fillRect;
+
+	fillRect.x = x1;
+	fillRect.y = y1;
+	fillRect.w = x2 - x1;
+	fillRect.h = y2 - y1;
+
+	//SDL_FillRect(SDL_Surface* s, &fillRect);
 }

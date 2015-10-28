@@ -237,6 +237,7 @@
     <ClInclude Include="active.h" />
     <ClInclude Include="backbuffer.h" />
     <ClInclude Include="buff.h" />
+    <ClInclude Include="bullet.h" />
     <ClInclude Include="entity.h" />
     <ClInclude Include="fmodhelper.h" />
     <ClInclude Include="game.h" />
@@ -250,6 +251,7 @@
     <ClInclude Include="terrain.h" />
     <ClInclude Include="texture.h" />
     <ClInclude Include="texturemanager.h" />
+    <ClInclude Include="wall.h" />
     <ClInclude Include="weapon.h" />
   </ItemGroup>
   <ItemGroup>
@@ -366,6 +368,7 @@
     <ClCompile Include="active.cpp" />
     <ClCompile Include="backbuffer.cpp" />
     <ClCompile Include="buff.cpp" />
+    <ClCompile Include="bullet.cpp" />
     <ClCompile Include="entity.cpp" />
     <ClCompile Include="fmodhelper.cpp" />
     <ClCompile Include="game.cpp" />
@@ -380,6 +383,7 @@
     <ClCompile Include="terrain.cpp" />
     <ClCompile Include="texture.cpp" />
     <ClCompile Include="texturemanager.cpp" />
+    <ClCompile Include="wall.cpp" />
     <ClCompile Include="weapon.cpp" />
   </ItemGroup>
   <ItemGroup>

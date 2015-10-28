@@ -22,10 +22,11 @@
 #include "inputhandler.h"
 #include "logmanager.h"
 #include "sprite.h"
-
+#include "wall.h"
 #include "gameMap.h"
 #include "entity.h"
 #include "player.h"
+#include "bullet.h"
 #include "fmodhelper.h"
 
 // Library includes:
@@ -57,6 +58,7 @@ bool isRunning;
 std::map<int, RakNet::SystemAddress> netClients;
 typedef std::map<int, RakNet::SystemAddress>::iterator it_sysaddr;
 std::map<int, Player*> playerList;
+std::map<int, Bullet*> bulletList;
 typedef std::map<int, Player*>::iterator it_players;
 int clientID;
 void NetworkThread();
@@ -84,7 +86,8 @@ enum GameMessages
 	NET_UPDATE = ID_USER_PACKET_ENUM + 4,
 	PLAYER_DISCONNECT = ID_USER_PACKET_ENUM + 5,
 	CLIENT_ID = ID_USER_PACKET_ENUM + 6,
-	CLIENT_END = ID_USER_PACKET_ENUM + 7
+	CLIENT_END = ID_USER_PACKET_ENUM + 7,
+	PLAYER_SHOOT = ID_USER_PACKET_ENUM + 8
 };
 
 Game&
@@ -173,6 +176,7 @@ Game::Initialise()
 	m_lastTime = SDL_GetTicks();
 	m_lag = 0.0f;
 
+
 	return (true);
 }
 
@@ -216,20 +220,21 @@ Game::Process(float deltaTime)
 {
 	// Count total simulation time elapsed:
 	m_elapsedSeconds += deltaTime;
+
 	if (isServer)
 	{
 		serverCounter += deltaTime;
-		if (serverCounter > 0.1)
+		if (serverCounter > 0.016666666)
 		{
 			RakNet::BitStream bsOut;
 			bsOut.Write((RakNet::MessageID)NET_UPDATE);
 			int plSize = playerList.size();
 			bsOut.Write(plSize);
 
+			//bullets send in own bullet
 			for (it_players iterator = playerList.begin(); iterator != playerList.end(); iterator++)
 			{
 				Player* e = iterator->second;
-
 				bsOut.Write(e->GetPositionX());
 				bsOut.Write(e->GetPositionY());
 			}
@@ -255,11 +260,107 @@ Game::Process(float deltaTime)
 	{
 		Player* e = (Player*)iterator->second;
 		e->Process(deltaTime);
+		
+		int pl_x = e->GetPositionX();
+		int pl_y = e->GetPositionY();
+
+		roomChangeXDir = e->getCurrentRoomX();
+		roomChangeYDir = e->getCurrentRoomY();
+		
+		
+		createWalls(roomChangeXDir, roomChangeYDir);
+
+		for (int i = 0; i < 8; i++)
+		{
+			Wall* wall = e->wa_wallContainer[i];
+		}
+		
+		int playerHeight = e->GetHeight();
+		int playerWidth = e->GetWidth();
+		//collisions for the walls
+		/*for (int i = 0; i < 8; i++)
+		{
+			Wall* wall = e->wa_wallContainer[i];
+
+			switch (i)
+			{
+				case
+					0:
+						if ((e->GetPositionY() < wall->getWallY()) && (e->GetPositionX() < wall->getWallX()))
+						{
+							if (e->GetPositionY() < wall->getWallY())
+							{
+								e->SetPositionY(wall->getWallY());
+							}
+							if (e->GetPositionX() < wall->getWallX())
+							{
+								e->SetPositionX(wall->getWallX());
+							}
+						}
+					break;
+				case
+					1:
+						if ((e->GetPositionY() < wall->getWallY()) && (e->GetPositionX() < wall->getWallX()))
+						{
+							e->SetPositionY(wall->getWallY());
+							e->SetPositionX(wall->getWallX());
+						}
+					break;
+				case
+					2:
+						if ((e->GetPositionY() < wall->getWallY()) && (e->GetPositionX() > wall->getWallX()))
+						{
+							e->SetPositionY(wall->getWallY());
+							e->SetPositionX(wall->getWallX());
+						}
+					break;
+				case
+					3:
+						if ((e->GetPositionY() < wall->getWallY()) && (e->GetPositionX() > wall->getWallX()))
+						{
+							e->SetPositionY(wall->getWallY());
+							e->SetPositionX(wall->getWallX());
+						}
+					break;
+				case
+					4:
+						if ((e->GetPositionY() < wall->getWallY()) && (e->GetPositionX() < wall->getWallX()))
+						{
+							e->SetPositionY(wall->getWallY());
+							e->SetPositionX(wall->getWallX());
+						}
+					break;
+				case
+					5:
+						if ((e->GetPositionY() > wall->getWallY()) && (e->GetPositionX() < wall->getWallX()))
+						{
+							e->SetPositionY(wall->getWallY());
+							e->SetPositionX(wall->getWallX());
+						}
+					break;
+				case
+					6:
+						if ((e->GetPositionY() > wall->getWallY()) && (e->GetPositionX() > wall->getWallX()))
+						{
+							e->SetPositionY(wall->getWallY());
+							e->SetPositionX(wall->getWallX());
+						}
+					break;
+				case
+					7:
+						if ((e->GetPositionY() > wall->getWallY()) && (e->GetPositionX() > wall->getWallX()))
+						{
+							e->SetPositionY(wall->getWallY());
+							e->SetPositionX(wall->getWallX());
+						}
+					break;
+			}
+		}*/
 	}
 
 	
 	updateCamera();
-
+	
 }
 
 void 
@@ -281,11 +382,45 @@ Game::Draw(BackBuffer& backBuffer)
 		for (it_players iterator = playerList.begin(); iterator != playerList.end(); iterator++)
 		{
 			Player* e = (Player*)iterator->second;
+			for each (Bullet* bullet in e->pl_bullets)
+			{
+				bullet->Draw(backBuffer);
+			}
+
+			for (int i = 0; i < 8; i++)
+			{
+				Wall* wall = e->wa_wallContainer[i];
+				m_pBackBuffer->DrawRectangle(wall->getWallX(), wall->getWallY(), wall->getWallX1(), wall->getWallY1());
+			}
 			e->Draw(backBuffer);
 		}
 	}
 
-	
+	/*
+	//rect 1
+	m_pBackBuffer->DrawRectangle(0, 0, 150, 270);
+
+	//rect 2
+	m_pBackBuffer->DrawRectangle(0, 0, 550, 30);
+
+	//rect 3
+	m_pBackBuffer->DrawRectangle(735, 0, 1280, 30);
+
+	//rect 4
+	m_pBackBuffer->DrawRectangle(1130, 0, 1280, 270);
+
+	//rect 5
+	m_pBackBuffer->DrawRectangle(0, 450, 150, 720);
+
+	//rect 6
+	m_pBackBuffer->DrawRectangle(0, 625, 550, 720);
+
+	//rect 7
+	m_pBackBuffer->DrawRectangle(735, 625, 1280, 720);
+
+	//rect 8
+	m_pBackBuffer->DrawRectangle(1130, 450, 1280, 720);
+	*/
 
 	backBuffer.Present();
 }
@@ -345,10 +480,76 @@ Game::MoveSpaceShipVert(float speed)
 	peer->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, ServerName, false);
 }
 
-
+//////marek
 void 
-Game::FireSpaceShipBullet()
+Game::FireBulletHorizontal(float speed)
 {
+	if (isServer)
+	{
+		for (it_sysaddr iterator = netClients.begin(); iterator != netClients.end(); iterator++){
+			RakNet::BitStream bsOut;
+			bsOut.Write((RakNet::MessageID)PLAYER_SHOOT);
+			bsOut.Write(0);
+			bsOut.Write(0);
+			bsOut.Write(speed);
+			peer->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, iterator->second, false);
+		}
+		Sprite* bulletSprite = m_pBackBuffer->CreateSprite("assets\\playerbullet.png");
+
+		Bullet* bullet = new Bullet();
+
+		bullet->SetPositionX(playerList.at(0)->GetPositionX());
+		bullet->SetPositionY(playerList.at(0)->GetPositionY());
+
+		bullet->Initialise(bulletSprite);
+		bullet->SetHorizontalVelocity(speed);
+		playerList.at(0)->pl_bullets.push_back(bullet);
+	}
+
+	RakNet::BitStream bsOut;
+	bsOut.Write((RakNet::MessageID)PLAYER_SHOOT);
+	//float test = 100.0;
+	bsOut.Write(0);
+	bsOut.Write(speed);
+	peer->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, ServerName, false);
+	
+	
+}
+
+void
+Game::FireBulletVertical(float speed)
+{
+	
+
+	if (isServer)
+	{
+		for (it_sysaddr iterator = netClients.begin(); iterator != netClients.end(); iterator++){
+			RakNet::BitStream bsOut;
+			bsOut.Write((RakNet::MessageID)PLAYER_SHOOT);
+			bsOut.Write(0);
+			bsOut.Write(1);
+			bsOut.Write(speed);
+			peer->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, iterator->second, false);
+		}
+		Sprite* bulletSprite = m_pBackBuffer->CreateSprite("assets\\playerbullet.png");
+
+		Bullet* bullet = new Bullet();
+
+		bullet->SetPositionX(playerList.at(0)->GetPositionX());
+		bullet->SetPositionY(playerList.at(0)->GetPositionY());
+
+		bullet->Initialise(bulletSprite);
+		bullet->SetVerticalVelocity(speed);
+		playerList.at(0)->pl_bullets.push_back(bullet);
+	}
+
+	RakNet::BitStream bsOut;
+	bsOut.Write((RakNet::MessageID)PLAYER_SHOOT);
+	//float test = 100.0;
+	bsOut.Write(1);
+	bsOut.Write(speed);
+	peer->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, ServerName, false);
+
 	
 }
 
@@ -369,7 +570,9 @@ Game::initiateServer()
 	player->Initialise(pPlayerSprite);
 	player->SetPositionX(screenWidth / 2);
 	player->SetPositionY(screenHeight / 2);
-
+	player->initialiseWalls();
+	roomChangeXDir = player->getCurrentRoomX();
+	roomChangeYDir = player->getCurrentRoomY();
 
 	RakNet::SocketDescriptor sd(SERVER_PORT, 0);
 	peer->SetMaximumIncomingConnections(MAX_CONNS);
@@ -392,11 +595,6 @@ Game::disconnectClient()
 	bsOut.Write((RakNet::MessageID)PLAYER_DISCONNECT);
 	bsOut.Write(clientID);
 	peer->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, ServerName, false);
-
-
-	
-	
-
 }
 
 void
@@ -419,7 +617,9 @@ Game::initiateClient()
 void
 NetworkThread()
 {
-
+	Game& game = Game::GetGame();
+	//game.MoveSpaceShipRight(y);
+	BackBuffer* backBuffer = game.CallBackBuffer();
 	
 	isRunning = true;
 	while (isRunning){
@@ -449,9 +649,7 @@ NetworkThread()
 								   bsIn.IgnoreBytes(sizeof(RakNet::MessageID));
 								   bsIn.Read(x);
 								   bsIn.Read(y);
-								   Game& game = Game::GetGame();
-								   //game.MoveSpaceShipRight(y);
-								   BackBuffer* backBuffer = game.CallBackBuffer();
+								   
 								   Sprite* pPlayerSprite = backBuffer->CreateSprite("assets\\playership.png");
 								   Player* pl = new Player();
 								   pl->Initialise(pPlayerSprite);
@@ -521,6 +719,58 @@ NetworkThread()
 										playerList.at(i)->SetVerticalVelocity(speed);
 				}
 					break;
+				case PLAYER_SHOOT:
+				{
+									int dirCheck;
+									float speed;
+									RakNet::BitStream bsIn(packet->data, packet->length, false);
+									bsIn.IgnoreBytes(sizeof(RakNet::MessageID));
+									bsIn.Read(dirCheck);
+									bsIn.Read(speed);
+									int i;
+
+									for (it_sysaddr iterator = netClients.begin(); iterator != netClients.end(); iterator++){
+										if (packet->systemAddress == iterator->second)
+										{
+											i = iterator->first;
+										}
+									}
+
+									for (it_sysaddr iterator = netClients.begin(); iterator != netClients.end(); iterator++){
+										RakNet::BitStream bsOut;
+										bsOut.Write((RakNet::MessageID)PLAYER_SHOOT);
+										bsOut.Write(i);
+										bsOut.Write(dirCheck);
+										bsOut.Write(speed);
+										peer->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, iterator->second, false);
+									}
+
+									Sprite* bulletSprite = backBuffer->CreateSprite("assets\\playerbullet.png");
+
+									Bullet* bullet = new Bullet();
+									if (dirCheck == 0)
+									{
+										
+
+										bullet->SetPositionX(playerList.at(0)->GetPositionX());
+										bullet->SetPositionY(playerList.at(0)->GetPositionY());
+
+										bullet->Initialise(bulletSprite);
+										bullet->SetHorizontalVelocity(speed);
+										playerList.at(i)->pl_bullets.push_back(bullet);
+									}
+									else if (dirCheck == 1)
+									{
+										bullet->SetPositionX(playerList.at(0)->GetPositionX());
+										bullet->SetPositionY(playerList.at(0)->GetPositionY());
+
+										bullet->Initialise(bulletSprite);
+										bullet->SetHorizontalVelocity(speed);
+										playerList.at(i)->pl_bullets.push_back(bullet);
+									}
+										
+				}
+					break;
 				case NET_UPDATE:
 				{
 
@@ -587,47 +837,47 @@ NetworkThread()
 				{
 				case ID_CONNECTION_REQUEST_ACCEPTED:
 				{
-													   printf("The connection to the server has been accepted.\n");
-													   ServerName = packet->systemAddress;
-													   RakNet::BitStream bsOut;
-													   float x, y;
-													   x = 300.0;
-													   y = 200.0;
+					printf("The connection to the server has been accepted.\n");
+					ServerName = packet->systemAddress;
+					RakNet::BitStream bsOut;
+					float x, y;
+					x = 300.0;
+					y = 200.0;
 
 
-													   bsOut.Write((RakNet::MessageID)NEW_PLAYER);
-													   bsOut.Write(x);
-													   bsOut.Write(y);
-													   peer->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, packet->systemAddress, false);
+					bsOut.Write((RakNet::MessageID)NEW_PLAYER);
+					bsOut.Write(x);
+					bsOut.Write(y);
+					peer->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, packet->systemAddress, false);
 				}
 					break;
 				case PLAYER_LIST:
 				{
-									//playerList.clear();
-									int plSize;
-									RakNet::BitStream bsIn(packet->data, packet->length, false);
-									bsIn.IgnoreBytes(sizeof(RakNet::MessageID));
-									bsIn.Read(plSize);
-									for (int i = 0; i < plSize; i++)
-									{
-										Game& game = Game::GetGame();
-										//game.MoveSpaceShipRight(y);
-										BackBuffer* backBuffer = game.CallBackBuffer();
-										Sprite* pPlayerSprite = backBuffer->CreateSprite("assets\\playership.png");
-										Player* pl = new Player();
-										pl->Initialise(pPlayerSprite);
-										float x, y;
-										bsIn.Read(x);
-										bsIn.Read(y);
+					//playerList.clear();
+					int plSize;
+					RakNet::BitStream bsIn(packet->data, packet->length, false);
+					bsIn.IgnoreBytes(sizeof(RakNet::MessageID));
+					bsIn.Read(plSize);
+					for (int i = 0; i < plSize; i++)
+					{
+						Game& game = Game::GetGame();
+						//game.MoveSpaceShipRight(y);
+						BackBuffer* backBuffer = game.CallBackBuffer();
+						Sprite* pPlayerSprite = backBuffer->CreateSprite("assets\\playership.png");
+						Player* pl = new Player();
+						pl->Initialise(pPlayerSprite);
+						float x, y;
+						bsIn.Read(x);
+						bsIn.Read(y);
 
-										pl->SetPositionX(x);
-										pl->SetPositionY(y);
+						pl->SetPositionX(x);
+						pl->SetPositionY(y);
 
-										playerList[i] = pl;
-									}
+						playerList[i] = pl;
+					}
 
 								
-									serverInitiated = true;
+					serverInitiated = true;
 
 				}
 					break;
@@ -653,6 +903,46 @@ NetworkThread()
 
 				}
 					break;
+				case PLAYER_SHOOT:
+				{
+
+									int i;
+									int dirCheck;
+									float speed;
+									RakNet::BitStream bsIn(packet->data, packet->length, false);
+									bsIn.IgnoreBytes(sizeof(RakNet::MessageID));
+									bsIn.Read(i);
+									bsIn.Read(dirCheck);
+									bsIn.Read(speed);
+
+									//playerID = rs.C_String();
+									Sprite* bulletSprite = backBuffer->CreateSprite("assets\\playerbullet.png");
+
+									Bullet* bullet = new Bullet();
+									if (dirCheck == 0)
+									{
+
+										bullet->SetPositionX(playerList.at(0)->GetPositionX());
+										bullet->SetPositionY(playerList.at(0)->GetPositionY());
+
+										bullet->Initialise(bulletSprite);
+										bullet->SetHorizontalVelocity(speed);
+										playerList.at(i)->pl_bullets.push_back(bullet);
+									}
+									else if (dirCheck == 1)
+									{
+										bullet->SetPositionX(playerList.at(0)->GetPositionX());
+										bullet->SetPositionY(playerList.at(0)->GetPositionY());
+
+										bullet->Initialise(bulletSprite);
+										bullet->SetHorizontalVelocity(speed);
+										playerList.at(i)->pl_bullets.push_back(bullet);
+									}
+
+
+
+				}
+					break;
 				case NET_UPDATE:
 				{
 								   int plSize;
@@ -663,6 +953,10 @@ NetworkThread()
 
 								   for (it_players iterator = playerList.begin(); iterator != playerList.end(); iterator++)
 								   {
+									   
+
+									   
+
 									   float x, y;
 									   bsIn.Read(x);
 									   bsIn.Read(y);
@@ -670,6 +964,22 @@ NetworkThread()
 									   iterator->second->SetPositionX(x);
 									   iterator->second->SetPositionY(y);
 								   }
+
+								   for (it_players iterator = playerList.begin(); iterator != playerList.end(); iterator++)
+								   {
+
+
+									   for each (Bullet* bullet in iterator->second->pl_bullets)
+									   {
+										   float x, y;
+										   bsIn.Read(x);
+										   bsIn.Read(y);
+
+										   bullet->SetPositionX(x);
+										   bullet->SetPositionY(y);
+									   }
+								   }
+
 
 
 				}
@@ -747,7 +1057,8 @@ Game::CallBackBuffer()
 
 
 void
-Game::updateCamera(){
+Game::updateCamera()
+{
 	if (ga_gameState == RUNNING && serverInitiated){
 		float charPosX = playerList[clientID]->GetPositionX();
 		float charPosY = playerList[clientID]->GetPositionY();
@@ -759,4 +1070,59 @@ Game::updateCamera(){
 		m_pBackBuffer->SetCameraY(roomY*screenHeight);
 	}
 
+}
+
+void
+Game::createWalls(int tempRoomX, int tempRoomY)
+{
+	/*	
+		This is for reference to the rectangle that will be created
+		in order to create the collisioning of the walls.
+		Take in x and y co-ordinate for entity and determine whether 
+		it hits any of the walls within the game.
+		 _______        _________
+		|  |_2__| door |__3___|  |
+		| 1|                  |4 |
+		|__|				  |__|
+		door				  door
+		 __					   __
+		|  |				  |  |
+		| 5|____        ______|8 |
+		|__|_6__| door |__7___|__|
+	*/
+
+	if (ga_gameState == RUNNING && serverInitiated){
+		float charPosX = playerList[clientID]->GetPositionX();
+		float charPosY = playerList[clientID]->GetPositionY();
+
+		int roomX = playerList[clientID]->getCurrentRoomX();
+		int roomY = playerList[clientID]->getCurrentRoomY();
+
+		int x_iterator = roomX * 1280;
+		int y_iterator = roomY * 720;
+
+		for (int i = 0; i < 8; i++)
+		{
+			Wall* wall = playerList[clientID]->wa_wallContainer[i];
+
+			int wallX = wall->getWallX();
+			int wallY = wall->getWallY();
+			int wallX1 = wall->getWallX1();
+			int wallY1 = wall->getWallY1();
+
+			if (tempRoomX != roomX)
+			{
+				wall->setWallX(wallX + x_iterator);
+				wall->setWallX1(wallX1 + x_iterator);
+			}
+			if (tempRoomY != roomY)
+			{
+				wall->setWallY(wallY + y_iterator);
+				wall->setWallY1(wallY1 + x_iterator);
+			}
+
+			playerList[clientID]->wa_wallContainer[i] = wall;
+		}
+		
+	}
 }

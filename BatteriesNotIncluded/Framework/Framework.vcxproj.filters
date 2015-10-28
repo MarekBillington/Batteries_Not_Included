@@ -531,6 +531,12 @@
     <ClInclude Include="fmodhelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="bullet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="wall.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="backbuffer.cpp">
@@ -915,6 +921,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="fmodhelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="bullet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="wall.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

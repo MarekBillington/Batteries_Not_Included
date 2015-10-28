@@ -14,6 +14,8 @@ Entity::Entity()
 : m_pSprite(0)
 , m_x(0.0f)
 , m_y(0.0f)
+, m_height(0)
+, m_width(0)
 , m_velocityX(0.0f)
 , m_velocityY(0.0f)
 , m_dead(false)
@@ -33,6 +35,8 @@ Entity::Initialise(Sprite* sprite)
 	m_pSprite = sprite;
 	m_pSprite->SetX(static_cast<int>(m_x));
 	m_pSprite->SetY(static_cast<int>(m_y));
+	m_width = m_pSprite->GetWidth();
+	m_height = m_pSprite->GetHeight();
 	return (true);
 }
 
@@ -42,6 +46,8 @@ Entity::Process(float deltaTime)
 	m_pSprite->SetX(static_cast<int>(m_x));
 	m_pSprite->SetY(static_cast<int>(m_y));
 
+	m_x += m_velocityX*deltaTime;
+	m_y += m_velocityY*deltaTime;
 	// Ex006.2: Generic position update, based upon velocity (and time).
 
 	// Ex006.2: Boundary checking and position capping. 
@@ -122,4 +128,22 @@ void
 Entity::SetVerticalVelocity(float y)
 {
 	m_velocityY = y;
+}
+
+//void
+//Entity::Rectangle(BackBuffer& backbuffer)
+//{
+//	m_pSprite->Rectangle(backbuffer);
+//}
+
+int
+Entity::GetWidth()
+{
+	return (m_width);
+}
+
+int
+Entity::GetHeight()
+{
+	return (m_height);
 }

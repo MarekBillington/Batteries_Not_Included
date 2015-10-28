@@ -18,7 +18,8 @@ bool
 Player::Initialise(Sprite* sprite)
 {
 	m_pSprite = sprite;
-
+	m_width = m_pSprite->GetWidth();
+	m_height = m_pSprite->GetHeight();
 	return (true);
 }
 
@@ -207,4 +208,18 @@ Player::setElectrocuted(int duration){
 void 
 Player::setRepairing(int duration){
 	pl_remainingDurationRepairing = duration;
+}
+
+
+void
+Player::initialiseWalls()
+{
+	wa_wallContainer[0] = new Wall(0, 0, 150, 270);
+	wa_wallContainer[1] = new Wall(0, 0, 550, 30);
+	wa_wallContainer[2] = new Wall(735, 0, 1280, 30);
+	wa_wallContainer[3] = new Wall(1130, 0, 1280, 270);
+	wa_wallContainer[4] = new Wall(0, 450, 150, 720);
+	wa_wallContainer[5] = new Wall(0, 625, 550, 720);
+	wa_wallContainer[6] = new Wall(735, 625, 1280, 720);
+	wa_wallContainer[7] = new Wall(1130, 450, 1280, 720);
 }

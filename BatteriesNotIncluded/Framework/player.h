@@ -7,9 +7,12 @@
 #include "passive.h"
 #include "active.h"
 #include "sprite.h"
+#include "bullet.h"
+#include "wall.h"
 
 
 #include <string>
+#include <vector>
 
 
 class Player	: public Entity
@@ -30,7 +33,6 @@ public:
 	void setName(std::string name);
 
 	//Stats
-
 	int getCurrentRoomX();
 	int getCurrentRoomY();
 	int getHealth();
@@ -44,8 +46,11 @@ public:
 	void getAttackSpeed(int attackSpeed);
 	void getAttackDamage(int attackDamage);
 	void setMovementSpeed(int movementSpeed);
+	void initialiseWalls();
 
 	//Items
+	Wall* wa_wallContainer[8];
+	std::vector<Bullet*> pl_bullets;
 	Weapon* getWeapon();
 	Passive* getPassive(int passiveNum);
 	Active* getActive();

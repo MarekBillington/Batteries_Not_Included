@@ -9,6 +9,7 @@ class Sprite;
 
 class Entity;
 class Player;
+class Wall;
 class GameMap;
 class FMODHelper;
 
@@ -36,7 +37,8 @@ public:
 	void MoveSpaceShipVert(float speed);
 	BackBuffer* CallBackBuffer();
 	void ServerMoveShip();
-	void FireSpaceShipBullet();
+	void FireBulletHorizontal(float speed);
+	void FireBulletVertical(float speed);
 
 	void MoveSpaceShipLeft();
 
@@ -47,6 +49,8 @@ public:
 	void initiateClient();
 
 	void disconnectClient();
+
+	void createWalls(int tempRoomX, int tempRoomY);
 
 	//ryan
 	GameState ga_gameState;
@@ -91,6 +95,9 @@ protected:
 
 
 	//marek
+	bool roomChange;
+	int roomChangeXDir;
+	int roomChangeYDir;
 	//liam
 	//ryan
 	Sprite* ga_mainMenu;

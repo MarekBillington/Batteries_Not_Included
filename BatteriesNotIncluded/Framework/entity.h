@@ -28,11 +28,16 @@ public:
 	float GetPositionY();
 	void  SetPositionY(float y);
 
+	int GetWidth();
+	int GetHeight();
+
 	float GetHorizontalVelocity();
 	void SetHorizontalVelocity(float x); 
 
 	float GetVerticalVelocity();
 	void SetVerticalVelocity(float y);
+
+	void Rectangle(BackBuffer& backbuffer);
 
 protected:
 
@@ -48,6 +53,9 @@ protected:
 
 	float m_x;
 	float m_y;
+
+	int m_width;
+	int m_height;
 
 	float m_velocityX;
 	float m_velocityY;

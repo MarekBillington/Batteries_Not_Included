@@ -31,7 +31,7 @@ public:
 
 	Sprite* CreateSprite(const char* pcFilename);
 
-
+	void DrawWall(int x1, int y1, int x2, int y2);
 
 	//tom
 	void SetCameraX(float px);
