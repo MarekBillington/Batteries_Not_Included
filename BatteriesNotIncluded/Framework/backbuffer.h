@@ -9,6 +9,7 @@
 // Forward Declarations:
 class TextureManager;
 class Sprite;
+class AnimatedSprite;
 struct SDL_Window;
 struct SDL_Renderer;
 
@@ -30,11 +31,13 @@ public:
 	void SetDrawColour(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
 
 	void DrawSprite(Sprite& sprite);
+	void DrawAnimatedSprite(AnimatedSprite& sprite);
 	void DrawRectangle(int x1, int y1, int x2, int y2);
 	void DrawLine(int x1, int y1, int x2, int y2);
 
 	Sprite* CreateSprite(const char* pcFilename);
 	Sprite* CreateText(std::string textureText, SDL_Color textColor, std::string textFont, int textSize);
+	AnimatedSprite* CreateAnimatedSprite(const char* pcFilename);
 
 
 	//tom
