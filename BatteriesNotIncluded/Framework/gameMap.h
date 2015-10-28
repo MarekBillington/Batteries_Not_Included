@@ -10,7 +10,7 @@ class Sprite;
 class GameMap
 {
 public:
-	GameMap();
+	GameMap(BackBuffer* backbuffer);
 	~GameMap();
 
 	void parseFile();
@@ -20,6 +20,17 @@ public:
 
 	Room* getRoomAt(int i, int j);
 	void setRoomAt(int i, int j, Room* value);
+
+	Sprite* BottomWallDoor;
+	Sprite* TopWallDoor;
+	Sprite* RightWallDoor;
+	Sprite* LeftWallDoor;
+
+	Sprite* BottomWallNoDoor;
+	Sprite* TopWallNoDoor;
+	Sprite* RightWallNoDoor;
+	Sprite* LeftWallNoDoor;
+
 
 private:
 	Room* gm_layout[9][9];

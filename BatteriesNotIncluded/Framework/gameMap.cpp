@@ -4,8 +4,17 @@
 #include "game.h"
 #include "backbuffer.h"
 
-GameMap::GameMap()
+GameMap::GameMap(BackBuffer* backbuffer)
 {
+	BottomWallDoor = backbuffer->CreateSprite("assets\\Bottom_Wall_Door.png");
+	TopWallDoor = backbuffer->CreateSprite("assets\\Top_Wall_Door.png");
+	RightWallDoor = backbuffer->CreateSprite("assets\\Right_Wall_Door.png");
+	LeftWallDoor = backbuffer->CreateSprite("assets\\Left_Wall_Door.png");
+
+	BottomWallNoDoor = backbuffer->CreateSprite("assets\\Bottom_Wall_No_Door.png");
+	TopWallNoDoor = backbuffer->CreateSprite("assets\\Top_Wall_No_Door.png");
+	RightWallNoDoor = backbuffer->CreateSprite("assets\\Right_Wall_No_Door.png");
+	LeftWallNoDoor = backbuffer->CreateSprite("assets\\Left_Wall_No_Door.png");
 }
 
 GameMap::~GameMap()
@@ -18,7 +27,7 @@ GameMap::parseFile()
 	
 	gm_layout[9][9];
 	std::ifstream mapfile;
-	mapfile.open("assets\\map_2.txt");
+	mapfile.open("assets\\map_3.txt");
 
 	Game& game = Game::GetGame();
 	BackBuffer* backBuffer = game.CallBackBuffer();
@@ -27,7 +36,6 @@ GameMap::parseFile()
 	{
 		for (size_t j = 0; j < 9; j++)
 		{
-			
 			Sprite* roomSprite;
 			
 			char c;
@@ -35,77 +43,88 @@ GameMap::parseFile()
 			if ((int)c == 48)
 			{
 				gm_room = fourDoors;
-				roomSprite = backBuffer->CreateSprite("assets\\AllDoorsOpenRoom1280.png");
+				roomSprite = backBuffer->CreateSprite("assets\\AllDoorsOpenRoom.png");
 			}
 			else if ((int)c == 49)
 			{
 				gm_room = threeDoorsTopWall;
-				roomSprite = backBuffer->CreateSprite("assets\\AllDoorsOpenRoom1280-2.png");
+				roomSprite = backBuffer->CreateSprite("assets\\threeDoorsTopWallOpen.png");
 			}
 			else if ((int)c == 50)
 			{
 				gm_room = threeDoorsBottomWall;
-				roomSprite = backBuffer->CreateSprite("assets\\AllDoorsOpenRoom1280-3.png");
+				roomSprite = backBuffer->CreateSprite("assets\\threeDoorsBottomWallOpen.png");
 			}
 			else if ((int)c == 51)
 			{
 				gm_room = threeDoorsLeftWall;
-				roomSprite = backBuffer->CreateSprite("assets\\AllDoorsOpenRoom1280-4.png");
+				roomSprite = backBuffer->CreateSprite("assets\\threeDoorsLeftWallOpen.png");
 			}
 			else if ((int)c == 52)
 			{
 				gm_room = threeDoorsRightWall;
+				roomSprite = backBuffer->CreateSprite("assets\\threeDoorsRightWallOpen.png");
 			}
 			else if ((int)c == 53)
 			{
 				gm_room = twoDoorsTopLeftWalls;
+				roomSprite = backBuffer->CreateSprite("assets\\twoDoorsTopLeftWallsOpen.png");
 			}
 			else if ((int)c == 54)
 			{
 				gm_room = twoDoorsTopRightWalls;
+				roomSprite = backBuffer->CreateSprite("assets\\twoDoorsTopRightWallsOpen.png");
 			}
 			else if ((int)c == 55)
 			{
 				gm_room = twoDoorsBottomLeftWalls;
+				roomSprite = backBuffer->CreateSprite("assets\\twoDoorsBottomLeftWallsOpen.png");
 			}
 			else if ((int)c == 56)
 			{
 				gm_room = twoDoorsBottomRightWalls;
+				roomSprite = backBuffer->CreateSprite("assets\\twoDoorsBottomRightWallsOpen.png");
 			}
 			else if ((int)c == 57)
 			{
 				gm_room = twoDoorsSplitHorizontal;
+				roomSprite = backBuffer->CreateSprite("assets\\twoDoorsSplitHorizontalOpen.png");
 			}
 			else if ((int)c == 97)
 			{
 				gm_room = twoDoorsSplitVertical;
+				roomSprite = backBuffer->CreateSprite("assets\\twoDoorsSplitVerticalOpen.png");
 			}
 			else if ((int)c == 98)
 			{
 				gm_room = oneDoorAtBottom;
+				roomSprite = backBuffer->CreateSprite("assets\\oneDoorAtBottomOpen.png");
 			}
 			else if ((int)c == 99)
 			{
 				gm_room = oneDoorAtTop;
+				roomSprite = backBuffer->CreateSprite("assets\\oneDoorAtTopOpen.png");
 			}
 			else if ((int)c == 100)
 			{
 				gm_room = oneDoorOnRight;
+				roomSprite = backBuffer->CreateSprite("assets\\oneDoorOnRightOpen.png");
 			}
 			else if ((int)c == 101)
 			{
 				gm_room = oneDoorOnLeft;
+				roomSprite = backBuffer->CreateSprite("assets\\oneDoorOnLeftOpen.png");
 			}
 			else 
 			{
 				gm_room = blank;
-				roomSprite = backBuffer->CreateSprite("assets\\AllDoorsClosedRoom1280.png");
+				roomSprite = backBuffer->CreateSprite("assets\\Blank.png");
 			}
 
-			Room* room = new Room(i, j, gm_room);
+			Room* room = new Room(j, i, gm_room);
 			room->Initialise(roomSprite);
 			//room->setRoomNumber(gm_room);
-			gm_layout[i][j] = room;
+			gm_layout[j][i] = room;
 		}
 	}
 }

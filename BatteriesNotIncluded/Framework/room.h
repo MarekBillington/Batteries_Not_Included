@@ -42,7 +42,7 @@ public:
 	void Draw(BackBuffer& backBuffer);
 	bool IsCollidingWith(Entity& e);
 
-
+	RoomType getRoomType();
 private:
 	RoomType ro_roomNumber;
 

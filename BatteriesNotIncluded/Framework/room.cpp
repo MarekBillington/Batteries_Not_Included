@@ -157,3 +157,8 @@ Room::createTerrain(RoomType type){
 		
 
 }
+
+RoomType
+Room::getRoomType(){
+	return ro_roomNumber;
+}

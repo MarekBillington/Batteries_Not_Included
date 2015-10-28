@@ -85,6 +85,7 @@ BackBuffer::Initialise(int width, int height)
 			}
 		}
 	}
+	SDL_SetRenderDrawBlendMode(m_pRenderer, SDL_BLENDMODE_BLEND);
 
 	m_pTextureManager = new TextureManager();
 	assert(m_pTextureManager);

@@ -198,7 +198,7 @@ Game::Initialise()
 	ga_hostText2->SetY(350);
 
 	//////////Tom///////////////////////////////////
-	ga_gameMap = new GameMap();	
+	ga_gameMap = new GameMap(m_pBackBuffer);	
 	ga_gameMap->parseFile();
 
 	///////////////////////////////////////////////
@@ -349,6 +349,266 @@ Game::Draw(BackBuffer& backBuffer)
 			Player* e = iterator->second;
 			e->Draw(backBuffer);
 		}
+
+		//Probably a bad way to do this but im tired
+		RoomType type = ga_gameMap->getRoomAt(playerList.at(clientID)->getCurrentRoomX(), playerList.at(clientID)->getCurrentRoomY())->getRoomType();
+		if (type == fourDoors){
+			ga_gameMap->BottomWallDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->BottomWallDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+			ga_gameMap->BottomWallDoor->Draw(backBuffer);
+
+			ga_gameMap->TopWallDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->TopWallDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+			ga_gameMap->TopWallDoor->Draw(backBuffer);
+
+			ga_gameMap->RightWallDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->RightWallDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+			ga_gameMap->RightWallDoor->Draw(backBuffer);
+
+			ga_gameMap->LeftWallDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->LeftWallDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+			ga_gameMap->LeftWallDoor->Draw(backBuffer);
+
+		}
+		else if (type == threeDoorsTopWall){
+			ga_gameMap->BottomWallDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->BottomWallDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+			ga_gameMap->BottomWallDoor->Draw(backBuffer);
+
+			ga_gameMap->TopWallNoDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->TopWallNoDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+			ga_gameMap->TopWallNoDoor->Draw(backBuffer);
+
+			ga_gameMap->RightWallDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->RightWallDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+			ga_gameMap->RightWallDoor->Draw(backBuffer);
+
+			ga_gameMap->LeftWallDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->LeftWallDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+			ga_gameMap->LeftWallDoor->Draw(backBuffer);
+		}
+		else if (type == threeDoorsBottomWall){
+			ga_gameMap->BottomWallNoDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->BottomWallNoDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+			ga_gameMap->BottomWallNoDoor->Draw(backBuffer);
+
+			ga_gameMap->TopWallDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->TopWallDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+			ga_gameMap->TopWallDoor->Draw(backBuffer);
+
+			ga_gameMap->RightWallDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->RightWallDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+			ga_gameMap->RightWallDoor->Draw(backBuffer);
+
+			ga_gameMap->LeftWallDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->LeftWallDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+			ga_gameMap->LeftWallDoor->Draw(backBuffer);
+		}
+		else if (type == threeDoorsLeftWall){
+			ga_gameMap->BottomWallDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->BottomWallDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+			ga_gameMap->BottomWallDoor->Draw(backBuffer);
+
+			ga_gameMap->TopWallDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->TopWallDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+			ga_gameMap->TopWallDoor->Draw(backBuffer);
+
+			ga_gameMap->RightWallDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->RightWallDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+			ga_gameMap->RightWallDoor->Draw(backBuffer);
+
+			ga_gameMap->LeftWallNoDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->LeftWallNoDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+			ga_gameMap->LeftWallNoDoor->Draw(backBuffer);
+		}
+		else if (type == threeDoorsRightWall){
+			ga_gameMap->BottomWallDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->BottomWallDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+			ga_gameMap->BottomWallDoor->Draw(backBuffer);
+
+			ga_gameMap->TopWallDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->TopWallDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+			ga_gameMap->TopWallDoor->Draw(backBuffer);
+
+			ga_gameMap->RightWallNoDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->RightWallNoDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+			ga_gameMap->RightWallNoDoor->Draw(backBuffer);
+
+			ga_gameMap->LeftWallDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->LeftWallDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+			ga_gameMap->LeftWallDoor->Draw(backBuffer);
+		}
+		else if (type == twoDoorsTopLeftWalls){
+			ga_gameMap->BottomWallDoor->Draw(backBuffer);
+			ga_gameMap->BottomWallDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->BottomWallDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+
+			ga_gameMap->TopWallNoDoor->Draw(backBuffer);
+			ga_gameMap->TopWallNoDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->TopWallNoDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+
+			ga_gameMap->RightWallDoor->Draw(backBuffer);
+			ga_gameMap->RightWallDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->RightWallDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+
+			ga_gameMap->LeftWallNoDoor->Draw(backBuffer);
+			ga_gameMap->LeftWallNoDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->LeftWallNoDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+		}
+		else if (type == twoDoorsTopRightWalls){
+			ga_gameMap->BottomWallDoor->Draw(backBuffer);
+			ga_gameMap->BottomWallDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->BottomWallDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+
+			ga_gameMap->TopWallNoDoor->Draw(backBuffer);
+			ga_gameMap->TopWallNoDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->TopWallNoDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+
+			ga_gameMap->RightWallNoDoor->Draw(backBuffer);
+			ga_gameMap->RightWallNoDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->RightWallNoDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+
+			ga_gameMap->LeftWallDoor->Draw(backBuffer);
+			ga_gameMap->LeftWallDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->LeftWallDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+		}
+		else if (type == twoDoorsBottomLeftWalls){
+			ga_gameMap->BottomWallNoDoor->Draw(backBuffer);
+			ga_gameMap->BottomWallNoDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->BottomWallNoDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+
+			ga_gameMap->TopWallDoor->Draw(backBuffer);
+			ga_gameMap->TopWallDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->TopWallDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+
+			ga_gameMap->RightWallDoor->Draw(backBuffer);
+			ga_gameMap->RightWallDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->RightWallDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+
+			ga_gameMap->LeftWallNoDoor->Draw(backBuffer);
+			ga_gameMap->LeftWallNoDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->LeftWallNoDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+		}
+		else if (type == twoDoorsBottomRightWalls){
+			ga_gameMap->BottomWallNoDoor->Draw(backBuffer);
+			ga_gameMap->BottomWallNoDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->BottomWallNoDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+
+			ga_gameMap->TopWallDoor->Draw(backBuffer);
+			ga_gameMap->TopWallDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->TopWallDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+
+			ga_gameMap->RightWallNoDoor->Draw(backBuffer);
+			ga_gameMap->RightWallNoDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->RightWallNoDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+
+			ga_gameMap->LeftWallDoor->Draw(backBuffer);
+			ga_gameMap->LeftWallDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->LeftWallDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+		}
+		else if (type == twoDoorsSplitHorizontal){
+			ga_gameMap->BottomWallNoDoor->Draw(backBuffer);
+			ga_gameMap->BottomWallNoDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->BottomWallNoDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+
+			ga_gameMap->TopWallNoDoor->Draw(backBuffer);
+			ga_gameMap->TopWallNoDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->TopWallNoDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+
+			ga_gameMap->RightWallDoor->Draw(backBuffer);
+			ga_gameMap->RightWallDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->RightWallDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+
+			ga_gameMap->LeftWallDoor->Draw(backBuffer);
+			ga_gameMap->LeftWallDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->LeftWallDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+		}
+		else if (type == twoDoorsSplitVertical){
+			ga_gameMap->BottomWallDoor->Draw(backBuffer);
+			ga_gameMap->BottomWallDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->BottomWallDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+
+			ga_gameMap->TopWallDoor->Draw(backBuffer);
+			ga_gameMap->TopWallDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->TopWallDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+
+			ga_gameMap->RightWallNoDoor->Draw(backBuffer);
+			ga_gameMap->RightWallNoDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->RightWallNoDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+
+			ga_gameMap->LeftWallNoDoor->Draw(backBuffer);
+			ga_gameMap->LeftWallNoDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->LeftWallNoDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+		}
+		else if (type == oneDoorAtBottom){
+			ga_gameMap->BottomWallDoor->Draw(backBuffer);
+			ga_gameMap->BottomWallDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->BottomWallDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+
+			ga_gameMap->TopWallNoDoor->Draw(backBuffer);
+			ga_gameMap->TopWallNoDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->TopWallNoDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+
+			ga_gameMap->RightWallNoDoor->Draw(backBuffer);
+			ga_gameMap->RightWallNoDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->RightWallNoDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+
+			ga_gameMap->LeftWallNoDoor->Draw(backBuffer);
+			ga_gameMap->LeftWallNoDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->LeftWallNoDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+		}
+		else if (type == oneDoorAtTop){
+			ga_gameMap->BottomWallNoDoor->Draw(backBuffer);
+			ga_gameMap->BottomWallNoDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->BottomWallNoDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+
+			ga_gameMap->TopWallDoor->Draw(backBuffer);
+			ga_gameMap->TopWallDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->TopWallDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+
+			ga_gameMap->RightWallNoDoor->Draw(backBuffer);
+			ga_gameMap->RightWallNoDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->RightWallNoDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+
+			ga_gameMap->LeftWallNoDoor->Draw(backBuffer);
+			ga_gameMap->LeftWallNoDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->LeftWallNoDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+		}
+		else if (type == oneDoorOnRight){
+			ga_gameMap->BottomWallNoDoor->Draw(backBuffer);
+			ga_gameMap->BottomWallNoDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->BottomWallNoDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+
+			ga_gameMap->TopWallNoDoor->Draw(backBuffer);
+			ga_gameMap->TopWallNoDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->TopWallNoDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+
+			ga_gameMap->RightWallDoor->Draw(backBuffer);
+			ga_gameMap->RightWallDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->RightWallDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+
+			ga_gameMap->LeftWallNoDoor->Draw(backBuffer);
+			ga_gameMap->LeftWallNoDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->LeftWallNoDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+		}
+		else if (type == oneDoorOnLeft){
+			ga_gameMap->BottomWallNoDoor->Draw(backBuffer);
+			ga_gameMap->BottomWallNoDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->BottomWallNoDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+
+			ga_gameMap->TopWallNoDoor->Draw(backBuffer);
+			ga_gameMap->TopWallNoDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->TopWallNoDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+
+			ga_gameMap->RightWallNoDoor->Draw(backBuffer);
+			ga_gameMap->RightWallNoDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->RightWallNoDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+
+			ga_gameMap->LeftWallDoor->Draw(backBuffer);
+			ga_gameMap->LeftWallDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
+			ga_gameMap->LeftWallDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
+		}
+
 		if (ga_hud != 0)
 			ga_hud->Draw(backBuffer);
 
