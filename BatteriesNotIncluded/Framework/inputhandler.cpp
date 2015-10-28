@@ -185,6 +185,18 @@ InputHandler::ProcessInput(Game& game)
 				{
 					game.initiateClient();
 				}
+				else if (e.key.keysym.sym == SDLK_t)
+				{
+					game.addHealth();
+				}
+				else if (e.key.keysym.sym == SDLK_y)
+				{
+					game.minusHealth();
+				}
+				else if (e.key.keysym.sym == SDLK_3)
+				{
+					game.ga_hud->mapType = !game.ga_hud->mapType;
+				}
 				else if (e.key.keysym.sym == SDLK_o)
 				{
 					game.disconnectClient();

@@ -12,6 +12,8 @@ class Player;
 class GameMap;
 class FMODHelper;
 
+#include "hud.h"
+
 enum GameState
 {
 	MAINMENU,
@@ -63,6 +65,11 @@ public:
 	void updateCamera();
 	FMODHelper* ga_fmodhelp;
 	
+	//james
+	void addHealth();
+	void minusHealth();
+	Hud* ga_hud;
+
 protected:
 	void Process(float deltaTime);
 	void Draw(BackBuffer& backBuffer);

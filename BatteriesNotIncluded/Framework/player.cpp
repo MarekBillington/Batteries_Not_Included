@@ -8,6 +8,9 @@ Player::Player()
 	,pl_currentRoomY(0)
 	,pl_direction(0)
 {
+	pl_currentRoomX = 0;
+	pl_currentRoomY = 0;
+	pl_health = 1000;
 }
 
 

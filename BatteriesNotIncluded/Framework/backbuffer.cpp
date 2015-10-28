@@ -169,6 +169,37 @@ BackBuffer::DrawLine(int x1, int y1, int x2, int y2)
 	SDL_RenderDrawLine(m_pRenderer, x1, y1, x2, y2);
 }
 
+
+void
+BackBuffer::DrawRectangleOutline(int x1, int y1, int x2, int y2)
+{
+	SDL_Rect fillRect;
+
+	fillRect.x = x1;
+	fillRect.y = y1;
+	fillRect.w = x2 - x1;
+	fillRect.h = y2 - y1;
+	SDL_RenderDrawRect(m_pRenderer, &fillRect);
+}
+
+void
+BackBuffer::DrawSpriteHUD(Sprite& sprite)
+{
+	SDL_Rect dest;
+
+	dest.x = sprite.GetX();
+	dest.y = sprite.GetY();
+	dest.w = sprite.GetWidth();
+	dest.h = sprite.GetHeight();
+
+	SDL_RenderCopy(m_pRenderer, sprite.GetTexture()->GetTexture(), 0, &dest);
+}
+
+void
+BackBuffer::SetSpriteAlpha(Sprite* t, unsigned char a){
+	SDL_SetTextureAlphaMod(t->GetTexture()->GetTexture(), a);
+}
+
 void 
 BackBuffer::LogSDLError()
 {

@@ -45,6 +45,12 @@ public:
 	void SetCameraY(float py);
 	float GetCameraX();
 	float GetCameraY();
+
+	//James
+	void DrawRectangleOutline(int x1, int y1, int x2, int y2);
+	void DrawSpriteHUD(Sprite& sprite);
+	void SetSpriteAlpha(Sprite* t, unsigned char b);
+
 	
 protected:
 	void LogSDLError();

@@ -242,6 +242,7 @@
     <ClInclude Include="fmodhelper.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="gameMap.h" />
+    <ClInclude Include="hud.h" />
     <ClInclude Include="inputhandler.h" />
     <ClInclude Include="logmanager.h" />
     <ClInclude Include="passive.h" />
@@ -254,7 +255,7 @@
     <ClInclude Include="weapon.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\..\..\Liam%27s Laptop\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\Framework\animatedsprite.cpp" />
+    <ClCompile Include="animatedsprite.cpp" />
     <ClCompile Include="..\RakNet-master\Source\Base64Encoder.cpp" />
     <ClCompile Include="..\RakNet-master\Source\BitStream.cpp" />
     <ClCompile Include="..\RakNet-master\Source\CCRakNetSlidingWindow.cpp" />
@@ -372,6 +373,7 @@
     <ClCompile Include="fmodhelper.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="gameMap.cpp" />
+    <ClCompile Include="hud.cpp" />
     <ClCompile Include="inputhandler.cpp" />
     <ClCompile Include="logmanager.cpp" />
     <ClCompile Include="main.cpp" />
