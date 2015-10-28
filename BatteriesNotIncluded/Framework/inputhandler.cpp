@@ -203,19 +203,19 @@ InputHandler::ProcessInput(Game& game)
 				}
 				else if (e.key.keysym.sym == SDLK_d)
 				{
-					game.MoveSpaceShipHor(100);
+					game.MoveSpaceShipHor(300);
 				}
 				else if (e.key.keysym.sym == SDLK_a)
 				{
-					game.MoveSpaceShipHor(-100);
+					game.MoveSpaceShipHor(-300);
 				}
 				else if (e.key.keysym.sym == SDLK_w)
 				{
-					game.MoveSpaceShipVert(-100);
+					game.MoveSpaceShipVert(-300);
 				}
 				else if (e.key.keysym.sym == SDLK_s)
 				{
-					game.MoveSpaceShipVert(100);
+					game.MoveSpaceShipVert(300);
 				}
 			}
 			else if (e.type == SDL_KEYUP){

@@ -1,14 +1,45 @@
-﻿Build started 28/10/2015 10:22:45 PM.
+﻿Build started 29/10/2015 3:23:09 AM.
      1>Project "C:\Users\tomcl\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\Framework\Framework.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\tomcl\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\\SDL\SDL2_ttf-2.0.12\include\\" /I"C:\Users\tomcl\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\\SDL\SDL2-2.0.3\include\\" /I"C:\Users\tomcl\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\\SDL\SDL2_image-2.0.0\include" /I"C:\Users\tomcl\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\\RakNet-master\Source" /IC:\Users\tomcl\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\\FMOD\inc /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt entity.cpp hud.cpp
-         hud.cpp
-     1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\hud.cpp(41): warning C4018: '>' : signed/unsigned mismatch
-     1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\hud.cpp(75): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\hud.cpp(76): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\hud.cpp(106): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\hud.cpp(107): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-         entity.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\tomcl\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\\SDL\SDL2_ttf-2.0.12\include\\" /I"C:\Users\tomcl\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\\SDL\SDL2-2.0.3\include\\" /I"C:\Users\tomcl\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\\SDL\SDL2_image-2.0.0\include" /I"C:\Users\tomcl\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\\RakNet-master\Source" /IC:\Users\tomcl\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\\FMOD\inc /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt game.cpp gameMap.cpp room.cpp wall.cpp
+         wall.cpp
+     1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\wall.cpp(26): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\wall.cpp(27): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\wall.cpp(42): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\wall.cpp(46): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\wall.cpp(50): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\wall.cpp(54): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\wall.cpp(61): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\wall.cpp(65): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\wall.cpp(69): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\wall.cpp(73): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+         room.cpp
+     1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\room.cpp(12): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\room.cpp(13): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\room.cpp(19): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\room.cpp(20): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\room.cpp(21): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\room.cpp(24): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\room.cpp(25): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\room.cpp(26): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\room.cpp(29): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\room.cpp(30): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\room.cpp(31): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\room.cpp(34): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\room.cpp(35): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\room.cpp(36): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\room.cpp(114): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\room.cpp(117): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\room.cpp(120): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+         Generating Code...
+         Compiling...
+         gameMap.cpp
+         game.cpp
+     1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\game.cpp(573): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\game.cpp(584): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\game.cpp(585): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\game.cpp(1168): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\game.cpp(1169): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
          Generating Code...
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\tomcl\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\Debug\Framework.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Users\tomcl\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\\SDL\SDL2-2.0.3\lib\x86" /LIBPATH:"C:\Users\tomcl\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\\SDL\SDL2_image-2.0.0\lib\x86" /LIBPATH:"C:\Users\tomcl\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\\SDL\SDL2_ttf-2.0.12\lib\x86" /LIBPATH:C:\Users\tomcl\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\\FMOD\lib SDL2.lib SDL2main.lib SDL2_image.lib SDL2_ttf.lib fmodl_vc.lib ws2_32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\tomcl\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\Debug\Framework.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\tomcl\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\Debug\Framework.lib" /MACHINE:X86 Debug\animatedsprite.obj
@@ -140,10 +171,11 @@
          Debug\terrain.obj
          Debug\texture.obj
          Debug\texturemanager.obj
+         Debug\wall.obj
          Debug\weapon.obj
          Framework.vcxproj -> C:\Users\tomcl\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\Debug\Framework.exe
      1>Done Building Project "C:\Users\tomcl\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\Framework\Framework.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.75
+Time Elapsed 00:00:02.66

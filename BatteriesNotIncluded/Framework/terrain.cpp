@@ -38,35 +38,24 @@ Terrain::IsCollidingWith(Entity& e){
 	
 	eWidth = e.getWidth();
 	eHeight = e.getHeight() / 2;
-		
-	
-
 	float terX = m_x;
 	float terY = m_y;
 	float entX = e.GetPositionX()/* + (eWidth /2)*/;
 	float entY = e.GetPositionY() + eHeight;
 
 
-	/*bool checkCollide(int x, int y, int oWidth, int oHeight, int xTwo, int yTwo, int oTwoWidth, int oTwoHeight)
-	{
-		if (x + oWidth < xTwo || x > xTwo + oTwoWidth) return false;
-		if (y + oHeight < yTwo || y > yTwo + oTwoHeight) return false;
 
-		return true;
-	}*/
 
 	int terWidth = m_pSprite->GetWidth();
 	int terHeight = m_pSprite->GetHeight();
 
-	if (terX + terHeight < entX || terX > entX + eWidth){
+	if (terX + terWidth < entX || terX > entX + eWidth){
 		return false;
 	}
 	if (terY + terHeight < entY || terY > entY + eHeight){
 		return false;
 	}
 
-	/*if ((terX < entX && terX + 80 > entX && terY < entY && terY + 80 > entY) || () || () || ())
-	{*/
 		
 	if (te_terrain == SPIKE){
 		e.setHealth(e.getHealth()-5);
