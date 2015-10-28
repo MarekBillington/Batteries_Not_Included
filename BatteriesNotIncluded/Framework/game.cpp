@@ -1006,7 +1006,7 @@ NetworkThread()
 
 									if (dirCheck == 0)
 									{
-										
+										playerList.at(i)->SetHorizontalVelocity(speed);
 									}
 									//	e->SetHorizontalVelocity(speed);
 									else if (dirCheck == 1)

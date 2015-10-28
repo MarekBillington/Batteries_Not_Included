@@ -45,6 +45,15 @@ Player::Process(float deltaTime)
 	m_pSprite->setLocation(pl_direction);
 	m_x += m_velocityX*deltaTime;
 	m_y += m_velocityY*deltaTime;
+	
+	if (m_velocityX == 0 && m_velocityY == 0)
+	{
+		m_pSprite->SetFrameSpeed(50.0);
+	}
+	else
+	{
+		m_pSprite->SetFrameSpeed(0.3);
+	}
 
 	if (m_velocityX < 0)
 	{
