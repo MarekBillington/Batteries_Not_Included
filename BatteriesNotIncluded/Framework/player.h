@@ -7,12 +7,13 @@
 #include "passive.h"
 #include "active.h"
 #include "sprite.h"
+#include "animatedsprite.h"
 
 
 #include <string>
 
 
-class Player	: public Entity
+class Player : public Entity
 {
 public:
 	Player();
@@ -21,7 +22,7 @@ public:
 
 
 	//Processing
-	bool Initialise(Sprite* sprite);
+	bool Initialise(AnimatedSprite* sprite);
 	void Process(float deltaTime);
 	void Draw(BackBuffer& backBuffer);
 
@@ -44,6 +45,7 @@ public:
 	void getAttackSpeed(int attackSpeed);
 	void getAttackDamage(int attackDamage);
 	void setMovementSpeed(int movementSpeed);
+	void setDirection(int direction);
 
 	//Items
 	Weapon* getWeapon();
@@ -68,6 +70,8 @@ public:
 
 
 private:
+	AnimatedSprite* m_pSprite;
+
 	std::string  pl_name;
 
 	int pl_currentRoomX;
@@ -77,6 +81,7 @@ private:
 	int pl_attackSpeed;
 	int pl_attackDamage;
 	int pl_movementSpeed;
+	int pl_direction;
 
 	Weapon* pl_weapon;
 

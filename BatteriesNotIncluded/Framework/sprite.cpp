@@ -104,6 +104,18 @@ Sprite::GetTexture()
 	return (m_pTexture);
 }
 
+void
+Sprite::SetWidth(float width)
+{
+	m_width = width;
+}
+
+void
+Sprite::SetHeight(float height)
+{
+	m_height = height;
+}
+
 int 
 Sprite::GetWidth() const
 {

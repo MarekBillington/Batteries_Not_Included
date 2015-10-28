@@ -17,6 +17,9 @@ public:
 
 	bool Initialise(Texture& texture);
 	void AddFrame(int x);
+	void setLocation(int y);
+
+	int getLocation();
 
 	void Process(float deltaTime);
 	void Draw(BackBuffer& backbuffer);
@@ -45,6 +48,7 @@ public:
 protected:
 	// Ex007.1: Add a field, the container for frame coordinates.
 	std::vector<int> frameCoordinates;
+	int currentFrameSelection;
 
 	float m_frameSpeed;
 	int m_frameWidth;

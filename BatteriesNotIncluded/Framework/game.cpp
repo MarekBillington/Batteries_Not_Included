@@ -22,6 +22,7 @@
 #include "inputhandler.h"
 #include "logmanager.h"
 #include "sprite.h"
+#include "animatedsprite.h"
 
 #include "gameMap.h"
 #include "entity.h"
@@ -363,6 +364,8 @@ Game::MoveSpaceShipHor(float speed)
 			peer->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, iterator->second, false);
 		}
 
+		
+
 		playerList.at(0)->SetHorizontalVelocity(speed);
 	}
 	// Ex006.2: Tell the player ship to move left.  
@@ -387,6 +390,9 @@ Game::MoveSpaceShipVert(float speed)
 			bsOut.Write(speed);
 			peer->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, iterator->second, false);
 		}
+
+		
+
 			playerList.at(0)->SetVerticalVelocity(speed);
 	}
 
@@ -556,7 +562,7 @@ Game::startGame()
 		Game& game = Game::GetGame();
 		//game.MoveSpaceShipRight(y);
 		BackBuffer* backBuffer = game.CallBackBuffer();
-		Sprite* pPlayerSprite = backBuffer->CreateSprite("assets\\playership.png");
+		AnimatedSprite* pPlayerSprite = backBuffer->CreateAnimatedSprite("assets\\playerIdle.png");
 
 
 		Player* player = new Player();
@@ -574,7 +580,7 @@ Game::startGame()
 			float roomY = static_cast <float> (rand()) / static_cast <float> (RAND_MAX / 400.0);
 			float x = static_cast <float> (rand()) / static_cast <float> (RAND_MAX / 400.0);
 			float y = static_cast <float> (rand()) / static_cast <float> (RAND_MAX / 400.0);
-			Sprite* pPlayerSprite = backBuffer->CreateSprite("assets\\playership.png");
+			AnimatedSprite* pPlayerSprite = backBuffer->CreateAnimatedSprite("assets\\playerIdle.png");
 			Player* pl = new Player();
 			pl->Initialise(pPlayerSprite);
 			pl->SetPositionX(x);
@@ -751,7 +757,7 @@ NetworkThread()
 							
 								   
 								  
-								   Sprite* pPlayerSprite = backBuffer->CreateSprite("assets\\playership.png");
+								   AnimatedSprite* pPlayerSprite = backBuffer->CreateAnimatedSprite("assets\\playerIdle.png");
 								   Player* pl = new Player();
 								   pl->Initialise(pPlayerSprite);
 								   pl->SetPositionX(x);
@@ -817,10 +823,17 @@ NetworkThread()
 
 
 									if (dirCheck == 0)
+									{
+										
 										playerList.at(i)->SetHorizontalVelocity(speed);
+									}
 									//	e->SetHorizontalVelocity(speed);
 									else if (dirCheck == 1)
+									{
+										
 										playerList.at(i)->SetVerticalVelocity(speed);
+									}
+										
 				}
 					break;
 				case NET_UPDATE:
@@ -961,7 +974,7 @@ NetworkThread()
 										
 										//game.MoveSpaceShipRight(y);
 										BackBuffer* backBuffer = game.CallBackBuffer();
-										Sprite* pPlayerSprite = backBuffer->CreateSprite("assets\\playership.png");
+										AnimatedSprite* pPlayerSprite = backBuffer->CreateAnimatedSprite("assets\\playerIdle.png");
 										Player* pl = new Player();
 										pl->Initialise(pPlayerSprite);
 										float x, y;
@@ -991,11 +1004,16 @@ NetworkThread()
 									bsIn.Read(dirCheck);
 									bsIn.Read(speed);
 
-									//playerID = rs.C_String();
 									if (dirCheck == 0)
-										playerList.at(i)->SetHorizontalVelocity(speed);
+									{
+										
+									}
+									//	e->SetHorizontalVelocity(speed);
 									else if (dirCheck == 1)
+									{
+										
 										playerList.at(i)->SetVerticalVelocity(speed);
+									}
 
 
 
@@ -1043,7 +1061,7 @@ NetworkThread()
 											  Game& game = Game::GetGame();
 											  //game.MoveSpaceShipRight(y);
 											  BackBuffer* backBuffer = game.CallBackBuffer();
-											  Sprite* pPlayerSprite = backBuffer->CreateSprite("assets\\playership.png");
+											  AnimatedSprite* pPlayerSprite = backBuffer->CreateAnimatedSprite("assets\\playerIdle.png");
 											  Player* pl = new Player();
 											  pl->Initialise(pPlayerSprite);
 											  float x, y;

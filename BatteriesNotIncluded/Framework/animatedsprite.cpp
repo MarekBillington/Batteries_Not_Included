@@ -28,7 +28,9 @@ AnimatedSprite::Initialise(Texture& texture)
 	m_frameWidth = 0;
 	m_frameSpeed = 0;
 
-	m_loop = false;
+	currentFrameSelection = 0;
+
+	m_loop = true;
 	m_paused = false;
 	m_animating = true;
 
@@ -42,9 +44,23 @@ AnimatedSprite::Initialise(Texture& texture)
 void
 AnimatedSprite::AddFrame(int x)
 {
-	// Ex007.1: Add the x coordinate to the frame coordinate container.
+
 	frameCoordinates.push_back(x);
 }
+
+void
+AnimatedSprite::setLocation(int y)
+{
+	currentFrameSelection = y;
+}
+
+int
+AnimatedSprite::getLocation()
+{
+	return (currentFrameSelection);
+}
+
+
 
 void
 AnimatedSprite::Process(float deltaTime)

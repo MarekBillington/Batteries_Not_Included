@@ -1,9 +1,12 @@
 
 #include"player.h"
 
+#include <cassert>
+
 Player::Player()
 	:pl_currentRoomX(0)
 	,pl_currentRoomY(0)
+	,pl_direction(0)
 {
 }
 
@@ -15,8 +18,20 @@ Player::~Player()
 
 
 bool
-Player::Initialise(Sprite* sprite)
+Player::Initialise(AnimatedSprite* sprite)
 {
+	int length = 0;
+	while (length < 2){
+		length++;
+		sprite->AddFrame(length);
+	}
+
+	sprite->SetFrameSpeed(0.3);
+	sprite->SetFrameWidth(114.0);
+	sprite->SetHeight(112.0);
+
+
+	assert(sprite);
 	m_pSprite = sprite;
 
 	return (true);
@@ -27,9 +42,29 @@ Player::Process(float deltaTime)
 {
 	m_pSprite->SetX(static_cast<int>(m_x));
 	m_pSprite->SetY(static_cast<int>(m_y));
-
+	m_pSprite->setLocation(pl_direction);
 	m_x += m_velocityX*deltaTime;
 	m_y += m_velocityY*deltaTime;
+
+	if (m_velocityX < 0)
+	{
+		pl_direction = 1;
+	}
+	else if (m_velocityX > 0)
+	{
+		pl_direction = 2;
+	}
+
+	if (m_velocityY < 0)
+	{
+		pl_direction = 3;
+	}
+	else if (m_velocityY > 0)
+	{
+		pl_direction = 0;
+	}
+
+	m_pSprite->Process(deltaTime);
 
 	pl_currentRoomX = (m_x / 1280);
 	pl_currentRoomY = (m_y / 720);
@@ -39,6 +74,7 @@ Player::Process(float deltaTime)
 void
 Player::Draw(BackBuffer& backBuffer)
 {
+	assert(m_pSprite);
 	m_pSprite->Draw(backBuffer);
 }
 
@@ -102,6 +138,12 @@ Player::getMovementSpeed(){
 void 
 Player::setMovementSpeed(int movementSpeed){
 	pl_movementSpeed = movementSpeed;
+}
+
+void
+Player::setDirection(int direction)
+{
+	pl_direction = direction;
 }
 
 

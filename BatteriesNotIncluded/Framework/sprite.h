@@ -30,6 +30,9 @@ public:
 	void SetCenter(int x, int y);
 	void SetHandleCenter();
 
+	void SetWidth(float width);
+	void SetHeight(float height);
+
 	int GetWidth() const;
 	int GetHeight() const;
 
