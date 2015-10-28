@@ -28,6 +28,7 @@ public:
 	void SetFrameWidth(int w);
 
 	int GetFrame();
+	int GetWidth();
 
 	void Pause();
 	bool IsPaused();

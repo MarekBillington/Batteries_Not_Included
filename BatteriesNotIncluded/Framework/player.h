@@ -34,14 +34,14 @@ public:
 
 	int getCurrentRoomX();
 	int getCurrentRoomY();
-	int getHealth();
+	//int getHealth();
 	int getAttackSpeed();
 	int getAttackDamage();
 	int getMovementSpeed();
 
 	void setCurrentRoomX(int x);
 	void setCurrentRoomY(int y);
-	void setHealth(int health);
+	//void setHealth(int health);
 	void getAttackSpeed(int attackSpeed);
 	void getAttackDamage(int attackDamage);
 	void setMovementSpeed(int movementSpeed);
@@ -67,7 +67,10 @@ public:
 	void setElectrocuted(int duration);
 	void setRepairing(int duration);
 
-
+	int getWidth();
+	int getHeight();
+	bool isPlayer();
+	//AnimatedSprite* getSprite();
 
 private:
 	AnimatedSprite* m_pSprite;
@@ -77,7 +80,7 @@ private:
 	int pl_currentRoomX;
 	int pl_currentRoomY;
 
-	int pl_health;
+	//int pl_health;
 	int pl_attackSpeed;
 	int pl_attackDamage;
 	int pl_movementSpeed;

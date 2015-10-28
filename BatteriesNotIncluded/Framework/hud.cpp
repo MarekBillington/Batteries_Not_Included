@@ -27,8 +27,10 @@ Hud::Draw(BackBuffer& backBuffer)
 	int bar = health % 100;
 	int numBatteries = (health - bar) / 100;
 	if (bar == 0){
-		numBatteries--;
-		bar = 100;
+//		if (numBatteries > 0){
+			numBatteries--;
+			bar = 100;
+//		}
 	}
 
 	//draw health bar

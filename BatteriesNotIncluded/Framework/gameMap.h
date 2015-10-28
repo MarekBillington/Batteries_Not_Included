@@ -4,27 +4,7 @@
 
 class BackBuffer;
 class Sprite;
-class Room;
-
-enum RoomType
-{
-	fourDoors,
-	threeDoorsTopWall,
-	threeDoorsBottomWall,
-	threeDoorsLeftWall,
-	threeDoorsRightWall,
-	twoDoorsTopLeftWalls,
-	twoDoorsTopRightWalls,
-	twoDoorsBottomLeftWalls,
-	twoDoorsBottomRightWalls,
-	twoDoorsSplitHorizontal,
-	twoDoorsSplitVertical,
-	oneDoorAtBottom,
-	oneDoorAtTop,
-	oneDoorOnRight,
-	oneDoorOnLeft,
-	blank
-};
+#include "room.h"
 
 
 class GameMap

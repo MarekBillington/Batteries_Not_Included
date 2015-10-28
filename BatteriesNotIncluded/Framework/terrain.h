@@ -15,7 +15,7 @@ enum TerrainType
 class Terrain : public Entity
 {
 public:
-	Terrain(TerrainType terrain, int x, int y);
+	Terrain(TerrainType terrain, int x, int y, BackBuffer* backbuffer);
 	~Terrain();
 
 	bool IsCollidingWith(Entity& e);

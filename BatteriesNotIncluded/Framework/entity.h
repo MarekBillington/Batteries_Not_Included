@@ -35,7 +35,15 @@ public:
 	void SetVerticalVelocity(float y);
 
 	Sprite* getSprite();
+	int getWidth();
+	int getHeight();
+	void setWidth(int w);
+	void setHeight(int h);
 
+	bool isPlayer();
+	
+	int getHealth();
+	void setHealth(int health);
 protected:
 
 private:
@@ -55,7 +63,10 @@ protected:
 	float m_velocityY;
 
 	bool m_dead;
+	int en_width;
+	int en_height;
 
+	int en_health;
 private:
 
 };

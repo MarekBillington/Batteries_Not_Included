@@ -257,7 +257,7 @@ Game::Process(float deltaTime)
 	if (isServer)
 	{
 		serverCounter += deltaTime;
-		if (serverCounter > 0.1)
+		if (serverCounter > 0.016)
 		{
 			RakNet::BitStream bsOut;
 			bsOut.Write((RakNet::MessageID)NET_UPDATE);
@@ -267,7 +267,9 @@ Game::Process(float deltaTime)
 			for (it_players iterator = playerList.begin(); iterator != playerList.end(); iterator++)
 			{
 				Player* e = (Player*)iterator->second;
-
+				if (ga_gameState == RUNNING){
+					ga_gameMap->getRoomAt(e->getCurrentRoomX(), e->getCurrentRoomY())->IsCollidingWith(*e);
+				}
 				bsOut.Write(e->GetPositionX());
 				bsOut.Write(e->GetPositionY());
 			}

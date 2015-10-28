@@ -11,12 +11,13 @@
 #include <cassert>
 
 Entity::Entity()
-: m_pSprite(0)
-, m_x(0.0f)
-, m_y(0.0f)
-, m_velocityX(0.0f)
-, m_velocityY(0.0f)
-, m_dead(false)
+	: m_pSprite(0)
+	, m_x(0.0f)
+	, m_y(0.0f)
+	, m_velocityX(0.0f)
+	, m_velocityY(0.0f)
+	, m_dead(false)
+	, en_health(0)
 {
 
 }
@@ -127,4 +128,50 @@ Entity::SetVerticalVelocity(float y)
 Sprite* 
 Entity::getSprite(){
 	return m_pSprite;
+}
+
+
+bool
+Entity::isPlayer(){
+	return false;
+}
+
+int
+Entity::getWidth(){
+	return en_width;
+}
+
+int
+Entity::getHeight(){
+	return en_height;
+}
+
+
+void
+Entity::setWidth(int w){
+	en_width = w;
+}
+
+void
+Entity::setHeight(int h){
+	en_height = h;
+}
+
+
+
+int
+Entity::getHealth(){
+	return en_health;
+}
+
+void
+Entity::setHealth(int health){
+	//if (en_health - health < 1){
+		//en_health = 0;
+		//SetDead(true);
+	//}
+	//else{
+		en_health = health;
+	//}	
+	
 }

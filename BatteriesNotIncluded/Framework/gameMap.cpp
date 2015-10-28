@@ -1,5 +1,5 @@
 #include "gameMap.h"
-#include "room.h"
+//#include "room.h"
 #include <fstream>
 #include "game.h"
 #include "backbuffer.h"
@@ -102,9 +102,9 @@ GameMap::parseFile()
 				roomSprite = backBuffer->CreateSprite("assets\\AllDoorsClosedRoom1280.png");
 			}
 
-			Room* room = new Room(i,j);
+			Room* room = new Room(i, j, gm_room);
 			room->Initialise(roomSprite);
-			room->setRoomNumber(gm_room);
+			//room->setRoomNumber(gm_room);
 			gm_layout[i][j] = room;
 		}
 	}

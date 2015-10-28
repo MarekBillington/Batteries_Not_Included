@@ -7,10 +7,9 @@ Player::Player()
 	:pl_currentRoomX(0)
 	,pl_currentRoomY(0)
 	,pl_direction(0)
+	
 {
-	pl_currentRoomX = 0;
-	pl_currentRoomY = 0;
-	pl_health = 1000;
+	setHealth(1000);
 }
 
 
@@ -31,8 +30,9 @@ Player::Initialise(AnimatedSprite* sprite)
 
 	sprite->SetFrameSpeed(0.3);
 	sprite->SetFrameWidth(114.0);
+	setWidth(114);
 	sprite->SetHeight(112.0);
-
+	setHeight(112);
 
 	assert(sprite);
 	m_pSprite = sprite;
@@ -111,16 +111,16 @@ Player::setCurrentRoomY(int y){
 	pl_currentRoomY = y;
 }
 
-
-int 
-Player::getHealth(){
-	return pl_health;
-}
-
-void 
-Player::setHealth(int health){
-	pl_health = health;
-}
+//
+//int 
+//Player::getHealth(){
+//	return pl_health;
+//}
+//
+//void 
+//Player::setHealth(int health){
+//	pl_health = health;
+//}
 
 int 
 Player::getAttackSpeed(){
@@ -261,4 +261,20 @@ Player::setElectrocuted(int duration){
 void 
 Player::setRepairing(int duration){
 	pl_remainingDurationRepairing = duration;
+}
+
+
+int
+Player::getWidth(){
+	return en_height;
+}
+
+int
+Player::getHeight(){
+	return en_height;
+}
+
+bool
+Player::isPlayer(){
+	return true;
 }
