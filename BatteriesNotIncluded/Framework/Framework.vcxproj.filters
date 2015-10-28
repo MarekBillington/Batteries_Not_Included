@@ -534,12 +534,6 @@
     <ClInclude Include="animatedsprite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="hud.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="wall.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="backbuffer.cpp">
@@ -926,13 +920,7 @@
     <ClCompile Include="fmodhelper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="animatedsprite.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="hud.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="wall.cpp">
+    <ClCompile Include="..\..\..\..\..\..\Liam%27s Laptop\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\Framework\animatedsprite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

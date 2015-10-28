@@ -33,81 +33,69 @@ GameMap::parseFile()
 			char c;
 			mapfile >> c;
 			if ((int)c == 48)
-			{//0
+			{
 				gm_room = fourDoors;
 				roomSprite = backBuffer->CreateSprite("assets\\AllDoorsOpenRoom1280.png");
 			}
 			else if ((int)c == 49)
-			{//1
+			{
 				gm_room = threeDoorsTopWall;
 				roomSprite = backBuffer->CreateSprite("assets\\AllDoorsOpenRoom1280-2.png");
 			}
 			else if ((int)c == 50)
-			{//2
+			{
 				gm_room = threeDoorsBottomWall;
 				roomSprite = backBuffer->CreateSprite("assets\\AllDoorsOpenRoom1280-3.png");
 			}
 			else if ((int)c == 51)
-			{//3
+			{
 				gm_room = threeDoorsLeftWall;
 				roomSprite = backBuffer->CreateSprite("assets\\AllDoorsOpenRoom1280-4.png");
 			}
 			else if ((int)c == 52)
-			{//4
+			{
 				gm_room = threeDoorsRightWall;
 			}
 			else if ((int)c == 53)
-			{//5
+			{
 				gm_room = twoDoorsTopLeftWalls;
 			}
 			else if ((int)c == 54)
-			{//6
+			{
 				gm_room = twoDoorsTopRightWalls;
 			}
 			else if ((int)c == 55)
-			{//7
+			{
 				gm_room = twoDoorsBottomLeftWalls;
 			}
 			else if ((int)c == 56)
-			{//8
+			{
 				gm_room = twoDoorsBottomRightWalls;
 			}
 			else if ((int)c == 57)
-			{//9
+			{
 				gm_room = twoDoorsSplitHorizontal;
 			}
 			else if ((int)c == 97)
-			{//a
+			{
 				gm_room = twoDoorsSplitVertical;
 			}
 			else if ((int)c == 98)
-			{//b
+			{
 				gm_room = oneDoorAtBottom;
 			}
 			else if ((int)c == 99)
-			{//c
+			{
 				gm_room = oneDoorAtTop;
 			}
 			else if ((int)c == 100)
-			{//d
+			{
 				gm_room = oneDoorOnRight;
 			}
 			else if ((int)c == 101)
-			{//e
+			{
 				gm_room = oneDoorOnLeft;
 			}
-			//else if ((int)c == 101)
-			//{//T for treasure
-			//	gm_room = oneDoorOnLeft;
-			//}
-			//else if ((int)c == 101)
-			//{//e
-			//	gm_room = oneDoorOnLeft;
-			//}
-			//else if ((int)c == 101)
-			//{//e
-			//	gm_room = oneDoorOnLeft;
-			//}
 			else 
 			{
 				gm_room = blank;

@@ -3,7 +3,6 @@
 
 #include "entity.h"
 #include "terrain.h"
-#include "wall.h"
 #include <vector>
 
 enum RoomType
@@ -43,13 +42,11 @@ public:
 	void Draw(BackBuffer& backBuffer);
 	bool IsCollidingWith(Entity& e);
 
-	void createWall(int x, int y, int width, int height, Side side);
 
 private:
 	RoomType ro_roomNumber;
 
 	std::vector<Terrain*> ro_terrainContainer;
-	std::vector<Wall*> ro_wallContainer;
 	//std::vector<Enemy*> enemyContainer;
 };
 

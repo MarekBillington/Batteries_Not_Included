@@ -252,7 +252,6 @@
     <ClInclude Include="terrain.h" />
     <ClInclude Include="texture.h" />
     <ClInclude Include="texturemanager.h" />
-    <ClInclude Include="wall.h" />
     <ClInclude Include="weapon.h" />
   </ItemGroup>
   <ItemGroup>
@@ -385,7 +384,6 @@
     <ClCompile Include="terrain.cpp" />
     <ClCompile Include="texture.cpp" />
     <ClCompile Include="texturemanager.cpp" />
-    <ClCompile Include="wall.cpp" />
     <ClCompile Include="weapon.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -24,34 +24,32 @@ Hud::Draw(BackBuffer& backBuffer)
 {
 	//get health, find how much is bar and how much is batteries
 	int health = hu_player->getHealth();
-	if (health > 0){
-		int bar = health % 100;
-		int numBatteries = (health - bar) / 100;
-		if (bar == 0){
+	int bar = health % 100;
+	int numBatteries = (health - bar) / 100;
+	if (bar == 0){
+//		if (numBatteries > 0){
 			numBatteries--;
 			bar = 100;
-		}
-
-
-		//draw health bar
-		backBuffer.SetDrawColour(255, 60, 60, 150);
-		backBuffer.DrawRectangle(5, 5, 5 + (bar * 5), 25);
-
-		//setup batteries
-		while (numBatteries > hu_batteries.size()){
-			Sprite* temp = backBuffer.CreateSprite("assets\\battery.png");
-			backBuffer.SetSpriteAlpha(temp, 150);
-			hu_batteries.push_back(temp);
-
-		}
-		//draw batteries
-		for (int i = 0; i < numBatteries; i++){
-			hu_batteries.at(i)->SetX(5 + (i * 27));
-			hu_batteries.at(i)->SetY(35);
-			backBuffer.DrawSpriteHUD((*hu_batteries.at(i)));
-
-		}
+//		}
 	}
+
+	//draw health bar
+	backBuffer.SetDrawColour(255, 60, 60, 150);
+	backBuffer.DrawRectangle(5, 5, 5 + (bar * 5), 25);
+
+	//setup batteries
+	while (numBatteries > hu_batteries.size()){
+		Sprite* temp = backBuffer.CreateSprite("assets\\battery.png");
+		backBuffer.SetSpriteAlpha(temp, 150);
+		hu_batteries.push_back(temp);
+	}
+	//draw batteries
+	for (int i = 0; i < numBatteries; i++){
+		hu_batteries.at(i)->SetX(5 + (i * 27));
+		hu_batteries.at(i)->SetY(35);
+		backBuffer.DrawSpriteHUD((*hu_batteries.at(i)));
+	}
+
 
 	//set up for both types of minimaps
 	int roomX = hu_player->getCurrentRoomX();
