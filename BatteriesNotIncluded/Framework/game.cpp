@@ -317,13 +317,7 @@ Game::Draw(BackBuffer& backBuffer)
 	{
 		ga_lobbyChoose->Draw(backBuffer);
 	}
-	else if (ga_gameState == LOBBY_HOST)
-	{
-		ga_lobbyChoose->Draw(backBuffer);
-		ga_lobbyHost->Draw(backBuffer);
-		ga_hostText1->Draw(backBuffer);
-		ga_hostText2->Draw(backBuffer);
-	}
+	
 	else if (ga_gameState == LOBBY_JOIN)
 	{
 		ga_lobbyChoose->Draw(backBuffer);
@@ -337,6 +331,10 @@ Game::Draw(BackBuffer& backBuffer)
 		for (it_L2Text iterator = playerL2TextList.begin(); iterator != playerL2TextList.end(); iterator++)
 		{
 			iterator->second->Draw(backBuffer);
+		}
+		if (isServer){
+			ga_hostText1->Draw(backBuffer);
+			ga_hostText2->Draw(backBuffer);
 		}
 	}
 	else if (ga_gameState == RUNNING){
@@ -514,12 +512,12 @@ Game::initiateServer()
 	ga_lobbyHost->SetY(screenHeight / 2 - 200);
 
 	ga_hostText1 = m_pBackBuffer->CreateText("Your ip is: ", color, "assets\\dkjalebi.otf", 42);
-	ga_hostText1->SetX(550);
-	ga_hostText1->SetY(250);
+	ga_hostText1->SetX(750);
+	ga_hostText1->SetY(550);
 
 	ga_hostText2 = m_pBackBuffer->CreateText(serverAdd, color, "assets\\dkjalebi.otf", 42);
-	ga_hostText2->SetX(550);
-	ga_hostText2->SetY(350);
+	ga_hostText2->SetX(750);
+	ga_hostText2->SetY(600);
 
 	playerL2TextList[0] = pText;
 	//ga_gameState = LOBBY;
