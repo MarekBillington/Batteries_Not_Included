@@ -48,7 +48,8 @@ public:
 	void MoveSpaceShipVert(float speed);
 	BackBuffer* CallBackBuffer();
 	void ServerMoveShip();
-	void FireSpaceShipBullet();
+	
+	void FirePlayerBullet(int dir);
 
 	void MoveSpaceShipLeft();
 

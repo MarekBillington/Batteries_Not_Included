@@ -8,6 +8,7 @@
 #include "active.h"
 #include "sprite.h"
 #include "animatedsprite.h"
+#include "bullet.h"
 
 
 #include <string>
@@ -51,6 +52,7 @@ public:
 	Weapon* getWeapon();
 	Passive* getPassive(int passiveNum);
 	Active* getActive();
+	std::vector<Bullet*> pl_bulletContainer;
 
 	void setWeapon(Weapon* weapon);
 	void setPassive(int passiveNum, Passive* passive);
