@@ -56,46 +56,60 @@ Terrain::IsCollidingWith(Entity& e){
 		return false;
 	}
 
+
+	
+
 		
 	if (te_terrain == SPIKE){
 		e.setHealth(e.getHealth()-5);
+		//result = true;
 	}
 	else if (te_terrain == HOLE){
 		if (terY < entY + eHeight && terY + 30 > entY + eHeight){
 			//north
 			e.SetPositionY(terY - ((eHeight * 2) + 1));
+			result = true;
 		}
 		else if (terX + 50 < entX  && terX + 80 > entX){
 			//east
 			e.SetPositionX(terX + 81);
+			result = true;
 		}
 		else if (terY + 50 < entY && terY + 80 > entY){
 			//south
 			e.SetPositionY(terY + 25);
+			result = true;
 		}
 		else if (terX < entX + eWidth  && terX + 30 > entX + eWidth){
 			//west
 			e.SetPositionX(terX - (eWidth + 1));
+			result = true;
 		}
+		
 
 	}
 	else if (te_terrain == ROCK){
 		if (terY < entY + eHeight && terY + 30 > entY + eHeight){
 			//north
 			e.SetPositionY(terY - ((eHeight * 2) + 1));
+			result = true;
 		}
 		else if (terX + 50 < entX  && terX + 80 > entX){
 			//east
 			e.SetPositionX(terX + 81);
+			result = true;
 		}
 		else if (terY + 50 < entY && terY + 80 > entY){
 			//south
 			e.SetPositionY(terY + 25);
+			result = true;
 		}
 		else if (terX < entX + eWidth  && terX + 30 > entX + eWidth){
 			//west
 			e.SetPositionX(terX - (eWidth + 1));
+			result = true;
 		}
+
 	}
 	else{
 
@@ -103,7 +117,6 @@ Terrain::IsCollidingWith(Entity& e){
 
 
 		
-		result = true;
 	/*}*/
 	return result;
 }
