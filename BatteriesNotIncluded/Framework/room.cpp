@@ -169,15 +169,13 @@ Room::createTerrain(RoomType type){
 
 }
 
-<<<<<<< HEAD
 RoomType
 Room::getRoomType(){
 	return ro_roomNumber;
-=======
+}
 
 void 
 Room::createWall(int x, int y, int width, int height, Side side){
 	Wall* wall = new Wall(x, y, width, height, side);
 	ro_wallContainer.push_back(wall);
->>>>>>> 380c5c16e3ea1fa226d337c14d2526416f74f16c
 }

@@ -42,13 +42,9 @@ public:
 	void Process(float deltaTime);
 	void Draw(BackBuffer& backBuffer);
 	bool IsCollidingWith(Entity& e);
-
-<<<<<<< HEAD
 	RoomType getRoomType();
-=======
 	void createWall(int x, int y, int width, int height, Side side);
 
->>>>>>> 380c5c16e3ea1fa226d337c14d2526416f74f16c
 private:
 	RoomType ro_roomNumber;
 
