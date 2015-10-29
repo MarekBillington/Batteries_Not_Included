@@ -384,6 +384,7 @@ Game::Process(float deltaTime)
 	for (it_players iterator = playerList.begin(); iterator != playerList.end(); iterator++)
 	{
 		Player* e = (Player*)iterator->second;
+		ga_gameMap->getRoomAt(e->getCurrentRoomX(), e->getCurrentRoomY())->IsCollidingWith(*e);
 		e->Process(deltaTime);
 		//basic Respawn(
 		if (e->getHealth() <= 0){
@@ -395,6 +396,7 @@ Game::Process(float deltaTime)
 				if (!bossTime){
 					tempX = 640;
 					tempY = 320;
+					ga_gameMap->getRoomAt(playerList[0]->getCurrentRoomX(), playerList[0]->getCurrentRoomY())->ro_Locked = false;
 				}
 				else {
 					tempX = (4 * 1280) + 200 + (0 * 50);
@@ -412,6 +414,7 @@ Game::Process(float deltaTime)
 					if (!bossTime){
 						tempX = 640;
 						tempY = (8 * 720) + 360;
+						ga_gameMap->getRoomAt(playerList[1]->getCurrentRoomX(), playerList[1]->getCurrentRoomY())->ro_Locked = false;
 					}
 					else {
 						tempX = (4 * 1280) + 200 + (1 * 50);
@@ -430,6 +433,7 @@ Game::Process(float deltaTime)
 					if (!bossTime){
 						tempX = (8 * 1280) + 640;
 						tempY = (8 * 720) + 360;
+						ga_gameMap->getRoomAt(playerList[2]->getCurrentRoomX(), playerList[2]->getCurrentRoomY())->ro_Locked = false;
 					}
 					else {
 						tempX = (4 * 1280) + 200 + (2 * 50);
@@ -448,6 +452,7 @@ Game::Process(float deltaTime)
 					if (!bossTime){
 						tempX = (8 * 1280) + 640;
 						tempY = 360;
+						ga_gameMap->getRoomAt(playerList[3]->getCurrentRoomX(), playerList[3]->getCurrentRoomY())->ro_Locked = false;
 					}
 					else {
 						tempX = (4 * 1280) + 200 + (3 * 50);
@@ -485,6 +490,36 @@ Game::Process(float deltaTime)
 		//}
 		
 	}
+
+	if (playerList.size() > 0){
+		if (playerList.size() > 1){
+			if (playerList[0]->getCurrentRoomX() == playerList[1]->getCurrentRoomX() && playerList[0]->getCurrentRoomY() == playerList[1]->getCurrentRoomY()){
+				ga_gameMap->getRoomAt(playerList[0]->getCurrentRoomX(), playerList[0]->getCurrentRoomY())->ro_Locked = true;
+			}
+			if (playerList.size() > 2){
+				if (playerList[2]->getCurrentRoomX() == playerList[1]->getCurrentRoomX() && playerList[2]->getCurrentRoomY() == playerList[1]->getCurrentRoomY()){
+					ga_gameMap->getRoomAt(playerList[2]->getCurrentRoomX(), playerList[2]->getCurrentRoomY())->ro_Locked = true;
+				}
+				if (playerList[0]->getCurrentRoomX() == playerList[2]->getCurrentRoomX() && playerList[0]->getCurrentRoomY() == playerList[2]->getCurrentRoomY()){
+					ga_gameMap->getRoomAt(playerList[0]->getCurrentRoomX(), playerList[0]->getCurrentRoomY())->ro_Locked = true;
+				}
+				if (playerList.size() > 3){
+					if (playerList[3]->getCurrentRoomX() == playerList[1]->getCurrentRoomX() && playerList[3]->getCurrentRoomY() == playerList[1]->getCurrentRoomY()){
+						ga_gameMap->getRoomAt(playerList[3]->getCurrentRoomX(), playerList[3]->getCurrentRoomY())->ro_Locked = true;
+					}
+					if (playerList[0]->getCurrentRoomX() == playerList[3]->getCurrentRoomX() && playerList[0]->getCurrentRoomY() == playerList[3]->getCurrentRoomY()){
+						ga_gameMap->getRoomAt(playerList[0]->getCurrentRoomX(), playerList[0]->getCurrentRoomY())->ro_Locked = true;
+					}
+					if (playerList[2]->getCurrentRoomX() == playerList[3]->getCurrentRoomX() && playerList[2]->getCurrentRoomY() == playerList[3]->getCurrentRoomY()){
+						ga_gameMap->getRoomAt(playerList[2]->getCurrentRoomX(), playerList[2]->getCurrentRoomY())->ro_Locked = true;
+					}
+				}
+			}
+		}
+	}
+
+
+
 	updateCamera();
 
 }
