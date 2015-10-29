@@ -147,45 +147,6 @@ Game::~Game()
 	m_pBackBuffer = 0;
 }
 
-void
-Game::Reset()
-{
-	isRunning = false;
-	serverInitiated = false;
-	screenWidth = 1280;
-	screenHeight = 720;
-	
-
-	//FMOD CLASS TOM MADE
-	ga_fmodhelp->playBackgroundMusic(1);
-
-	SDL_Color color = { 0xFF, 0x99, 0x00, 0xFF };
-
-
-
-
-
-	////////ryan
-	ga_gameState = MAINMENU;
-
-	ga_lobbyHost->SetX(screenWidth / 2 - 300);
-	ga_lobbyHost->SetY(screenHeight / 2 - 200);
-
-
-	ga_hostText1 = m_pBackBuffer->CreateText("Type the IP you want to join: ", color, "assets\\dkjalebi.otf", 42);
-	ga_hostText1->SetX(450);
-	ga_hostText1->SetY(250);
-
-	ga_hostText2 = m_pBackBuffer->CreateText(serverAdd, color, "assets\\dkjalebi.otf", 42);
-	ga_hostText2->SetX(550);
-	ga_hostText2->SetY(350);
-
-	m_lastTime = SDL_GetTicks();
-	m_lag = 0.0f;
-
-	ga_hud = 0;
-}
-
 bool 
 Game::Initialise()
 {
@@ -221,7 +182,7 @@ Game::Initialise()
 	ga_gameState = MAINMENU;
 	ga_mainMenu = m_pBackBuffer->CreateSprite("assets\\Menu maybe.png");
 	ga_lobbyChoose = m_pBackBuffer->CreateSprite("assets\\lobbychoose.png");
-	ga_lobbyWait = m_pBackBuffer->CreateSprite("assets\\lobby2.png");
+	ga_lobbyWait = m_pBackBuffer->CreateSprite("assets\\lobby.png");
 	ga_lobbyHost = m_pBackBuffer->CreateSprite("assets\\ipshow.png");
 
 	ga_lobbyHost->SetX(screenWidth / 2 - 300);
@@ -811,12 +772,12 @@ Game::initiateServer()
 	ga_lobbyHost->SetY(screenHeight / 2 - 200);
 
 	ga_hostText1 = m_pBackBuffer->CreateText("Your ip is: ", color, "assets\\dkjalebi.otf", 42);
-	ga_hostText1->SetX(550);
-	ga_hostText1->SetY(580);
+	ga_hostText1->SetX(750);
+	ga_hostText1->SetY(550);
 
 	ga_hostText2 = m_pBackBuffer->CreateText(serverAdd, color, "assets\\dkjalebi.otf", 42);
-	ga_hostText2->SetX(550);
-	ga_hostText2->SetY(630);
+	ga_hostText2->SetX(750);
+	ga_hostText2->SetY(600);
 
 	playerL2TextList[0] = pText;
 	//ga_gameState = LOBBY;
