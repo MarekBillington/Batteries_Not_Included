@@ -110,10 +110,6 @@ Texture::loadText(SDL_Renderer* pRenderer, std::string textureText, SDL_Color te
 		SDL_FreeSurface(textSurface);
 	}
 
-	//assert(m_width);
-	//m_width = textSurface->w;
-	//assert(m_height);
-	//m_height = textSurface->h;
 
 	SDL_SetTextureBlendMode(m_pTexture, SDL_BLENDMODE_BLEND);
 

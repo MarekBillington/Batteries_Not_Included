@@ -364,10 +364,10 @@ Game::Process(float deltaTime)
 	{
 		Player* e = (Player*)iterator->second;
 		e->Process(deltaTime);
-<<<<<<< HEAD
+
 		if (ga_gameState == RUNNING){
 			ga_gameMap->getRoomAt(e->getCurrentRoomX(), e->getCurrentRoomY())->Process(deltaTime);
-=======
+		}
 
 		for (int i = 0; i < e->pl_bulletContainer.size(); i++)
 		{
@@ -376,11 +376,10 @@ Game::Process(float deltaTime)
 
 			bullet->Process(deltaTime);
 
->>>>>>> origin/master
 		}
-	}
-
 	
+
+	}
 	updateCamera();
 
 }
@@ -803,8 +802,8 @@ Game::FirePlayerBullet(int dir)
 		bullet = new Bullet(dir);
 		bullet->Initialise(bulletSprite);
 
-		bullet->SetPositionX(playerList[clientID]->GetPositionX());
-		bullet->SetPositionY(playerList[clientID]->GetPositionY());
+		bullet->SetPositionX(playerList[clientID]->GetPositionX() + 40);
+		bullet->SetPositionY(playerList[clientID]->GetPositionY() + 40);
 		/*bullet->SetPositionX(playerList.at(0)->GetPositionX());
 		bullet->SetPositionY(playerList.at(0)->GetPositionY());*/
 
@@ -814,8 +813,8 @@ Game::FirePlayerBullet(int dir)
 		bullet = new Bullet(dir);
 		bullet->Initialise(bulletSprite);
 
-		bullet->SetPositionX(playerList[clientID]->GetPositionX());
-		bullet->SetPositionY(playerList[clientID]->GetPositionY());
+		bullet->SetPositionX(playerList[clientID]->GetPositionX() + 40);
+		bullet->SetPositionY(playerList[clientID]->GetPositionY() + 40);
 
 
 		bullet->SetVerticalVelocity(600);
@@ -824,8 +823,8 @@ Game::FirePlayerBullet(int dir)
 		bullet = new Bullet(dir);
 		bullet->Initialise(bulletSprite);
 
-		bullet->SetPositionX(playerList[clientID]->GetPositionX());
-		bullet->SetPositionY(playerList[clientID]->GetPositionY());
+		bullet->SetPositionX(playerList[clientID]->GetPositionX() + 40);
+		bullet->SetPositionY(playerList[clientID]->GetPositionY() + 40);
 
 		bullet->SetHorizontalVelocity(-600);
 		break;
@@ -834,8 +833,8 @@ Game::FirePlayerBullet(int dir)
 		bullet->Initialise(bulletSprite);
 
 
-		bullet->SetPositionX(playerList[clientID]->GetPositionX());
-		bullet->SetPositionY(playerList[clientID]->GetPositionY());
+		bullet->SetPositionX(playerList[clientID]->GetPositionX() + 40);
+		bullet->SetPositionY(playerList[clientID]->GetPositionY() + 40);
 
 		bullet->SetHorizontalVelocity(600);
 		break;
@@ -1456,8 +1455,8 @@ NetworkThread()
 					Sprite* bulletSprite = backBuffer->CreateSprite("assets\\playerbullet.png");
 					Bullet* bullet = new Bullet(dirCheck);
 					bullet->Initialise(bulletSprite);
-					bullet->SetPositionX(playerList[i]->GetPositionX());
-					bullet->SetPositionY(playerList[i]->GetPositionY());
+					bullet->SetPositionX(playerList[i]->GetPositionX() + 40);
+					bullet->SetPositionY(playerList[i]->GetPositionY() + 40);
 					switch (dirCheck)
 					{
 					case 1:
@@ -1689,8 +1688,8 @@ NetworkThread()
 					Sprite* bulletSprite = backBuffer->CreateSprite("assets\\playerbullet.png");
 					Bullet* bullet = new Bullet(dirCheck);
 					bullet->Initialise(bulletSprite);
-					bullet->SetPositionX(playerList[id]->GetPositionX());
-					bullet->SetPositionY(playerList[id]->GetPositionY());
+					bullet->SetPositionX(playerList[id]->GetPositionX() + 40);
+					bullet->SetPositionY(playerList[id]->GetPositionY() + 40);
 					switch (dirCheck)
 					{
 					case 1:

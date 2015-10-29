@@ -80,6 +80,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\..\..\Liam%27s Laptop\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\Framework\bullet.h" />
+    <ClInclude Include="..\..\..\..\..\..\Liam%27s Laptop\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\Framework\enemy.h" />
     <ClInclude Include="animatedsprite.h" />
     <ClInclude Include="..\RakNet-master\Source\AutopatcherPatchContext.h" />
     <ClInclude Include="..\RakNet-master\Source\AutopatcherRepositoryInterface.h" />
@@ -256,6 +258,8 @@
     <ClInclude Include="weapon.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\..\..\Liam%27s Laptop\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\Framework\bullet.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\Liam%27s Laptop\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\Framework\enemy.cpp" />
     <ClCompile Include="animatedsprite.cpp" />
     <ClCompile Include="..\RakNet-master\Source\Base64Encoder.cpp" />
     <ClCompile Include="..\RakNet-master\Source\BitStream.cpp" />
