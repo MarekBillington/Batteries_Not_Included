@@ -55,7 +55,9 @@ bool serverInitiated = false;
 bool sending = true;
 char str[512];
 bool isRunning;
-char* name = "";
+float volumeSlide = 0.5f;
+char* name = "NAME";
+std::string clientName = "";
 char* serverAdd = "IP";
 std::string serverIP = "";
 
@@ -224,6 +226,22 @@ Game::Initialise()
 	ga_lobbyChoose = m_pBackBuffer->CreateSprite("assets\\lobbychoose.png");
 	ga_lobbyWait = m_pBackBuffer->CreateSprite("assets\\lobby2.png");
 	ga_lobbyHost = m_pBackBuffer->CreateSprite("assets\\ipshow.png");
+	ga_nameBox = m_pBackBuffer->CreateSprite("assets\\ipshow.png");
+	ga_options = m_pBackBuffer->CreateSprite("assets\\options.png");
+	ga_volumeSlider = m_pBackBuffer->CreateSprite("assets\\volumeAdjuster.png");
+	ga_volumeSlider->SetX(900);
+	ga_volumeSlider->SetY(495);
+
+	ga_nameBox->SetX(screenWidth / 2 - 400);
+	ga_nameBox->SetY(screenHeight / 2 - 200);
+
+	ga_nameChange1 = m_pBackBuffer->CreateText("Type in your new name", color, "assets\\dkjalebi.otf", 42);
+	ga_nameChange1->SetX(400);
+	ga_nameChange1->SetY(250);
+
+	ga_nameChange2 = m_pBackBuffer->CreateText(name, color, "assets\\dkjalebi.otf", 42);
+	ga_nameChange2->SetX(500);
+	ga_nameChange2->SetY(350);
 
 	ga_lobbyHost->SetX(screenWidth / 2 - 300);
 	ga_lobbyHost->SetY(screenHeight / 2 - 200);
@@ -362,6 +380,18 @@ Game::Draw(BackBuffer& backBuffer)
 	
 	if (ga_gameState == MAINMENU){
 		ga_mainMenu->Draw(backBuffer);
+	}
+	else if (ga_gameState == OPTIONS)
+	{
+		ga_options->Draw(backBuffer);
+		ga_volumeSlider->Draw(backBuffer);
+	}
+	else if (ga_gameState == OPTIONS_NAME)
+	{
+		ga_options->Draw(backBuffer);
+		ga_nameBox->Draw(backBuffer);
+		ga_nameChange1->Draw(backBuffer);
+		ga_nameChange2->Draw(backBuffer);
 	}
 	else if (ga_gameState == LOBBY_CHOOSE)
 	{
@@ -675,6 +705,19 @@ Game::Quit()
 }
 
 void
+Game::adjustVolume(int xValue)
+{
+	ga_volumeSlider->SetX(xValue - 16);
+	int value = xValue - 314;
+	//0 - 592
+	//592 / 10 = 59.2
+
+	
+	volumeSlide = (float) ((0 + value) / 10) / 59.2;
+	ga_fmodhelp->adjustVolume(volumeSlide);
+}
+
+void
 Game::MoveSpaceShipHor(float speed)
 {
 	if (isServer)
@@ -742,26 +785,50 @@ Game::SpawnEnemy(int x, int y)
 }
 
 void
-Game::enterServerName(char* name)
+Game::enterServerName(char* cValue)
 {
-	if (serverAdd == "IP")
-	{
-		SDL_Color color = { 0xFF, 0x99, 0x00, 0xFF };
-		serverAdd = name;
-		serverIP = name;
-		ga_hostText2 = m_pBackBuffer->CreateText(serverAdd, color, "assets\\dkjalebi.otf", 42);
-		ga_hostText2->SetX(550);
-		ga_hostText2->SetY(350);
+	if (ga_gameState == LOBBY_JOIN){
+		if (serverAdd == "IP")
+		{
+			SDL_Color color = { 0xFF, 0x99, 0x00, 0xFF };
+			serverAdd = cValue;
+			serverIP = cValue;
+			ga_hostText2 = m_pBackBuffer->CreateText(serverAdd, color, "assets\\dkjalebi.otf", 42);
+			ga_hostText2->SetX(550);
+			ga_hostText2->SetY(350);
+		}
+		else
+		{
+			SDL_Color color = { 0xFF, 0x99, 0x00, 0xFF };
+			serverIP += cValue;
+			serverAdd = &serverIP[0u];
+			ga_hostText2 = m_pBackBuffer->CreateText(serverAdd, color, "assets\\dkjalebi.otf", 42);
+			ga_hostText2->SetX(550);
+			ga_hostText2->SetY(350);
+		}
 	}
-	else
+	else if (ga_gameState == GameState::OPTIONS_NAME)
 	{
-		SDL_Color color = { 0xFF, 0x99, 0x00, 0xFF };
-		serverIP += name;
-		serverAdd = &serverIP[0u];
-		ga_hostText2 = m_pBackBuffer->CreateText(serverAdd, color, "assets\\dkjalebi.otf", 42);
-		ga_hostText2->SetX(550);
-		ga_hostText2->SetY(350);
+		if (name == "NAME")
+		{
+			SDL_Color color = { 0xFF, 0x99, 0x00, 0xFF };
+			name = cValue;
+			clientName = cValue;
+			ga_nameChange2 = m_pBackBuffer->CreateText(name, color, "assets\\dkjalebi.otf", 42);
+			ga_nameChange2->SetX(550);
+			ga_nameChange2->SetY(350);
+		}
+		else
+		{
+			SDL_Color color = { 0xFF, 0x99, 0x00, 0xFF };
+			clientName += cValue;
+			name = &clientName[0u];
+			ga_nameChange2 = m_pBackBuffer->CreateText(name, color, "assets\\dkjalebi.otf", 42);
+			ga_nameChange2->SetX(550);
+			ga_nameChange2->SetY(350);
+		}
 	}
+		
 	
 }
 
@@ -769,24 +836,45 @@ void
 Game::deleteServerIP()
 {
 	SDL_Color color = { 0xFF, 0x99, 0x00, 0xFF };
-	if (serverIP.size() == 1 || serverIP.empty())
-	{
-		serverIP.clear();
-		serverIP = "";
-		serverAdd = "IP";
-		ga_hostText2 = m_pBackBuffer->CreateText(serverAdd, color, "assets\\dkjalebi.otf", 42);
-		ga_hostText2->SetX(550);
-		ga_hostText2->SetY(350);
+	if (ga_gameState == LOBBY_JOIN){
+		if (serverIP.size() == 1 || serverIP.empty())
+		{
+			serverIP.clear();
+			serverIP = "";
+			serverAdd = "IP";
+			ga_hostText2 = m_pBackBuffer->CreateText(serverAdd, color, "assets\\dkjalebi.otf", 42);
+			ga_hostText2->SetX(550);
+			ga_hostText2->SetY(350);
+		}
+		else
+		{
+			serverIP.erase(serverIP.size() - 1, 1);
+			serverAdd = &serverIP[0u];
+			ga_hostText2 = m_pBackBuffer->CreateText(serverAdd, color, "assets\\dkjalebi.otf", 42);
+			ga_hostText2->SetX(550);
+			ga_hostText2->SetY(350);
+		}
 	}
-	else
+	else if (ga_gameState == OPTIONS_NAME)
 	{
-		serverIP.erase(serverIP.size()-1, 1);
-		serverAdd = &serverIP[0u];
-		ga_hostText2 = m_pBackBuffer->CreateText(serverAdd, color, "assets\\dkjalebi.otf", 42);
-		ga_hostText2->SetX(550);
-		ga_hostText2->SetY(350);
+		if (clientName.size() == 1 || clientName.empty())
+		{
+			clientName.clear();
+			clientName = "";
+			name = "NAME";
+			ga_nameChange2 = m_pBackBuffer->CreateText(name, color, "assets\\dkjalebi.otf", 42);
+			ga_nameChange2->SetX(550);
+			ga_nameChange2->SetY(350);
+		}
+		else
+		{
+			clientName.erase(clientName.size() - 1, 1);
+			name = &clientName[0u];
+			ga_nameChange2 = m_pBackBuffer->CreateText(name, color, "assets\\dkjalebi.otf", 42);
+			ga_nameChange2->SetX(550);
+			ga_nameChange2->SetY(350);
+		}
 	}
-	
 	
 
 }
@@ -810,7 +898,7 @@ Game::initiateServer()
 	isServer = true;
 	//serverInitiated = true;
 	printf("Server is ready to receive connections.\n");
-	name = "Server";
+	//name = "Server";
 	serverAdd = (char*) peer->GetLocalIP(0);
 	//playerList[0] = player;
 	clientNames[0] = name;
@@ -1269,7 +1357,7 @@ NetworkThread()
 					printf("The connection to the server has been accepted.\n");
 					ServerName = packet->systemAddress;
 					RakNet::BitStream bsOut;
-					char name[] = "John";
+					//char name[] = "John";
 					//float x, y;
 					//x = 300.0;
 					// y = 200.0;

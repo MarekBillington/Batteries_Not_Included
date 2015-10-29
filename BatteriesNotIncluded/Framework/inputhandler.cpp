@@ -67,6 +67,7 @@ InputHandler::ProcessInput(Game& game)
 				}
 				if (460 < x && x < 820 && 457 < y && y < 528){
 					//go options menu
+					game.ga_gameState = GameState::OPTIONS;
 				}
 				if (460 < x && x < 820 && 336 < y && y < 407){
 					//go to multiplayer lobby
@@ -80,6 +81,67 @@ InputHandler::ProcessInput(Game& game)
 				}
 			}	//main menu bracket
 
+		}
+		if (game.ga_gameState == OPTIONS)
+		{
+			if (e.type == SDL_MOUSEBUTTONDOWN){
+				int x;
+				int y;
+				SDL_GetMouseState(&x, &y);
+				if (416 < x && x < 826 && 208 < y && y < 338){
+					//go to training map
+					game.ga_gameState = GameState::OPTIONS_NAME;
+				}
+				if (324 < x && x < 916 && 524 < y && y < 542)
+				{
+					game.adjustVolume(x);
+				}
+			}
+			if (e.type == SDL_KEYDOWN){
+
+				
+				if (e.key.keysym.sym == SDLK_ESCAPE)
+				{
+					game.ga_gameState = GameState::MAINMENU;
+					//game.initiateServer();
+					//game.ga_gameState = LOBBY;
+				}
+			}
+		} 
+		if (game.ga_gameState == OPTIONS_NAME)
+		{
+			if (e.type == SDL_TEXTINPUT)
+			{
+				if (text == NULL)
+				{
+					text = e.text.text;
+				}
+				game.enterServerName(text);
+				text = NULL;
+				//	printf("ok");
+			}
+			if (e.type == SDL_KEYDOWN){
+
+				if (e.key.keysym.sym == SDLK_RETURN)
+				{
+					SDL_StopTextInput();
+					game.ga_gameState = GameState::OPTIONS;
+					//game.initiateClient();
+					//game.initiateServer();
+					//game.ga_gameState = LOBBY;
+				}
+				if (e.key.keysym.sym == SDLK_ESCAPE)
+				{
+					SDL_StopTextInput();
+					game.ga_gameState = GameState::OPTIONS;
+					//game.initiateServer();
+					//game.ga_gameState = LOBBY;
+				}
+				if (e.key.keysym.sym == SDLK_BACKSPACE)
+				{
+					game.deleteServerIP();
+				}
+			}
 		}
 		if (game.ga_gameState == LOBBY_CHOOSE)
 		{

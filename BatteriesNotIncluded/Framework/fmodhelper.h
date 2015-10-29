@@ -21,6 +21,7 @@ public:
 	void initBackgroundMusic();
 	void playSoundEffect(int sound);
 	void releaseSounds();
+	void adjustVolume(float volume);
 
 private:
 

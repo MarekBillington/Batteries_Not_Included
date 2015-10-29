@@ -21,7 +21,10 @@ enum GameState
 	LOBBY_HOST,
 	LOBBY_JOIN,
 	RUNNING,
-	LOBBY
+	LOBBY,
+	OPTIONS,
+	OPTIONS_NAME,
+	OPTIONS_VOLUME
 };
 
 class Game
@@ -39,6 +42,8 @@ public:
 	void Quit();
 	void Reset();
 
+	void adjustVolume(int xValue);
+
 	void MoveSpaceShipHor(float speed);
 	void MoveSpaceShipVert(float speed);
 	BackBuffer* CallBackBuffer();
@@ -54,7 +59,7 @@ public:
 	void initiateClient();
 	void startGame();
 
-	void enterServerName(char* name);
+	void enterServerName(char* cValue);
 	void deleteServerIP();
 
 	void disconnectClient();
@@ -115,6 +120,11 @@ protected:
 	Sprite* ga_lobbyHost;
 	Sprite* ga_hostText1;
 	Sprite* ga_hostText2;
+	Sprite* ga_options;
+	Sprite* ga_nameBox;
+	Sprite* ga_nameChange1;
+	Sprite* ga_nameChange2;
+	Sprite* ga_volumeSlider;
 
 	Sprite* currentIP;
 	//Player* player;
