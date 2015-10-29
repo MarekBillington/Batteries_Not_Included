@@ -341,9 +341,9 @@ Game::Process(float deltaTime)
 			{
 				Player* e = (Player*)iterator->second;
 				
-				if (ga_gameState == RUNNING){
+				/*if (ga_gameState == RUNNING){
 					ga_gameMap->getRoomAt(e->getCurrentRoomX(), e->getCurrentRoomY())->IsCollidingWith(*e);
-				}
+				}*/
 				bsOut.Write(e->GetPositionX());
 				bsOut.Write(e->GetPositionY());
 			}

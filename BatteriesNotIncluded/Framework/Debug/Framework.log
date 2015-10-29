@@ -1,10 +1,28 @@
-﻿Build started 28/10/2015 10:53:26 p.m..
-     1>Project "C:\Batteries_Not_Included\Batteries_Not_Included\BatteriesNotIncluded\Framework\Framework.vcxproj" on node 2 (Build target(s)).
+﻿Build started 30/10/2015 1:17:25 AM.
+     1>Project "C:\Users\tomcl\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\Framework\Framework.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Batteries_Not_Included\Batteries_Not_Included\BatteriesNotIncluded\\SDL\SDL2_ttf-2.0.12\include\\" /I"C:\Batteries_Not_Included\Batteries_Not_Included\BatteriesNotIncluded\\SDL\SDL2-2.0.3\include\\" /I"C:\Batteries_Not_Included\Batteries_Not_Included\BatteriesNotIncluded\\SDL\SDL2_image-2.0.0\include" /I"C:\Batteries_Not_Included\Batteries_Not_Included\BatteriesNotIncluded\\RakNet-master\Source" /IC:\Batteries_Not_Included\Batteries_Not_Included\BatteriesNotIncluded\\FMOD\inc /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt inputhandler.cpp
-         inputhandler.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\tomcl\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\\SDL\SDL2_ttf-2.0.12\include\\" /I"C:\Users\tomcl\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\\SDL\SDL2-2.0.3\include\\" /I"C:\Users\tomcl\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\\SDL\SDL2_image-2.0.0\include" /I"C:\Users\tomcl\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\\RakNet-master\Source" /IC:\Users\tomcl\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\\FMOD\inc /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt game.cpp
+         game.cpp
+     1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\game.cpp(373): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\game.cpp(406): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\game.cpp(407): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\game.cpp(424): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\game.cpp(425): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\game.cpp(443): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\game.cpp(444): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\game.cpp(462): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\game.cpp(463): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\game.cpp(469): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\game.cpp(877): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\game.cpp(1195): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\game.cpp(1206): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\game.cpp(1207): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\game.cpp(1898): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\tomcl\documents\github\batteries_not_included\batteriesnotincluded\framework\game.cpp(1899): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Batteries_Not_Included\Batteries_Not_Included\BatteriesNotIncluded\Debug\Framework.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Batteries_Not_Included\Batteries_Not_Included\BatteriesNotIncluded\\SDL\SDL2-2.0.3\lib\x86" /LIBPATH:"C:\Batteries_Not_Included\Batteries_Not_Included\BatteriesNotIncluded\\SDL\SDL2_image-2.0.0\lib\x86" /LIBPATH:"C:\Batteries_Not_Included\Batteries_Not_Included\BatteriesNotIncluded\\SDL\SDL2_ttf-2.0.12\lib\x86" /LIBPATH:C:\Batteries_Not_Included\Batteries_Not_Included\BatteriesNotIncluded\\FMOD\lib SDL2.lib SDL2main.lib SDL2_image.lib SDL2_ttf.lib fmodl_vc.lib ws2_32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Batteries_Not_Included\Batteries_Not_Included\BatteriesNotIncluded\Debug\Framework.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Batteries_Not_Included\Batteries_Not_Included\BatteriesNotIncluded\Debug\Framework.lib" /MACHINE:X86 Debug\animatedsprite.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\tomcl\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\Debug\Framework.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Users\tomcl\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\\SDL\SDL2-2.0.3\lib\x86" /LIBPATH:"C:\Users\tomcl\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\\SDL\SDL2_image-2.0.0\lib\x86" /LIBPATH:"C:\Users\tomcl\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\\SDL\SDL2_ttf-2.0.12\lib\x86" /LIBPATH:C:\Users\tomcl\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\\FMOD\lib SDL2.lib SDL2main.lib SDL2_image.lib SDL2_ttf.lib fmodl_vc.lib ws2_32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\tomcl\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\Debug\Framework.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\tomcl\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\Debug\Framework.lib" /MACHINE:X86 Debug\bullet.obj
+         Debug\enemy.obj
+         Debug\animatedsprite.obj
          Debug\Base64Encoder.obj
          Debug\BitStream.obj
          Debug\CCRakNetSlidingWindow.obj
@@ -133,10 +151,11 @@
          Debug\terrain.obj
          Debug\texture.obj
          Debug\texturemanager.obj
+         Debug\wall.obj
          Debug\weapon.obj
-         Framework.vcxproj -> C:\Batteries_Not_Included\Batteries_Not_Included\BatteriesNotIncluded\Debug\Framework.exe
-     1>Done Building Project "C:\Batteries_Not_Included\Batteries_Not_Included\BatteriesNotIncluded\Framework\Framework.vcxproj" (Build target(s)).
+         Framework.vcxproj -> C:\Users\tomcl\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\Debug\Framework.exe
+     1>Done Building Project "C:\Users\tomcl\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\Framework\Framework.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.00
+Time Elapsed 00:00:01.77
