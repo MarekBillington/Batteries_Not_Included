@@ -16,6 +16,7 @@ Room::Room(int i, int j, RoomType type, RoomSpecial special)
 
 	createTerrain(type);
 
+
 	//topwall
 	createWall(m_x + 0, m_y + 0, 570, 93, TOP, false, false);
 	if (!ro_doorNorth){
@@ -120,16 +121,10 @@ Room::IsCollidingWith(Entity& e){
 
 	for (size_t i = 0; i < ro_wallContainer.size(); i++)
 	{
-<<<<<<< HEAD
-		
-		ro_wallContainer.at(i)->IsCollidingWith(e, ro_Locked);
-		result = true;
-=======
-		if (ro_wallContainer.at(i)->IsCollidingWith(e))
+		if (ro_wallContainer.at(i)->IsCollidingWith(e, ro_Locked))
 		{
 			result = true;
 		}
->>>>>>> 1329c8394fb3a958e10e8c7b227325a1b2ac06df
 	}
 
 	///////////////////////////////////////

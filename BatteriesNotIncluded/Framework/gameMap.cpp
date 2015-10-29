@@ -171,6 +171,8 @@ GameMap::parseFile()
 			Room* room = new Room(j, i, gm_room, gm_roomType);
 			room->Initialise(roomSprite);
 			room->ro_lockedSprite = lockedSprite;
+			room->ro_lockedSprite->SetX(room->GetPositionX());
+			room->ro_lockedSprite->SetY(room->GetPositionY());
 			//room->setRoomNumber(gm_room);
 			gm_layout[j][i] = room;
 		}
