@@ -1,9 +1,17 @@
-5 1 9 9 e 5 6 d 7
-c 7 1 6 f a 7 9 4
-b f a 2 a 4 f 5 8
-7 9 4 f b 3 e 3 e
-f d 0 1 0 0 9 4 f
+S5 1 9 9 Te 5 6 $d S6
+
+$c 7 1 6 f a 7 9 4
+
+b f 3 2 9 4 f 5 8
+
+7 9 4 f !b 3 e 3 e
+
+f Td 0 1 B0 0 9 4 f
+
 5 9 8 3 2 8 f a b
-a 5 9 4 f 5 9 0 8
-3 8 f a 5 a f a b
-7 e d 2 8 c d 2 8
+
+a 5 9 4 f 5 T9 0 8
+
+3 8 f a 5 a f a $b
+
+S7 $e d T2 8 c d 2 S8

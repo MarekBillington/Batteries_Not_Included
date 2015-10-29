@@ -1,12 +1,14 @@
 #include "wall.h"
 
 
-Wall::Wall(int x, int y, int width, int height, Side side)
+Wall::Wall(int x, int y, int width, int height, Side side, bool door, bool open)
 	: wa_xloc(x)
 	, wa_yloc(y)
 	, wa_width(width)
 	, wa_height(height)
 	, wa_side(side)
+	, wa_door(door)
+	, wa_open(open)
 {
 }
 
@@ -36,43 +38,57 @@ Wall::IsCollidingWith(Entity& e)
 	}
 
 
+
+
 	if (wa_side == TOP || wa_side == BOTTOM){
-		if (wa_yloc <= entityY + eHeight && wa_yloc + 50 >= entityY + eHeight){
-			//north, blocks moving down
-			e.SetPositionY(wa_yloc - ((eHeight * 2) + 1));
+
+		if (wa_door && wa_open){
+			e.SetPositionX(wa_xloc + 10);
 		}
-		else if (wa_yloc + (wa_height - 50) <= entityY && wa_yloc + wa_height >= entityY){ //done
-			//south, blocks moving up
-			e.SetPositionY(wa_yloc + 41);
-		}
-		else if (wa_xloc <= entityX + eWidth  && wa_xloc + 50 >= entityX + eWidth){ //done
-			//west, blocks moveing right
-			e.SetPositionX(wa_xloc - (eWidth + 1));
-		}
-		else if (wa_xloc + (wa_width - 50) <= entityX  && wa_xloc + wa_width >= entityX){ //done
-			//east, blocks moving left
-			e.SetPositionX(wa_xloc + 151);
+		else{
+
+			if (wa_yloc <= entityY + eHeight && wa_yloc + 50 >= entityY + eHeight){
+				//north, blocks moving down
+				e.SetPositionY(wa_yloc - ((eHeight * 2) + 1));
+			}
+			else if (wa_yloc + (wa_height - 50) <= entityY && wa_yloc + wa_height >= entityY){ //done
+				//south, blocks moving up
+				e.SetPositionY(wa_yloc + 41);
+			}
+			else if (wa_xloc <= entityX + eWidth  && wa_xloc + 50 >= entityX + eWidth){ //done
+				//west, blocks moveing right
+				e.SetPositionX(wa_xloc - (eWidth + 1));
+			}
+			else if (wa_xloc + (wa_width - 50) <= entityX  && wa_xloc + wa_width >= entityX){ //done
+				//east, blocks moving left
+				e.SetPositionX(wa_xloc + 151);
+			}
 		}
 	}
-	else{
+	else if (wa_side == LEFT || wa_side == RIGHT){
 		
-		if (wa_xloc <= entityX + eWidth  && wa_xloc + 50 >= entityX + eWidth){ //done
-			//west, blocks moveing right
-			e.SetPositionX(wa_xloc - (eWidth + 1));
+
+		if (wa_door && wa_open){
+			e.SetPositionY(wa_yloc - 10);
 		}
-		else if (wa_xloc + (wa_width - 50) <= entityX  && wa_xloc + wa_width >= entityX){ //done
-			//east, blocks moving left
-			e.SetPositionX(wa_xloc + 151);
+		else{
+			if (wa_xloc <= entityX + eWidth  && wa_xloc + 50 >= entityX + eWidth){ //done
+				//west, blocks moveing right
+				e.SetPositionX(wa_xloc - (eWidth + 1));
+			}
+			else if (wa_xloc + (wa_width - 50) <= entityX  && wa_xloc + wa_width >= entityX){ //done
+				//east, blocks moving left
+				e.SetPositionX(wa_xloc + 151);
+			}
+			else if (wa_yloc <= entityY + eHeight && wa_yloc + 50 >= entityY + eHeight){
+				//north, blocks moving down
+				e.SetPositionY(wa_yloc - ((eHeight * 2) + 1));
+			}
+			else if (wa_yloc + (wa_height - 50) <= entityY && wa_yloc + wa_height >= entityY){ //done
+				//south, blocks moving up
+				e.SetPositionY(wa_yloc + 41);
+			}
 		}
-		else if (wa_yloc <= entityY + eHeight && wa_yloc + 50 >= entityY + eHeight){
-			//north, blocks moving down
-			e.SetPositionY(wa_yloc - ((eHeight * 2) + 1));
-		}
-		else if (wa_yloc + (wa_height - 50) <= entityY && wa_yloc + wa_height >= entityY){ //done
-			//south, blocks moving up
-			e.SetPositionY(wa_yloc + 41);
-		}
-		
 	}
 
 	

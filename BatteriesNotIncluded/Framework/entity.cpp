@@ -18,6 +18,8 @@ Entity::Entity()
 	, m_velocityY(0.0f)
 	, m_dead(false)
 	, en_health(0)
+	, en_currentRoomX(0)
+	, en_currentRoomY(0)
 {
 
 }
@@ -100,6 +102,29 @@ Entity::SetPositionY(float y)
 {
 	m_y = y;
 }
+
+
+int 
+Entity::getCurrentRoomX(){
+	return en_currentRoomX;
+}
+
+int 
+Entity::getCurrentRoomY(){
+	return en_currentRoomY;
+}
+
+void 
+Entity::setCurrentRoomX(int x){
+	en_currentRoomX = x;
+}
+
+void 
+Entity::setCurrentRoomY(int y){
+	en_currentRoomY = y;
+}
+
+
 
 float 
 Entity::GetHorizontalVelocity()

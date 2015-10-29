@@ -353,6 +353,9 @@ Game::Process(float deltaTime)
 	{
 		Player* e = (Player*)iterator->second;
 		e->Process(deltaTime);
+		if (ga_gameState == RUNNING){
+			ga_gameMap->getRoomAt(e->getCurrentRoomX(), e->getCurrentRoomY())->Process(deltaTime);
+		}
 	}
 
 	

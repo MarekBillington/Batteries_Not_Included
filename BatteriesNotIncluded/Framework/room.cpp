@@ -6,8 +6,9 @@ Room::Room()
 {
 }
 
-Room::Room(int i, int j, RoomType type)
+Room::Room(int i, int j, RoomType type, RoomSpecial special)
 	:ro_roomNumber(type)
+	, ro_roomSpecial(special)
 {
 	m_x = i * 1280;
 	m_y = j * 720;
@@ -16,24 +17,44 @@ Room::Room(int i, int j, RoomType type)
 	createTerrain(type);
 
 	//topwall
-	createWall(m_x + 0, m_y + 0, 580, 93, TOP);
-	createWall(m_x + 580, m_y + 0, 120, 93, TOP);
-	createWall(m_x + 700, m_y + 0, 580, 93, TOP);
-
+	createWall(m_x + 0, m_y + 0, 570, 93, TOP, false, false);
+	if (!ro_doorNorth){
+		createWall(m_x + 570, m_y + 0, 130, 93, TOP, true, false);
+	}
+	else{
+		createWall(m_x + 570, m_y + 0, 130, 93, TOP, true, true);
+	}
+		createWall(m_x + 710, m_y + 0, 570, 93, TOP, false, false);
+	
 	//rightwall
-	createWall(m_x + 1129, m_y + 0, 151, 301, RIGHT);
-	createWall(m_x + 1129, m_y + 301, 151, 117, RIGHT);
-	createWall(m_x + 1129, m_y + 418, 151, 302, RIGHT);
+		createWall(m_x + 1129, m_y + 0, 151, 331, RIGHT, false, false);
+	if (!ro_doorEast){
+		createWall(m_x + 1129, m_y + 301, 151, 117, RIGHT, true, false);
+	}
+	else{
+		createWall(m_x + 1129, m_y + 301, 151, 117, RIGHT, true, true);
+	}
+		createWall(m_x + 1129, m_y + 418, 151, 302, RIGHT, false, false);
 
 	//bottomwall
-	createWall(m_x + 0, m_y + 625, 580, 95, BOTTOM);
-	createWall(m_x + 580, m_y + 625, 120, 95, BOTTOM);
-	createWall(m_x + 700, m_y + 625, 580, 95, BOTTOM);
+		createWall(m_x + 0, m_y + 625, 570, 160, BOTTOM, false, false);
+	if (!ro_doorSouth){
+		createWall(m_x + 570, m_y + 625, 130, 160, BOTTOM, true, false);
+	}
+	else{
+		createWall(m_x + 570, m_y + 625, 130, 160, BOTTOM, true, true);
+	}
+		createWall(m_x + 710, m_y + 625, 570, 160, BOTTOM, false, false);
 
 	//leftwall
-	createWall(m_x + 0, m_y + 0, 151, 301, LEFT);
-	createWall(m_x + 0, m_y + 301, 151, 117, LEFT);
-	createWall(m_x + 0, m_y + 418, 151, 302, LEFT);
+		createWall(m_x + 0, m_y + 0, 151, 331, LEFT, false, false);
+	if (!ro_doorWest){
+		createWall(m_x + 0, m_y + 301, 151, 117, LEFT, true, false);
+	}
+	else{
+		createWall(m_x + 0, m_y + 301, 151, 117, LEFT, true, true);
+	}
+		createWall(m_x + 0, m_y + 418, 151, 302, LEFT, false, false);
 
 }
 
@@ -57,6 +78,13 @@ Room::Process(float deltaTime)
 		//}
 	}
 
+	for (size_t i = 0; i < ro_enemyContainer.size(); i++)
+	{
+		//if (!ro_terrainContainer.at(i)->IsDead()){
+		ro_enemyContainer.at(i)->Process(deltaTime);
+		//}
+	}
+
 }
 
 void
@@ -67,6 +95,11 @@ Room::Draw(BackBuffer& backBuffer)
 	for (size_t i = 0; i < ro_terrainContainer.size(); i++)
 	{
 		ro_terrainContainer.at(i)->Draw(backBuffer);
+	}
+
+	for (size_t i = 0; i < ro_enemyContainer.size(); i++)
+	{
+		ro_enemyContainer.at(i)->Draw(backBuffer);
 	}
 }
 
@@ -121,49 +154,143 @@ Room::createTerrain(RoomType type){
 		ro_terrainContainer.push_back(dwayneTheHoleJohnson);
 
 
-
+		ro_doorNorth = true;
+		ro_doorEast = true;
+		ro_doorSouth = true;
+		ro_doorWest = true;
 	}
 	else if (type == threeDoorsTopWall){
 
+
+
+		ro_doorNorth = false;
+		ro_doorEast = true;
+		ro_doorSouth = true;
+		ro_doorWest = true;
 	}
 	else if (type == threeDoorsBottomWall){
 
+		ro_doorNorth = true;
+		ro_doorEast = true;
+		ro_doorSouth = false;
+		ro_doorWest = true;
 	}
 	else if (type == threeDoorsLeftWall){
 
+		ro_doorNorth = true;
+		ro_doorEast = true;
+		ro_doorSouth = true;
+		ro_doorWest = false;
 	}
 	else if (type == threeDoorsRightWall){
 
+		ro_doorNorth = true;
+		ro_doorEast = false;
+		ro_doorSouth = true;
+		ro_doorWest = true;
 	}
 	else if (type == twoDoorsTopLeftWalls){
-
+		//test
+		ro_doorNorth = false;
+		ro_doorEast = true;
+		ro_doorSouth = true;
+		ro_doorWest = false;
 	}
 	else if (type == twoDoorsTopRightWalls){
 
+		ro_doorNorth = false;
+		ro_doorEast = false;
+		ro_doorSouth = true;
+		ro_doorWest = true;
 	}
 	else if (type == twoDoorsBottomLeftWalls){
 
+		ro_doorNorth = true;
+		ro_doorEast = true;
+		ro_doorSouth = false;
+		ro_doorWest = false;
 	}
 	else if (type == twoDoorsBottomRightWalls){
 
+		ro_doorNorth = true;
+		ro_doorEast = false;
+		ro_doorSouth = false;
+		ro_doorWest = true;
 	}
 	else if (type == twoDoorsSplitHorizontal){
-
+		ro_doorNorth = false;
+		ro_doorEast = true;
+		ro_doorSouth = false;
+		ro_doorWest = true;
+		
 	}
 	else if (type == twoDoorsSplitVertical){
 
+		
+
+		ro_doorNorth = true;
+		ro_doorEast = false;
+		ro_doorSouth = true;
+		ro_doorWest = false;
 	}
 	else if (type == oneDoorAtBottom){
 
+		Terrain* dwayneTheRockJohnson = new Terrain(ROCK, m_x + 600, m_y + 220, backBuffer);
+		ro_terrainContainer.push_back(dwayneTheRockJohnson);
+
+
+		Enemy* theHoOfHoes = new Enemy(ROBORAT, m_x + 400, m_y + 300, backBuffer);
+		ro_enemyContainer.push_back(theHoOfHoes);
+
+		ro_doorNorth = false;
+		ro_doorEast = false;
+		ro_doorSouth = true;
+		ro_doorWest = false;
 	}
 	else if (type == oneDoorAtTop){
 
+		Terrain* dwayneTheRockJohnson = new Terrain(ROCK, m_x + 600, m_y + 220, backBuffer);
+		ro_terrainContainer.push_back(dwayneTheRockJohnson);
+
+		Enemy* theHoOfHoes = new Enemy(ROBORAT, m_x + 400, m_y + 300, backBuffer);
+		ro_enemyContainer.push_back(theHoOfHoes);
+
+		ro_doorNorth = true;
+		ro_doorEast = false;
+		ro_doorSouth = false;
+		ro_doorWest = false;
 	}
 	else if (type == oneDoorOnRight){
 
+		Terrain* dwayneTheRockJohnson = new Terrain(ROCK, m_x + 600, m_y + 220, backBuffer);
+		ro_terrainContainer.push_back(dwayneTheRockJohnson);
+
+		Enemy* theHoOfHoes = new Enemy(ROBORAT, m_x + 400, m_y + 300, backBuffer);
+		ro_enemyContainer.push_back(theHoOfHoes);
+
+		ro_doorNorth = false;
+		ro_doorEast = true;
+		ro_doorSouth = false;
+		ro_doorWest = false;
 	}
 	else if (type == oneDoorOnLeft){
 
+		Terrain* dwayneTheRockJohnson = new Terrain(ROCK, m_x + 600, m_y + 220, backBuffer);
+		ro_terrainContainer.push_back(dwayneTheRockJohnson);
+
+		Enemy* theHoOfHoes = new Enemy(ROBORAT, m_x + 400, m_y + 300, backBuffer);
+		ro_enemyContainer.push_back(theHoOfHoes);
+
+		ro_doorNorth = false;
+		ro_doorEast = false;
+		ro_doorSouth = false;
+		ro_doorWest = true;
+	}
+	else{
+		ro_doorNorth = false;
+		ro_doorEast = false;
+		ro_doorSouth = false;
+		ro_doorWest = false;
 	}
 		
 
@@ -174,8 +301,14 @@ Room::getRoomType(){
 	return ro_roomNumber;
 }
 
+RoomSpecial
+Room::getRoomSpecial(){
+	return ro_roomSpecial;
+}
+
+
 void 
-Room::createWall(int x, int y, int width, int height, Side side){
-	Wall* wall = new Wall(x, y, width, height, side);
+Room::createWall(int x, int y, int width, int height, Side side, bool door, bool open){
+	Wall* wall = new Wall(x, y, width, height, side, door, open);
 	ro_wallContainer.push_back(wall);
 }

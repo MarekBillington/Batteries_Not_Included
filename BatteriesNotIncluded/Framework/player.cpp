@@ -4,9 +4,7 @@
 #include <cassert>
 
 Player::Player()
-	:pl_currentRoomX(0)
-	,pl_currentRoomY(0)
-	,pl_direction(0)
+	:pl_direction(0)
 	
 {
 	setHealth(1000);
@@ -78,8 +76,8 @@ Player::Process(float deltaTime)
 
 	m_pSprite->Process(deltaTime);
 
-	pl_currentRoomX = (m_x / 1280);
-	pl_currentRoomY = (m_y / 720);
+	en_currentRoomX = (m_x / 1280);
+	en_currentRoomY = (m_y / 720);
 
 }
 
@@ -91,36 +89,36 @@ Player::Draw(BackBuffer& backBuffer)
 }
 
 
-int 
-Player::getCurrentRoomX(){
-	return pl_currentRoomX;
-}
-
-int 
-Player::getCurrentRoomY(){
-	return pl_currentRoomY;
-}
-
-void 
-Player::setCurrentRoomX(int x){
-	pl_currentRoomX = x;
-}
-
-void 
-Player::setCurrentRoomY(int y){
-	pl_currentRoomY = y;
-}
-
+//int 
+//Player::getCurrentRoomX(){
+//	return pl_currentRoomX;
+//}
 //
 //int 
-//Player::getHealth(){
-//	return pl_health;
+//Player::getCurrentRoomY(){
+//	return pl_currentRoomY;
 //}
 //
 //void 
-//Player::setHealth(int health){
-//	pl_health = health;
+//Player::setCurrentRoomX(int x){
+//	pl_currentRoomX = x;
 //}
+//
+//void 
+//Player::setCurrentRoomY(int y){
+//	pl_currentRoomY = y;
+//}
+//
+////
+////int 
+////Player::getHealth(){
+////	return pl_health;
+////}
+////
+////void 
+////Player::setHealth(int health){
+////	pl_health = health;
+////}
 
 int 
 Player::getAttackSpeed(){

@@ -4,6 +4,7 @@
 #include "entity.h"
 #include "terrain.h"
 #include "wall.h"
+#include "enemy.h"
 #include <vector>
 
 enum RoomType
@@ -26,13 +27,21 @@ enum RoomType
 	blank
 };
 
-
+enum RoomSpecial
+{
+	NONE,
+	SPAWN,
+	ITEM,
+	SHOP,
+	BOSSROOM,
+	BOSSENTERANCE
+};
 
 class Room: public Entity
 {
 public:
 	Room();
-	Room(int i, int j, RoomType type);
+	Room(int i, int j, RoomType type, RoomSpecial special);
 	~Room();
 
 	void setRoomNumber(RoomType num);
@@ -43,14 +52,29 @@ public:
 	void Draw(BackBuffer& backBuffer);
 	bool IsCollidingWith(Entity& e);
 	RoomType getRoomType();
-	void createWall(int x, int y, int width, int height, Side side);
+	void createWall(int x, int y, int width, int height, Side side, bool door, bool open);
+
+	RoomSpecial getRoomSpecial();
+
+	
+
 
 private:
+	
+
 	RoomType ro_roomNumber;
+	RoomSpecial ro_roomSpecial;
 
 	std::vector<Terrain*> ro_terrainContainer;
 	std::vector<Wall*> ro_wallContainer;
-	//std::vector<Enemy*> enemyContainer;
+	std::vector<Enemy*> ro_enemyContainer;
+
+	bool ro_doorNorth;
+	bool ro_doorEast;
+	bool ro_doorSouth;
+	bool ro_doorWest;
+
+
 };
 
 

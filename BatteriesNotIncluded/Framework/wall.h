@@ -15,7 +15,7 @@ enum Side
 class Wall
 {
 public:
-	Wall(int x, int y, int width, int height, Side side);
+	Wall(int x, int y, int width, int height, Side side, bool door, bool wa_open);
 	~Wall();
 
 	bool IsCollidingWith(Entity& e);
@@ -31,7 +31,8 @@ private:
 	int wa_width;
 	int wa_height;
 	Side wa_side;
-
+	bool wa_door;
+	bool wa_open;
 };
 
 

@@ -40,6 +40,35 @@ GameMap::parseFile()
 			
 			char c;
 			mapfile >> c;
+			RoomSpecial gm_roomType = NONE;
+			////////////////////////////////////
+			if ((int)c == 84)
+			{//T for treasure
+				gm_roomType = ITEM;
+				mapfile >> c;
+			}
+			else if ((int)c == 83)
+			{//S spawn
+				gm_roomType = SPAWN;
+				mapfile >> c;
+			}
+			else if ((int)c == 36)
+			{//$ shop
+				gm_roomType = SHOP;
+				mapfile >> c;
+			}
+			else if ((int)c == 41)
+			{//! boss
+				gm_roomType = BOSSROOM;
+				mapfile >> c;
+			}
+			else if ((int)c == 66)
+			{//B boss entrance
+				gm_roomType = BOSSENTERANCE;
+				mapfile >> c;
+			}
+			///////////////////////////////////
+
 			if ((int)c == 48)
 			{//0
 				gm_room = fourDoors;
@@ -115,25 +144,13 @@ GameMap::parseFile()
 				gm_room = oneDoorOnLeft;
 				roomSprite = backBuffer->CreateSprite("assets\\oneDoorOnLeftOpen.png");
 			}
-			//else if ((int)c == 101)
-			//{//T for treasure
-			//	gm_room = oneDoorOnLeft;
-			//}
-			//else if ((int)c == 101)
-			//{//e
-			//	gm_room = oneDoorOnLeft;
-			//}
-			//else if ((int)c == 101)
-			//{//e
-			//	gm_room = oneDoorOnLeft;
-			//}
 			else 
 			{
 				gm_room = blank;
 				roomSprite = backBuffer->CreateSprite("assets\\Blank.png");
 			}
 
-			Room* room = new Room(j, i, gm_room);
+			Room* room = new Room(j, i, gm_room, gm_roomType);
 			room->Initialise(roomSprite);
 			//room->setRoomNumber(gm_room);
 			gm_layout[j][i] = room;

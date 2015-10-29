@@ -28,8 +28,13 @@ public:
 	float GetPositionY();
 	void  SetPositionY(float y);
 
+	int getCurrentRoomX();	//- moved to entity
+	int getCurrentRoomY();
+	void setCurrentRoomX(int x);	//- moved to entity
+	void setCurrentRoomY(int y);
+
 	float GetHorizontalVelocity();
-	void SetHorizontalVelocity(float x); 
+	void SetHorizontalVelocity(float x);
 
 	float GetVerticalVelocity();
 	void SetVerticalVelocity(float y);
@@ -41,7 +46,7 @@ public:
 	void setHeight(int h);
 
 	bool isPlayer();
-	
+
 	int getHealth();
 	void setHealth(int health);
 protected:
@@ -58,6 +63,9 @@ protected:
 
 	float m_x;
 	float m_y;
+
+	int en_currentRoomX;
+	int en_currentRoomY;
 
 	float m_velocityX;
 	float m_velocityY;

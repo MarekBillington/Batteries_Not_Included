@@ -32,15 +32,15 @@ public:
 
 	//Stats
 
-	int getCurrentRoomX();
-	int getCurrentRoomY();
+	/*int getCurrentRoomX();	//- moved to entity
+	int getCurrentRoomY();*/
 	//int getHealth();
 	int getAttackSpeed();
 	int getAttackDamage();
 	int getMovementSpeed();
 
-	void setCurrentRoomX(int x);
-	void setCurrentRoomY(int y);
+	/*void setCurrentRoomX(int x);	//- moved to entity
+	void setCurrentRoomY(int y);*/
 	//void setHealth(int health);
 	void getAttackSpeed(int attackSpeed);
 	void getAttackDamage(int attackDamage);
@@ -55,7 +55,7 @@ public:
 	void setWeapon(Weapon* weapon);
 	void setPassive(int passiveNum, Passive* passive);
 	void setActive(Active* active);
-	
+
 	//Effects
 	int fireTimeRemaining();
 	int poisonedTimeRemaining();
@@ -77,8 +77,8 @@ private:
 
 	std::string  pl_name;
 
-	int pl_currentRoomX;
-	int pl_currentRoomY;
+	/*int pl_currentRoomX;	- moved to entity
+	int pl_currentRoomY;*/
 
 	//int pl_health;
 	int pl_attackSpeed;
@@ -95,12 +95,11 @@ private:
 
 	Active* pl_active;
 
-	
+
 	int pl_remainingDurationPoisoned;
 	int pl_remainingDurationFire;
 	int pl_remainingDurationElectrocuted;
 	int pl_remainingDurationRepairing;
-	
 
 
 };
