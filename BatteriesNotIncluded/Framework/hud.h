@@ -16,7 +16,7 @@ public:
 	~Hud();
 
 	void Process(float deltatime);
-	void Draw(BackBuffer& backBuffer);
+	void Draw(BackBuffer& backBuffer, int minutesToBoss, int secondsToBoss);
 
 	//something to update current item room
 	//something for boss timer

@@ -69,6 +69,7 @@ public:
 	void setElectrocuted(int duration);
 	void setRepairing(int duration);
 
+	int pl_deathCount;
 	int getWidth();
 	int getHeight();
 	bool isPlayer();

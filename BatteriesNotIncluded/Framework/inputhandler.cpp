@@ -258,6 +258,11 @@ InputHandler::ProcessInput(Game& game)
 				{
 					game.minusHealth();
 				}
+				else if (e.key.keysym.sym == SDLK_m)
+				{
+					game.minutesToBoss = 0;
+					game.secondsToBoss = 0;
+				}
 				else if (e.key.keysym.sym == SDLK_3)
 				{
 					game.ga_hud->mapType = !game.ga_hud->mapType;

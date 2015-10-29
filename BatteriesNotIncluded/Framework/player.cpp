@@ -5,6 +5,7 @@
 
 Player::Player()
 	:pl_direction(0)
+	, pl_deathCount(0)
 	
 {
 	setHealth(1000);

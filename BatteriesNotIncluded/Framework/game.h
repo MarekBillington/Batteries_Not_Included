@@ -89,7 +89,9 @@ private:
 
 	//Member Data:
 public:
-
+	int secondsToBoss;
+	int minutesToBoss;
+	bool bossTime = false;
 protected:
 	static Game* sm_pInstance;
 	BackBuffer* m_pBackBuffer;

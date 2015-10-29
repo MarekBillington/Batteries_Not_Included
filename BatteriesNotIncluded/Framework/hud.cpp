@@ -2,6 +2,7 @@
 #include "hud.h"
 #include "player.h"
 #include "backbuffer.h"
+#include <sstream>
 
 Hud::Hud(Player* p)
 {
@@ -21,7 +22,7 @@ Hud::Process(float deltaTime)
 }
 
 void
-Hud::Draw(BackBuffer& backBuffer)
+Hud::Draw(BackBuffer& backBuffer, int minutesToBoss, int secondsToBoss)
 {
 	//get health, find how much is bar and how much is batteries
 	int health = hu_player->getHealth();
@@ -129,9 +130,34 @@ Hud::Draw(BackBuffer& backBuffer)
 	//draw Active
 	//hu_player->getActive();
 
+	//draw Death Count
+	std::stringstream ss;
+	ss << hu_player->pl_deathCount;
+	std::string str = ss.str();
+	Sprite* deathCount = backBuffer.CreateText("Deaths: " + str, { 0, 0, 0, 150 }, "assets//dkjalebi.otf", 30);
+	deathCount->SetX(10);
+	deathCount->SetY(690);
+	backBuffer.DrawSpriteHUD(*deathCount);
 
 	//get boss timer
-	//backBuffer.drawText(bossTimer);
+	if (minutesToBoss > 0 && secondsToBoss > 0){
+		std::stringstream ss1;
+		ss1 << minutesToBoss;
+		std::string str1 = ss1.str();
+		std::stringstream ss2;
+		ss2 << secondsToBoss;
+		str1 += ":" + ss2.str();
+		Sprite* bossTimer = backBuffer.CreateText("Boss: " + str1, { 0, 0, 0, 150 }, "assets//dkjalebi.otf", 30);
+		bossTimer->SetX(1100);
+		bossTimer->SetY(175);
+		backBuffer.DrawSpriteHUD(*bossTimer);
+	}
+	else {
+		Sprite* bossTimer = backBuffer.CreateText("Its Boss Time", { 0, 0, 0, 150 }, "assets//dkjalebi.otf", 30);
+		bossTimer->SetX(1100);
+		bossTimer->SetY(175);
+		backBuffer.DrawSpriteHUD(*bossTimer);
+	}
 
 	//get item room timer
 	//backBuffer.drawText(bossTimer);

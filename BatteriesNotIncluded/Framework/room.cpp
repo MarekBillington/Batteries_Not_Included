@@ -90,7 +90,14 @@ Room::Process(float deltaTime)
 void
 Room::Draw(BackBuffer& backBuffer)
 {
-	m_pSprite->Draw(backBuffer);
+	if (ro_Locked == false){
+		m_pSprite->Draw(backBuffer);
+	}
+	else {
+	//
+		//s +=
+		//Sprite* lockdown = backBuffer.CreateSprite("");
+	}
 
 	for (size_t i = 0; i < ro_terrainContainer.size(); i++)
 	{
@@ -251,6 +258,9 @@ Room::createTerrain(RoomType type){
 
 		Enemy* theHoOfHoes = new Enemy(ROBORAT, m_x + 400, m_y + 300, backBuffer);
 		ro_enemyContainer.push_back(theHoOfHoes);
+
+		Terrain* dwayneTheSpikeJohnson = new Terrain(SPIKE, m_x + 900, m_y + 320, backBuffer);
+		ro_terrainContainer.push_back(dwayneTheSpikeJohnson);
 
 		ro_doorNorth = false;
 		ro_doorEast = false;

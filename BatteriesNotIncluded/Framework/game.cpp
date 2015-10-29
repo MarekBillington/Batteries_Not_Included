@@ -197,6 +197,9 @@ Game::Initialise()
 	screenWidth = 1280;
 	screenHeight = 720;
 
+	secondsToBoss = 0;
+	minutesToBoss = 10;
+
 	m_pBackBuffer = new BackBuffer();
 	if (!m_pBackBuffer->Initialise(screenWidth, screenHeight))
 	{
@@ -355,6 +358,22 @@ Game::Process(float deltaTime)
 	// Frame Counter:
 	if (m_elapsedSeconds > 1)
 	{
+		//Boss Timer
+		if (ga_gameState == RUNNING){
+			if (secondsToBoss == 0 && minutesToBoss > 0){
+				minutesToBoss--;
+				secondsToBoss = 59;
+			}
+			else if (secondsToBoss > 0){
+				secondsToBoss--;
+			}
+			//Move to Boss Room
+			if (minutesToBoss == 0 && secondsToBoss == 0 && bossTime == false){
+				playerList.at(clientID)->SetPositionX((4 * 1280) + 200 + (clientID*50));
+				playerList.at(clientID)->SetPositionY((3 * 720) + 460);
+				bossTime = true;
+			}
+		}
 		m_elapsedSeconds -= 1;
 		m_FPS = m_frameCount;
 		m_frameCount = 0;
@@ -364,6 +383,81 @@ Game::Process(float deltaTime)
 	{
 		Player* e = (Player*)iterator->second;
 		e->Process(deltaTime);
+		//basic Respawn(
+		if (e->getHealth() <= 0){
+			e->setHealth(1000);
+			e->pl_deathCount++;
+			if (playerList.size() > 0){
+				int tempX;
+				int tempY;
+				if (!bossTime){
+					tempX = 640;
+					tempY = 320;
+				}
+				else {
+					tempX = (4 * 1280) + 200 + (0 * 50);
+					tempY = (3 * 720) + 460;
+				}
+				if (e == playerList[0]){
+					playerList.at(0)->SetPositionX(tempX);
+					playerList.at(0)->SetPositionY(tempY);
+				}
+			}
+			if (playerList.size() > 1) {
+				if (e == playerList[1]){
+					int tempX;
+					int tempY;
+					if (!bossTime){
+						tempX = 640;
+						tempY = (8 * 720) + 360;
+					}
+					else {
+						tempX = (4 * 1280) + 200 + (1 * 50);
+						tempY = (3 * 720) + 460;
+					}
+					if (e == playerList[1]){
+						playerList.at(1)->SetPositionX(tempX);
+						playerList.at(1)->SetPositionY(tempY);
+					}
+				}
+			}
+			if (playerList.size() > 2) {
+				if (e == playerList[2]){
+					int tempX;
+					int tempY;
+					if (!bossTime){
+						tempX = (8 * 1280) + 640;
+						tempY = (8 * 720) + 360;
+					}
+					else {
+						tempX = (4 * 1280) + 200 + (2 * 50);
+						tempY = (3 * 720) + 460;
+					}
+					if (e == playerList[2]){
+						playerList.at(2)->SetPositionX(tempX);
+						playerList.at(2)->SetPositionY(tempY);
+					}
+				}
+			}
+			if (playerList.size() > 3) {
+				if (e == playerList[3]){
+					int tempX;
+					int tempY;
+					if (!bossTime){
+						tempX = (8 * 1280) + 640;
+						tempY = 360;
+					}
+					else {
+						tempX = (4 * 1280) + 200 + (3 * 50);
+						tempY= (3 * 720) + 460;
+					}
+					if (e == playerList[3]){
+						playerList.at(3)->SetPositionX(tempX);
+						playerList.at(3)->SetPositionY(tempY);
+					}
+				}
+			}
+		}
 
 		if (ga_gameState == RUNNING){
 			ga_gameMap->getRoomAt(e->getCurrentRoomX(), e->getCurrentRoomY())->Process(deltaTime);
@@ -709,7 +803,7 @@ Game::Draw(BackBuffer& backBuffer)
 		}
 
 		if (ga_hud != 0)
-			ga_hud->Draw(backBuffer);
+			ga_hud->Draw(backBuffer, minutesToBoss, secondsToBoss);
 
 	}
 	

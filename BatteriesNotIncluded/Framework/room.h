@@ -6,6 +6,8 @@
 #include "wall.h"
 #include "enemy.h"
 #include <vector>
+#include "sprite.h"
+#include "texture.h"
 
 enum RoomType
 {
@@ -55,10 +57,7 @@ public:
 	void createWall(int x, int y, int width, int height, Side side, bool door, bool open);
 
 	RoomSpecial getRoomSpecial();
-
-	
-
-
+	bool ro_Locked = false;
 private:
 	
 
