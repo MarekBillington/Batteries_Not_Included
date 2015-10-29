@@ -372,6 +372,7 @@ Game::Process(float deltaTime)
 				playerList.at(clientID)->SetPositionX((4 * 1280) + 200 + (clientID*50));
 				playerList.at(clientID)->SetPositionY((3 * 720) + 460);
 				bossTime = true;
+				ga_gameMap->getRoomAt(4, 3)->ro_Locked = true;
 			}
 		}
 		m_elapsedSeconds -= 1;

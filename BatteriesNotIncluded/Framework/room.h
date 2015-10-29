@@ -56,6 +56,7 @@ public:
 	RoomType getRoomType();
 	void createWall(int x, int y, int width, int height, Side side, bool door, bool open);
 
+	Sprite* ro_lockedSprite;
 	RoomSpecial getRoomSpecial();
 	bool ro_Locked = false;
 private:

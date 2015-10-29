@@ -70,6 +70,9 @@ Room::Process(float deltaTime)
 {
 	m_pSprite->SetX(static_cast<int>(m_x));
 	m_pSprite->SetY(static_cast<int>(m_y)); 
+	ro_lockedSprite->SetX(static_cast<int>(m_x));
+	ro_lockedSprite->SetY(static_cast<int>(m_y));
+
 
 	for (size_t i = 0; i < ro_terrainContainer.size(); i++)
 	{
@@ -94,9 +97,7 @@ Room::Draw(BackBuffer& backBuffer)
 		m_pSprite->Draw(backBuffer);
 	}
 	else {
-	//
-		//s +=
-		//Sprite* lockdown = backBuffer.CreateSprite("");
+		ro_lockedSprite->Draw(backBuffer);
 	}
 
 	for (size_t i = 0; i < ro_terrainContainer.size(); i++)
@@ -119,7 +120,8 @@ Room::IsCollidingWith(Entity& e){
 
 	for (size_t i = 0; i < ro_wallContainer.size(); i++)
 	{
-		ro_wallContainer.at(i)->IsCollidingWith(e);
+		
+		ro_wallContainer.at(i)->IsCollidingWith(e, ro_Locked);
 		result = true;
 	}
 

@@ -18,7 +18,7 @@ public:
 	Wall(int x, int y, int width, int height, Side side, bool door, bool wa_open);
 	~Wall();
 
-	bool IsCollidingWith(Entity& e);
+	bool IsCollidingWith(Entity& e, bool lockdown);
 	int getX();
 	int getY();
 	int getWidth();

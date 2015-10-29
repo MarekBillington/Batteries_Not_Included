@@ -540,10 +540,10 @@
     <ClInclude Include="wall.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\Liam%27s Laptop\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\Framework\enemy.h">
+    <ClInclude Include="enemy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\Liam%27s Laptop\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\Framework\bullet.h">
+    <ClInclude Include="bullet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -941,10 +941,10 @@
     <ClCompile Include="wall.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Liam%27s Laptop\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\Framework\enemy.cpp">
+    <ClCompile Include="bullet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Liam%27s Laptop\Documents\GitHub\Batteries_Not_Included\BatteriesNotIncluded\Framework\bullet.cpp">
+    <ClCompile Include="enemy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

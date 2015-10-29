@@ -19,7 +19,7 @@ Wall::~Wall()
 
 
 bool
-Wall::IsCollidingWith(Entity& e)
+Wall::IsCollidingWith(Entity& e, bool lockdown)
 {
 	bool result = false;
 
@@ -42,7 +42,7 @@ Wall::IsCollidingWith(Entity& e)
 
 	if (wa_side == TOP || wa_side == BOTTOM){
 
-		if (wa_door && wa_open){
+		if (wa_door && wa_open && !lockdown){
 			e.SetPositionX(wa_xloc + 10);
 		}
 		else{
@@ -68,7 +68,7 @@ Wall::IsCollidingWith(Entity& e)
 	else if (wa_side == LEFT || wa_side == RIGHT){
 		
 
-		if (wa_door && wa_open){
+		if (wa_door && wa_open && !lockdown){
 			e.SetPositionY(wa_yloc - 10);
 		}
 		else{

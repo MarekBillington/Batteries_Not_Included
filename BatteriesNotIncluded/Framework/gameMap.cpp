@@ -37,6 +37,7 @@ GameMap::parseFile()
 		for (size_t j = 0; j < 9; j++)
 		{
 			Sprite* roomSprite;
+			Sprite* lockedSprite;
 			
 			char c;
 			mapfile >> c;
@@ -73,85 +74,103 @@ GameMap::parseFile()
 			{//0
 				gm_room = fourDoors;
 				roomSprite = backBuffer->CreateSprite("assets\\AllDoorsOpenRoom.png");
+				lockedSprite = backBuffer->CreateSprite("assets\\AllDoorsClosedRoom.png");
 			}
 			else if ((int)c == 49)
 			{//1
 				gm_room = threeDoorsTopWall;
 				roomSprite = backBuffer->CreateSprite("assets\\threeDoorsTopWallOpen.png");
+				lockedSprite = backBuffer->CreateSprite("assets\\threeDoorsTopWallClosed.png");
 			}
 			else if ((int)c == 50)
 			{//2
 				gm_room = threeDoorsBottomWall;
 				roomSprite = backBuffer->CreateSprite("assets\\threeDoorsBottomWallOpen.png");
+				lockedSprite = backBuffer->CreateSprite("assets\\threeDoorsBottomWallClosed.png");
 			}
 			else if ((int)c == 51)
 			{//3
 				gm_room = threeDoorsLeftWall;
 				roomSprite = backBuffer->CreateSprite("assets\\threeDoorsLeftWallOpen.png");
+				lockedSprite = backBuffer->CreateSprite("assets\\threeDoorsLeftWallClosed.png");
 			}
 			else if ((int)c == 52)
 			{//4
 				gm_room = threeDoorsRightWall;
 				roomSprite = backBuffer->CreateSprite("assets\\threeDoorsRightWallOpen.png");
+				lockedSprite = backBuffer->CreateSprite("assets\\threeDoorsRightWallClosed.png");
 			}
 			else if ((int)c == 53)
 			{//5
 				gm_room = twoDoorsTopLeftWalls;
 				roomSprite = backBuffer->CreateSprite("assets\\twoDoorsTopLeftWallsOpen.png");
+				lockedSprite = backBuffer->CreateSprite("assets\\twoDoorsTopLeftWallsClosed.png");
 			}
 			else if ((int)c == 54)
 			{//6
 				gm_room = twoDoorsTopRightWalls;
 				roomSprite = backBuffer->CreateSprite("assets\\twoDoorsTopRightWallsOpen.png");
+				lockedSprite = backBuffer->CreateSprite("assets\\twoDoorsTopRightWallsClosed.png");
 			}
 			else if ((int)c == 55)
 			{//7
 				gm_room = twoDoorsBottomLeftWalls;
 				roomSprite = backBuffer->CreateSprite("assets\\twoDoorsBottomLeftWallsOpen.png");
+				lockedSprite = backBuffer->CreateSprite("assets\\twoDoorsBottomLeftWallsClosed.png");
 			}
 			else if ((int)c == 56)
 			{//8
 				gm_room = twoDoorsBottomRightWalls;
 				roomSprite = backBuffer->CreateSprite("assets\\twoDoorsBottomRightWallsOpen.png");
+				lockedSprite = backBuffer->CreateSprite("assets\\twoDoorsBottomRightWallsClosed.png");
 			}
 			else if ((int)c == 57)
 			{//9
 				gm_room = twoDoorsSplitHorizontal;
 				roomSprite = backBuffer->CreateSprite("assets\\twoDoorsSplitHorizontalOpen.png");
+				lockedSprite = backBuffer->CreateSprite("assets\\twoDoorsSplitHorizontalClosed.png");
 			}
 			else if ((int)c == 97)
 			{//a
 				gm_room = twoDoorsSplitVertical;
 				roomSprite = backBuffer->CreateSprite("assets\\twoDoorsSplitVerticalOpen.png");
+				lockedSprite = backBuffer->CreateSprite("assets\\twoDoorsSplitVerticalClosed.png");
 			}
 			else if ((int)c == 98)
 			{//b
 				gm_room = oneDoorAtBottom;
 				roomSprite = backBuffer->CreateSprite("assets\\oneDoorAtBottomOpen.png");
+				lockedSprite = backBuffer->CreateSprite("assets\\oneDoorAtBottomClosed.png");
 			}
 			else if ((int)c == 99)
 			{//c
 				gm_room = oneDoorAtTop;
 				roomSprite = backBuffer->CreateSprite("assets\\oneDoorAtTopOpen.png");
+				lockedSprite = backBuffer->CreateSprite("assets\\oneDoorAtTopClosed.png");
 			}
 			else if ((int)c == 100)
 			{//d
 				gm_room = oneDoorOnRight;
 				roomSprite = backBuffer->CreateSprite("assets\\oneDoorOnRightOpen.png");
+				lockedSprite = backBuffer->CreateSprite("assets\\oneDoorOnRightClosed.png");
 			}
 			else if ((int)c == 101)
 			{//e
 				gm_room = oneDoorOnLeft;
 				roomSprite = backBuffer->CreateSprite("assets\\oneDoorOnLeftOpen.png");
+				lockedSprite = backBuffer->CreateSprite("assets\\oneDoorOnLeftClosed.png");
 			}
 			else 
 			{
 				gm_room = blank;
 				roomSprite = backBuffer->CreateSprite("assets\\Blank.png");
+				lockedSprite = backBuffer->CreateSprite("assets\\Blank.png");
+
 			}
 
 			Room* room = new Room(j, i, gm_room, gm_roomType);
 			room->Initialise(roomSprite);
+			room->ro_lockedSprite = lockedSprite;
 			//room->setRoomNumber(gm_room);
 			gm_layout[j][i] = room;
 		}
