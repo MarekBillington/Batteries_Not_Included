@@ -221,7 +221,7 @@ Enemy::setInitialStats(){
 void
 Enemy::roboratProcess(){
 	if (en_enemyState == PASSIVE){
-
+		
 	}
 	else if (en_enemyState == AGRO){
 
