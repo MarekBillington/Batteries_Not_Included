@@ -37,6 +37,7 @@ public:
 	bool Initialise();
 	bool DoGameLoop();
 	void Quit();
+	void Reset();
 
 	void MoveSpaceShipHor(float speed);
 	void MoveSpaceShipVert(float speed);
