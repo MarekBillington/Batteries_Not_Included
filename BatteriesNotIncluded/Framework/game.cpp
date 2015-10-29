@@ -100,7 +100,8 @@ enum GameMessages
 	PLAYER_DISCONNECT = ID_USER_PACKET_ENUM + 5,
 	CLIENT_ID = ID_USER_PACKET_ENUM + 6,
 	CLIENT_END = ID_USER_PACKET_ENUM + 7,
-	LOBBY_NEW_PLAYER = ID_USER_PACKET_ENUM + 8
+	LOBBY_NEW_PLAYER = ID_USER_PACKET_ENUM + 8,
+	PLAYER_SHOOT = ID_USER_PACKET_ENUM + 9
 };
 
 Game&
@@ -310,7 +311,7 @@ Game::Process(float deltaTime)
 		ga_hud = new Hud(playerList.at(clientID));
 		hudCreated = false;
 		if (playerList.size() > 1) {
-			playerList.at(2)->SetPositionX(640);
+			playerList.at(1)->SetPositionX(640);
 			playerList.at(1)->SetPositionY((8 * 720) + 360);
 		}
 		if (playerList.size() > 2) {
@@ -363,6 +364,15 @@ Game::Process(float deltaTime)
 	{
 		Player* e = (Player*)iterator->second;
 		e->Process(deltaTime);
+
+		for (int i = 0; i < e->pl_bulletContainer.size(); i++)
+		{
+			Bullet* bullet = e->pl_bulletContainer.at(i);
+
+
+			bullet->Process(deltaTime);
+
+		}
 	}
 
 	
@@ -426,6 +436,11 @@ Game::Draw(BackBuffer& backBuffer)
 		{
 			Player* e = iterator->second;
 			e->Draw(backBuffer);
+
+			for each (Bullet* bullet in e->pl_bulletContainer)
+			{
+				bullet->Draw(backBuffer);
+			}
 		}
 
 		if (playerCreated){
@@ -773,9 +788,72 @@ Game::MoveSpaceShipVert(float speed)
 
 
 void 
-Game::FireSpaceShipBullet()
+Game::FirePlayerBullet(int dir)
 {
-	
+	Sprite* bulletSprite = m_pBackBuffer->CreateSprite("assets\\playerbullet.png");
+	Bullet* bullet;
+	switch (dir)
+	{
+	case 1:
+		bullet = new Bullet(dir);
+		bullet->Initialise(bulletSprite);
+
+		bullet->SetPositionX(playerList[clientID]->GetPositionX());
+		bullet->SetPositionY(playerList[clientID]->GetPositionY());
+		/*bullet->SetPositionX(playerList.at(0)->GetPositionX());
+		bullet->SetPositionY(playerList.at(0)->GetPositionY());*/
+
+		bullet->SetVerticalVelocity(-600);
+		break;
+	case 2:
+		bullet = new Bullet(dir);
+		bullet->Initialise(bulletSprite);
+
+		bullet->SetPositionX(playerList[clientID]->GetPositionX());
+		bullet->SetPositionY(playerList[clientID]->GetPositionY());
+
+
+		bullet->SetVerticalVelocity(600);
+		break;
+	case 3:
+		bullet = new Bullet(dir);
+		bullet->Initialise(bulletSprite);
+
+		bullet->SetPositionX(playerList[clientID]->GetPositionX());
+		bullet->SetPositionY(playerList[clientID]->GetPositionY());
+
+		bullet->SetHorizontalVelocity(-600);
+		break;
+	case 4:
+		bullet = new Bullet(dir);
+		bullet->Initialise(bulletSprite);
+
+
+		bullet->SetPositionX(playerList[clientID]->GetPositionX());
+		bullet->SetPositionY(playerList[clientID]->GetPositionY());
+
+		bullet->SetHorizontalVelocity(600);
+		break;
+	}
+	playerList.at(clientID)->pl_bulletContainer.push_back(bullet);
+	playerList[clientID]->pl_bulletContainer.push_back(bullet);
+	if (isServer){
+		for (it_sysaddr iterator = netClients.begin(); iterator != netClients.end(); iterator++){
+			RakNet::BitStream bsOut;
+			bsOut.Write((RakNet::MessageID)PLAYER_SHOOT);
+			bsOut.Write(clientID);
+			bsOut.Write(dir);
+			peer->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, iterator->second, false);
+		}
+	}
+	else
+	{
+		RakNet::BitStream bsOut;
+		bsOut.Write((RakNet::MessageID)PLAYER_SHOOT);
+		bsOut.Write(clientID);
+		bsOut.Write(dir);
+		peer->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, ServerName, false);
+	}
 }
 
 void 
@@ -1342,7 +1420,70 @@ NetworkThread()
 
 				}
 					break;
+				case PLAYER_SHOOT:
+				{
+					int i;
+					int dirCheck;
+					RakNet::BitStream bsIn(packet->data, packet->length, false);
+					bsIn.IgnoreBytes(sizeof(RakNet::MessageID));
+					bsIn.Read(i);
+					bsIn.Read(dirCheck);
+					//int i;
+
+					//for (it_sysaddr iterator = netClients.begin(); iterator != netClients.end(); iterator++){
+					//if (packet->systemAddress == iterator->second)
+					//{
+					//	i = iterator->first;
+					//}
+					//}
+
+					for (it_sysaddr iterator = netClients.begin(); iterator != netClients.end(); iterator++){
+						if (iterator->first != i){
+							RakNet::BitStream bsOut;
+							bsOut.Write((RakNet::MessageID)PLAYER_SHOOT);
+							bsOut.Write(i);
+							bsOut.Write(dirCheck);
+							peer->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, iterator->second, false);
+						}
+					}
+
+
+					Sprite* bulletSprite = backBuffer->CreateSprite("assets\\playerbullet.png");
+					Bullet* bullet = new Bullet(dirCheck);
+					bullet->Initialise(bulletSprite);
+					bullet->SetPositionX(playerList[i]->GetPositionX());
+					bullet->SetPositionY(playerList[i]->GetPositionY());
+					switch (dirCheck)
+					{
+					case 1:
+					{
+							bullet->SetVerticalVelocity(-600);
+					}
+						break;
+					case 2:
+					{
+							bullet->SetVerticalVelocity(600);
+					}
+						break;
+					case 3:
+					{
+							bullet->SetHorizontalVelocity(-600);
+					}
+						break;
+					case 4:
+					{
+							bullet->SetHorizontalVelocity(600);
+					}
+						break;
+					}
+
+					playerList.at(i)->pl_bulletContainer.push_back(bullet);
+					playerList[i]->pl_bulletContainer.push_back(bullet);
+
 				}
+					break;
+				}
+				
 			}
 		}
 		else
@@ -1527,6 +1668,50 @@ NetworkThread()
 
 						playerL2TextList[i] = pText;
 					}
+				}
+					break;
+				case PLAYER_SHOOT:
+				{
+					int dirCheck;
+					int id;
+					RakNet::BitStream bsIn(packet->data, packet->length, false);
+					bsIn.IgnoreBytes(sizeof(RakNet::MessageID));
+					bsIn.Read(id);
+					bsIn.Read(dirCheck);
+
+
+
+					Sprite* bulletSprite = backBuffer->CreateSprite("assets\\playerbullet.png");
+					Bullet* bullet = new Bullet(dirCheck);
+					bullet->Initialise(bulletSprite);
+					bullet->SetPositionX(playerList[id]->GetPositionX());
+					bullet->SetPositionY(playerList[id]->GetPositionY());
+					switch (dirCheck)
+					{
+					case 1:
+					{
+							bullet->SetVerticalVelocity(-600);
+					}
+						break;
+					case 2:
+					{
+							bullet->SetVerticalVelocity(600);
+					}
+						break;
+					case 3:
+					{
+							bullet->SetHorizontalVelocity(-600);
+					}
+						break;
+					case 4:
+					{
+							bullet->SetHorizontalVelocity(600);
+					}
+						break;
+					}
+
+					playerList.at(id)->pl_bulletContainer.push_back(bullet);
+					playerList[id]->pl_bulletContainer.push_back(bullet);
 				}
 					break;
 				}

@@ -282,6 +282,22 @@ InputHandler::ProcessInput(Game& game)
 				{
 					game.MoveSpaceShipVert(300);
 				}
+				else if (e.key.keysym.sym == SDLK_UP)
+				{
+					game.FirePlayerBullet(1);
+				}
+				else if (e.key.keysym.sym == SDLK_DOWN)
+				{
+					game.FirePlayerBullet(2);
+				}
+				else if (e.key.keysym.sym == SDLK_LEFT)
+				{
+					game.FirePlayerBullet(3);
+				}
+				else if (e.key.keysym.sym == SDLK_RIGHT)
+				{
+					game.FirePlayerBullet(4);
+				}
 			}
 			else if (e.type == SDL_KEYUP){
 
