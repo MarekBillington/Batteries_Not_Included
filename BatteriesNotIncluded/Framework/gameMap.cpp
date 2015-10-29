@@ -41,80 +41,92 @@ GameMap::parseFile()
 			char c;
 			mapfile >> c;
 			if ((int)c == 48)
-			{
+			{//0
 				gm_room = fourDoors;
 				roomSprite = backBuffer->CreateSprite("assets\\AllDoorsOpenRoom.png");
 			}
 			else if ((int)c == 49)
-			{
+			{//1
 				gm_room = threeDoorsTopWall;
 				roomSprite = backBuffer->CreateSprite("assets\\threeDoorsTopWallOpen.png");
 			}
 			else if ((int)c == 50)
-			{
+			{//2
 				gm_room = threeDoorsBottomWall;
 				roomSprite = backBuffer->CreateSprite("assets\\threeDoorsBottomWallOpen.png");
 			}
 			else if ((int)c == 51)
-			{
+			{//3
 				gm_room = threeDoorsLeftWall;
 				roomSprite = backBuffer->CreateSprite("assets\\threeDoorsLeftWallOpen.png");
 			}
 			else if ((int)c == 52)
-			{
+			{//4
 				gm_room = threeDoorsRightWall;
 				roomSprite = backBuffer->CreateSprite("assets\\threeDoorsRightWallOpen.png");
 			}
 			else if ((int)c == 53)
-			{
+			{//5
 				gm_room = twoDoorsTopLeftWalls;
 				roomSprite = backBuffer->CreateSprite("assets\\twoDoorsTopLeftWallsOpen.png");
 			}
 			else if ((int)c == 54)
-			{
+			{//6
 				gm_room = twoDoorsTopRightWalls;
 				roomSprite = backBuffer->CreateSprite("assets\\twoDoorsTopRightWallsOpen.png");
 			}
 			else if ((int)c == 55)
-			{
+			{//7
 				gm_room = twoDoorsBottomLeftWalls;
 				roomSprite = backBuffer->CreateSprite("assets\\twoDoorsBottomLeftWallsOpen.png");
 			}
 			else if ((int)c == 56)
-			{
+			{//8
 				gm_room = twoDoorsBottomRightWalls;
 				roomSprite = backBuffer->CreateSprite("assets\\twoDoorsBottomRightWallsOpen.png");
 			}
 			else if ((int)c == 57)
-			{
+			{//9
 				gm_room = twoDoorsSplitHorizontal;
 				roomSprite = backBuffer->CreateSprite("assets\\twoDoorsSplitHorizontalOpen.png");
 			}
 			else if ((int)c == 97)
-			{
+			{//a
 				gm_room = twoDoorsSplitVertical;
 				roomSprite = backBuffer->CreateSprite("assets\\twoDoorsSplitVerticalOpen.png");
 			}
 			else if ((int)c == 98)
-			{
+			{//b
 				gm_room = oneDoorAtBottom;
 				roomSprite = backBuffer->CreateSprite("assets\\oneDoorAtBottomOpen.png");
 			}
 			else if ((int)c == 99)
-			{
+			{//c
 				gm_room = oneDoorAtTop;
 				roomSprite = backBuffer->CreateSprite("assets\\oneDoorAtTopOpen.png");
 			}
 			else if ((int)c == 100)
-			{
+			{//d
 				gm_room = oneDoorOnRight;
 				roomSprite = backBuffer->CreateSprite("assets\\oneDoorOnRightOpen.png");
 			}
 			else if ((int)c == 101)
-			{
+			{//e
 				gm_room = oneDoorOnLeft;
 				roomSprite = backBuffer->CreateSprite("assets\\oneDoorOnLeftOpen.png");
 			}
+			//else if ((int)c == 101)
+			//{//T for treasure
+			//	gm_room = oneDoorOnLeft;
+			//}
+			//else if ((int)c == 101)
+			//{//e
+			//	gm_room = oneDoorOnLeft;
+			//}
+			//else if ((int)c == 101)
+			//{//e
+			//	gm_room = oneDoorOnLeft;
+			//}
 			else 
 			{
 				gm_room = blank;

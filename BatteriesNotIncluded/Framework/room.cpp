@@ -14,6 +14,27 @@ Room::Room(int i, int j, RoomType type)
 	//could probably do this above but eh
 
 	createTerrain(type);
+
+	//topwall
+	createWall(m_x + 0, m_y + 0, 580, 93, TOP);
+	createWall(m_x + 580, m_y + 0, 120, 93, TOP);
+	createWall(m_x + 700, m_y + 0, 580, 93, TOP);
+
+	//rightwall
+	createWall(m_x + 1129, m_y + 0, 151, 301, RIGHT);
+	createWall(m_x + 1129, m_y + 301, 151, 117, RIGHT);
+	createWall(m_x + 1129, m_y + 418, 151, 302, RIGHT);
+
+	//bottomwall
+	createWall(m_x + 0, m_y + 625, 580, 95, BOTTOM);
+	createWall(m_x + 580, m_y + 625, 120, 95, BOTTOM);
+	createWall(m_x + 700, m_y + 625, 580, 95, BOTTOM);
+
+	//leftwall
+	createWall(m_x + 0, m_y + 0, 151, 301, LEFT);
+	createWall(m_x + 0, m_y + 301, 151, 117, LEFT);
+	createWall(m_x + 0, m_y + 418, 151, 302, LEFT);
+
 }
 
 Room::~Room()
@@ -53,26 +74,16 @@ Room::Draw(BackBuffer& backBuffer)
 bool 
 Room::IsCollidingWith(Entity& e){
 
-	//for players only this code is whack
 	bool result = false;
+	/////////////////////////////////////
 
-	/*float terX = m_x;
-	float terY = m_y;
-	float entX = e.GetPositionX();
-	float entY = e.GetPositionY();
-
-
-
-	if (terX < entX && terX + 80 > entX && terY < entY && terY + 80 > entY)
+	for (size_t i = 0; i < ro_wallContainer.size(); i++)
 	{
-		Sprite* sprite = e.getSprite();
-		int eWidth = sprite->GetWidth();
-		int eHeight = sprite->GetHeight();
-
+		ro_wallContainer.at(i)->IsCollidingWith(e);
 		result = true;
 	}
-	return result;*/
 
+	///////////////////////////////////////
 	for (size_t i = 0; i < ro_terrainContainer.size(); i++)
 	{
 		ro_terrainContainer.at(i)->IsCollidingWith(e);
@@ -158,7 +169,15 @@ Room::createTerrain(RoomType type){
 
 }
 
+<<<<<<< HEAD
 RoomType
 Room::getRoomType(){
 	return ro_roomNumber;
+=======
+
+void 
+Room::createWall(int x, int y, int width, int height, Side side){
+	Wall* wall = new Wall(x, y, width, height, side);
+	ro_wallContainer.push_back(wall);
+>>>>>>> 380c5c16e3ea1fa226d337c14d2526416f74f16c
 }

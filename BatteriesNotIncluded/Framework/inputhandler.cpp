@@ -90,7 +90,7 @@ InputHandler::ProcessInput(Game& game)
 				SDL_GetMouseState(&x, &y);
 				if (460 < x && x < 820 && 216 < y && y < 286){
 					//Host lobby
-					game.ga_gameState = LOBBY_HOST;
+					game.ga_gameState = LOBBY;
 					game.initiateServer();
 				}
 
@@ -101,16 +101,7 @@ InputHandler::ProcessInput(Game& game)
 				}
 			}
 		}
-		if (game.ga_gameState == LOBBY_HOST)
-		{
-			if (e.type == SDL_KEYDOWN){
-				if (e.key.keysym.sym == SDLK_RETURN)
-				{
-					//game.initiateServer();
-					game.ga_gameState = LOBBY;
-				}
-			}
-		}
+	
 		if (game.ga_gameState == LOBBY_JOIN)
 		{
 			
@@ -203,19 +194,19 @@ InputHandler::ProcessInput(Game& game)
 				}
 				else if (e.key.keysym.sym == SDLK_d)
 				{
-					game.MoveSpaceShipHor(100);
+					game.MoveSpaceShipHor(300);
 				}
 				else if (e.key.keysym.sym == SDLK_a)
 				{
-					game.MoveSpaceShipHor(-100);
+					game.MoveSpaceShipHor(-300);
 				}
 				else if (e.key.keysym.sym == SDLK_w)
 				{
-					game.MoveSpaceShipVert(-100);
+					game.MoveSpaceShipVert(-300);
 				}
 				else if (e.key.keysym.sym == SDLK_s)
 				{
-					game.MoveSpaceShipVert(100);
+					game.MoveSpaceShipVert(300);
 				}
 			}
 			else if (e.type == SDL_KEYUP){
