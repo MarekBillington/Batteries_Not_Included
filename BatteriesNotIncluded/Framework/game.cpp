@@ -55,7 +55,7 @@ bool serverInitiated = false;
 bool sending = true;
 char str[512];
 bool isRunning;
-float volumeSlide = 0.5f;
+float volumeSlide = 1.0f;
 char* name = "NAME";
 std::string clientName = "";
 char* serverAdd = "IP";
@@ -340,6 +340,7 @@ Game::Process(float deltaTime)
 			for (it_players iterator = playerList.begin(); iterator != playerList.end(); iterator++)
 			{
 				Player* e = (Player*)iterator->second;
+				
 				if (ga_gameState == RUNNING){
 					ga_gameMap->getRoomAt(e->getCurrentRoomX(), e->getCurrentRoomY())->IsCollidingWith(*e);
 				}
@@ -459,20 +460,29 @@ Game::Process(float deltaTime)
 			}
 		}
 
-		if (ga_gameState == RUNNING){
-			ga_gameMap->getRoomAt(e->getCurrentRoomX(), e->getCurrentRoomY())->Process(deltaTime);
-		}
-
 		for (int i = 0; i < e->pl_bulletContainer.size(); i++)
 		{
 			Bullet* bullet = e->pl_bulletContainer.at(i);
-
-
 			bullet->Process(deltaTime);
-
+			
 		}
-	
 
+		//for (int i = 0; i < e->pl_bulletContainer.size(); i++)
+		//{
+
+			//Bullet* bullet = e->pl_bulletContainer.at(i);
+			//if (ga_gameMap->getRoomAt(e->getCurrentRoomX(), e->getCurrentRoomY())->IsCollidingWith(*bullet)){
+
+			//	e->pl_bulletContainer.at(i)->SetDead(true);
+
+			//}
+
+			//if (e->pl_bulletContainer.at(i)->IsDead()){
+				//delete bullet;
+				//e->pl_bulletContainer.erase(e->pl_bulletContainer.begin() + i);
+			//}
+		//}
+		
 	}
 	updateCamera();
 
@@ -535,9 +545,11 @@ Game::Draw(BackBuffer& backBuffer)
 			Player* e = iterator->second;
 			e->Draw(backBuffer);
 
-			for each (Bullet* bullet in e->pl_bulletContainer)
+			//for each (Bullet* bullet in e->pl_bulletContainer)
+			for each(Bullet* bullet in e->pl_bulletContainer)
 			{
-				bullet->Draw(backBuffer);
+				
+					bullet->Draw(backBuffer);
 			}
 		}
 

@@ -48,6 +48,12 @@ Entity::Process(float deltaTime)
 
 	m_x += m_velocityX*deltaTime;
 	m_y += m_velocityY*deltaTime;
+
+	if (m_x > 1280 || m_x < 0 || m_y > 720 || m_y < 0)
+	{
+		m_dead = true;
+	
+	}
 	// Ex006.2: Generic position update, based upon velocity (and time).
 
 	// Ex006.2: Boundary checking and position capping. 
@@ -56,24 +62,24 @@ Entity::Process(float deltaTime)
 void 
 Entity::Draw(BackBuffer& backBuffer)
 {
-	assert(m_pSprite);
-	m_pSprite->Draw(backBuffer);
+	if (!m_dead){
+		assert(m_pSprite);
+		m_pSprite->Draw(backBuffer);
+	}
 }
 
 bool
 Entity::IsCollidingWith(Entity& e)
 {
-	// Ex006.4: Generic Entity Collision routine.
-
-	// Ex006.4: Does this object collide with the e object?
-	// Ex006.4: Create a circle for each entity (this and e).
-
-	// Ex006.4: Check for intersection.
-	// Ex006.4: Using circle-vs-circle collision detection.
-
-	// Ex006.4: Return result of collision.
+	
 
 	return (false); // Ex006.4 Change return value!
+}
+
+bool 
+Entity::IsDead()
+{
+	return m_dead;
 }
 
 void 

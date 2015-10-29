@@ -119,15 +119,19 @@ Room::IsCollidingWith(Entity& e){
 
 	for (size_t i = 0; i < ro_wallContainer.size(); i++)
 	{
-		ro_wallContainer.at(i)->IsCollidingWith(e);
-		result = true;
+		if (ro_wallContainer.at(i)->IsCollidingWith(e))
+		{
+			result = true;
+		}
 	}
 
 	///////////////////////////////////////
 	for (size_t i = 0; i < ro_terrainContainer.size(); i++)
 	{
-		ro_terrainContainer.at(i)->IsCollidingWith(e);
-		result = true;
+		if(ro_terrainContainer.at(i)->IsCollidingWith(e))
+		{
+			result = true;
+		}
 	}
 	return result;
 }

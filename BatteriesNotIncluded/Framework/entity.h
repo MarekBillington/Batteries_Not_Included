@@ -19,7 +19,7 @@ public:
 	void Draw(BackBuffer& backBuffer);
 
 	void SetDead(bool dead);
-	bool IsDead() const;
+	bool IsDead();
 
 	bool IsCollidingWith(Entity& e);
 
