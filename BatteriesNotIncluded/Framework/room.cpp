@@ -137,6 +137,15 @@ Room::createTerrain(RoomType type){
 	}
 	else if (type == twoDoorsTopLeftWalls){
 
+		Terrain* dwayneTheRockJohnson = new Terrain(ROCK, m_x + 600, m_y + 220, backBuffer);
+		ro_terrainContainer.push_back(dwayneTheRockJohnson);
+
+		Terrain* dwayneTheSpikeJohnson = new Terrain(SPIKE, m_x + 900, m_y + 320, backBuffer);
+		ro_terrainContainer.push_back(dwayneTheSpikeJohnson);
+
+		Terrain* dwayneTheHoleJohnson = new Terrain(HOLE, m_x + 300, m_y + 520, backBuffer);
+		ro_terrainContainer.push_back(dwayneTheHoleJohnson);
+
 	}
 	else if (type == twoDoorsTopRightWalls){
 

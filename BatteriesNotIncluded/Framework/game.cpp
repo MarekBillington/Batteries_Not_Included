@@ -291,6 +291,17 @@ Game::Process(float deltaTime)
 	if (hudCreated){
 		ga_hud = new Hud(playerList.at(clientID));
 		hudCreated = false;
+		if (playerList.size() > 1) {
+			playerList.at(2)->SetPositionX(640);
+			playerList.at(1)->SetPositionY((8 * 720) + 360);
+		}
+		if (playerList.size() > 2) {
+			playerList.at(2)->SetPositionX((8 * 1280)+ 640);
+			playerList.at(2)->SetPositionY((8 * 720)+360);
+		}
+		if (playerList.size() > 3) {
+			playerList.at(3)->SetPositionX((8 * 1280) + 640);
+		}
 	}
 	// Count total simulation time elapsed:
 	m_elapsedSeconds += deltaTime;
@@ -328,7 +339,6 @@ Game::Process(float deltaTime)
 		m_elapsedSeconds -= 1;
 		m_FPS = m_frameCount;
 		m_frameCount = 0;
-
 	}
 
 	for (it_players iterator = playerList.begin(); iterator != playerList.end(); iterator++)
@@ -1298,7 +1308,6 @@ NetworkThread()
 
 						pl->SetPositionX(x);
 						pl->SetPositionY(y);
-
 						playerList[i] = pl;
 					}
 
