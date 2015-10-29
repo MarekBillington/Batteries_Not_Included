@@ -55,6 +55,7 @@ bool serverInitiated = false;
 bool sending = true;
 char str[512];
 bool isRunning;
+float volumeSlide = 0.5f;
 char* name = "NAME";
 std::string clientName = "";
 char* serverAdd = "IP";
@@ -227,6 +228,9 @@ Game::Initialise()
 	ga_lobbyHost = m_pBackBuffer->CreateSprite("assets\\ipshow.png");
 	ga_nameBox = m_pBackBuffer->CreateSprite("assets\\ipshow.png");
 	ga_options = m_pBackBuffer->CreateSprite("assets\\options.png");
+	ga_volumeSlider = m_pBackBuffer->CreateSprite("assets\\volumeAdjuster.png");
+	ga_volumeSlider->SetX(900);
+	ga_volumeSlider->SetY(495);
 
 	ga_nameBox->SetX(screenWidth / 2 - 400);
 	ga_nameBox->SetY(screenHeight / 2 - 200);
@@ -370,6 +374,7 @@ Game::Draw(BackBuffer& backBuffer)
 	else if (ga_gameState == OPTIONS)
 	{
 		ga_options->Draw(backBuffer);
+		ga_volumeSlider->Draw(backBuffer);
 	}
 	else if (ga_gameState == OPTIONS_NAME)
 	{
@@ -690,6 +695,19 @@ Game::Quit()
 }
 
 void
+Game::adjustVolume(int xValue)
+{
+	ga_volumeSlider->SetX(xValue - 16);
+	int value = xValue - 314;
+	//0 - 592
+	//592 / 10 = 59.2
+
+	
+	volumeSlide = (float) ((0 + value) / 10) / 59.2;
+	ga_fmodhelp->adjustVolume(volumeSlide);
+}
+
+void
 Game::MoveSpaceShipHor(float speed)
 {
 	if (isServer)
@@ -870,7 +888,7 @@ Game::initiateServer()
 	isServer = true;
 	//serverInitiated = true;
 	printf("Server is ready to receive connections.\n");
-	name = "Server";
+	//name = "Server";
 	serverAdd = (char*) peer->GetLocalIP(0);
 	//playerList[0] = player;
 	clientNames[0] = name;
@@ -1329,7 +1347,7 @@ NetworkThread()
 					printf("The connection to the server has been accepted.\n");
 					ServerName = packet->systemAddress;
 					RakNet::BitStream bsOut;
-					char name[] = "John";
+					//char name[] = "John";
 					//float x, y;
 					//x = 300.0;
 					// y = 200.0;

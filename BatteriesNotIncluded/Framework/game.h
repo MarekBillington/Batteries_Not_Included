@@ -42,6 +42,8 @@ public:
 	void Quit();
 	void Reset();
 
+	void adjustVolume(int xValue);
+
 	void MoveSpaceShipHor(float speed);
 	void MoveSpaceShipVert(float speed);
 	BackBuffer* CallBackBuffer();
@@ -122,6 +124,7 @@ protected:
 	Sprite* ga_nameBox;
 	Sprite* ga_nameChange1;
 	Sprite* ga_nameChange2;
+	Sprite* ga_volumeSlider;
 
 	Sprite* currentIP;
 	//Player* player;

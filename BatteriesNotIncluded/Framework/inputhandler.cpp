@@ -92,6 +92,10 @@ InputHandler::ProcessInput(Game& game)
 					//go to training map
 					game.ga_gameState = GameState::OPTIONS_NAME;
 				}
+				if (324 < x && x < 916 && 524 < y && y < 542)
+				{
+					game.adjustVolume(x);
+				}
 			}
 			if (e.type == SDL_KEYDOWN){
 

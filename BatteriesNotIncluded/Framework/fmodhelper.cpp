@@ -1,5 +1,6 @@
 
 #include "fmodhelper.h"
+#include <cmath>
 
 
 FMOD::System *systemFMOD = NULL;
@@ -24,6 +25,8 @@ FMODHelper::~FMODHelper()
 void 
 FMODHelper::initialiseSounds(){
 
+
+
 	result = FMOD::System_Create(&systemFMOD);      // Create the main system object.
 	if (result != FMOD_OK)
 	{
@@ -32,12 +35,14 @@ FMODHelper::initialiseSounds(){
 		exit(-1);
 	}
 
+
 	result = systemFMOD->init(512, FMOD_INIT_NORMAL, 0);    // Initialize FMOD.
 	if (result != FMOD_OK)
 	{
 		printf("FMOD error! (%d) %s\n", result, FMOD_ErrorString(result));
 		exit(-1);
 	}
+
 
 	 
 
@@ -55,6 +60,7 @@ FMODHelper::initialiseSounds(){
 		exit(-1);
 	}
 
+	
 	
 	initBackgroundMusic();
 
@@ -107,6 +113,16 @@ FMODHelper::initBackgroundMusic(){
 		exit(-1);
 	}
 
+	
+
+
+}
+
+void
+FMODHelper::adjustVolume(float volume)
+{
+	channel1->setVolume(volume);
+	channel2->setVolume(volume);
 }
 
 
