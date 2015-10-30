@@ -488,8 +488,9 @@ Game::Process(float deltaTime)
 			}*/
 			if (e_bullet->IsDead())
 			{
-				delete e_bullet;
+				
 				e->pl_bulletContainer.erase(e->pl_bulletContainer.begin() + i);
+				delete e_bullet;
 			}
 
 			
