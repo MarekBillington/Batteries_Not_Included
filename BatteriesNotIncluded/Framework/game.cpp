@@ -469,10 +469,10 @@ Game::Process(float deltaTime)
 		for (int i = 0; i < e->pl_bulletContainer.size(); i++)
 		{
 			Bullet* e_bullet = e->pl_bulletContainer.at(i);
-			if (e_bullet->IsCollidingWith(*e))
-			{
-				e->setHealth(e->getHealth() - 50);
-			}
+			//if (e_bullet->IsCollidingWith(*e))
+			//{
+			//	e->setHealth(e->getHealth() - 50);
+			//}
 			if ((e_bullet->getCurrentRoomX() != e->getCurrentRoomX()) || (e_bullet->getCurrentRoomY() != e->getCurrentRoomY()))
 			{
 				e_bullet->SetDead(true);
@@ -1883,7 +1883,7 @@ NetworkThread()
 						break;
 					}
 
-					playerList.at(id)->pl_bulletContainer.push_back(bullet);
+					//playerList.at(id)->pl_bulletContainer.push_back(bullet);
 					playerList[id]->pl_bulletContainer.push_back(bullet);
 					
 					
