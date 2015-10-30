@@ -1629,6 +1629,7 @@ NetworkThread()
 					bullet->Initialise(bulletSprite);
 					bullet->SetPositionX(playerList[i]->GetPositionX() + 40);
 					bullet->SetPositionY(playerList[i]->GetPositionY() + 40);
+					bullet->setClient(i);
 					switch (dirCheck)
 					{
 					case 1:
