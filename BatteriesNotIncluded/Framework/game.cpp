@@ -74,6 +74,7 @@ typedef std::map<int, Sprite*>::iterator it_L2Text;
 int clientID;
 void NetworkThread();
 
+
 Bullet* one_bul[20];
 Bullet* two_bul[20];
 Bullet* three_bul[20];
@@ -474,22 +475,25 @@ Game::Process(float deltaTime)
 					}
 				}
 			}
-			for (it_players iterator1 = playerList.begin(); iterator1 != playerList.end(); iterator1++)
-			{
-				Player* randySavage = (Player*)iterator1->second;
-				if ((e->getCurrentRoomX() != randySavage->getCurrentRoomX() || e->getCurrentRoomY() != randySavage->getCurrentRoomY()) && iterator->first != iterator1->first){
-					ga_gameMap->getRoomAt(randySavage->getCurrentRoomX(), randySavage->getCurrentRoomY())->ro_Locked = false;
-				}
-
+			
+		}
+		for (it_players iterator1 = playerList.begin(); iterator1 != playerList.end(); iterator1++)
+		{
+			Player* randySavage = (Player*)iterator1->second;
+			if ((e->getCurrentRoomX() != randySavage->getCurrentRoomX() || e->getCurrentRoomY() != randySavage->getCurrentRoomY()) && iterator->first != iterator1->first){
+				ga_gameMap->getRoomAt(randySavage->getCurrentRoomX(), randySavage->getCurrentRoomY())->ro_Locked = false;
 			}
+
 		}
 		for (int i = 0; i < e->pl_bulletContainer.size(); i++)
 		{
 			Bullet* e_bullet = e->pl_bulletContainer.at(i);
-			//if (e_bullet->IsCollidingWith(*e))
-			//{
-			//	e->setHealth(e->getHealth() - 50);
-			//}
+			int stuff = clientID;
+			if (/*(e_bullet->getClient() != clientID) &&*/ e_bullet->IsCollidingWith(*e))
+			{
+					e->setHealth(e->getHealth() - 50);
+					e_bullet->SetDead(true);
+			}
 			if ((e_bullet->getCurrentRoomX() != e->getCurrentRoomX()) || (e_bullet->getCurrentRoomY() != e->getCurrentRoomY()))
 			{
 				e_bullet->SetDead(true);
@@ -501,8 +505,9 @@ Game::Process(float deltaTime)
 			}*/
 			if (e_bullet->IsDead())
 			{
-				delete e_bullet;
+				
 				e->pl_bulletContainer.erase(e->pl_bulletContainer.begin() + i);
+				delete e_bullet;
 			}
 
 			
@@ -541,6 +546,8 @@ Game::Process(float deltaTime)
 
 
 	}
+
+	ga_fmodhelp->update();
 	
 	if (ga_gameMap->getRoomAt(4, 3)->getBoss()->getHealth() <= 0 && ga_gameState == RUNNING){
 
@@ -1012,6 +1019,7 @@ Game::adjustVolume(int xValue)
 void
 Game::MoveSpaceShipHor(float speed)
 {
+
 	if (isServer)
 	{
 		for (it_sysaddr iterator = netClients.begin(); iterator != netClients.end(); iterator++){
@@ -1039,6 +1047,7 @@ Game::MoveSpaceShipHor(float speed)
 void
 Game::MoveSpaceShipVert(float speed)
 {
+	
 	if (isServer)
 	{
 		for (it_sysaddr iterator = netClients.begin(); iterator != netClients.end(); iterator++){
@@ -1064,10 +1073,11 @@ Game::MoveSpaceShipVert(float speed)
 void 
 Game::FirePlayerBullet(int dir)
 {
+	
 	if (playerList[clientID]->pl_bulletContainer.size() < 20)
 	{
 	
-		Sprite* bulletSprite = m_pBackBuffer->CreateSprite("assets\\playerbullet.png");
+		Sprite* bulletSprite = m_pBackBuffer->CreateSprite("assets\\hole80.png");
 		Bullet* bullet;
 		switch (dir)
 		{
@@ -1144,6 +1154,7 @@ Game::FirePlayerBullet(int dir)
 			peer->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, ServerName, false);
 		}
 	}
+	ga_fmodhelp->playSoundEffect(1);
 }
 
 void 
@@ -1343,7 +1354,7 @@ Game::startGame()
 		//game.MoveSpaceShipRight(y);
 		BackBuffer* backBuffer = game.CallBackBuffer();
 		AnimatedSprite* pPlayerSprite = backBuffer->CreateAnimatedSprite("assets\\playerIdle.png");
-
+		//Sprite* pPlSprite = backBuffer->CreateAnimatedSprite("assets\\playership.png");
 
 		Player* player = new Player();
 		player->Initialise(pPlayerSprite);
@@ -1738,11 +1749,12 @@ NetworkThread()
 					}
 
 
-					Sprite* bulletSprite = backBuffer->CreateSprite("assets\\playerbullet.png");
+					Sprite* bulletSprite = backBuffer->CreateSprite("assets\\hole80.png");
 					Bullet* bullet = new Bullet(dirCheck);
 					bullet->Initialise(bulletSprite);
 					bullet->SetPositionX(playerList[i]->GetPositionX() + 40);
 					bullet->SetPositionY(playerList[i]->GetPositionY() + 40);
+					bullet->setClient(i);
 					switch (dirCheck)
 					{
 					case 1:
@@ -1809,6 +1821,7 @@ NetworkThread()
 					Game& game = Game::GetGame();
 					game.ga_gameState = RUNNING;
 
+					game.ga_fmodhelp->playBackgroundMusic(2);
 
 					//playerList.clear();
 					int plSize;
@@ -1973,7 +1986,7 @@ NetworkThread()
 
 
 
-					Sprite* bulletSprite = backBuffer->CreateSprite("assets\\playerbullet.png");
+					Sprite* bulletSprite = backBuffer->CreateSprite("assets\\hole80.png");
 					Bullet* bullet = new Bullet(dirCheck);
 					bullet->Initialise(bulletSprite);
 					bullet->SetPositionX(playerList[id]->GetPositionX() + 40);

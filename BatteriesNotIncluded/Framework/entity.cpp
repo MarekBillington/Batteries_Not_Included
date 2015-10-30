@@ -51,8 +51,8 @@ Entity::Process(float deltaTime)
 		m_x += m_velocityX*deltaTime;
 		m_y += m_velocityY*deltaTime;
 
-		//en_currentRoomX = (m_x / 1280);
-		//en_currentRoomY = (m_y / 720);
+		en_currentRoomX = (m_x / 1280);
+		en_currentRoomY = (m_y / 720);
 	}
 	
 

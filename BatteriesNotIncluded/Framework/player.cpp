@@ -1,7 +1,7 @@
 
 #include"player.h"
 #include "backbuffer.h"
-
+#include "game.h"
 #include <cassert>
 
 Player::Player()
@@ -10,6 +10,13 @@ Player::Player()
 	
 {
 	setHealth(1000);
+
+
+	Game& game = Game::GetGame();
+	BackBuffer* backBuffer = game.CallBackBuffer();
+
+	Sprite* bulletSprite = backBuffer->CreateSprite("assets\\playerbullet.png");
+	m_pSprite = bulletSprite;
 }
 
 
@@ -35,7 +42,7 @@ Player::Initialise(AnimatedSprite* sprite)
 	setHeight(112);
 
 	assert(sprite);
-	m_pSprite = sprite;
+	pl_Sprite = sprite;
 
 	return (true);
 }
@@ -43,19 +50,23 @@ Player::Initialise(AnimatedSprite* sprite)
 void
 Player::Process(float deltaTime)
 {
+	pl_Sprite->SetX(static_cast<int>(m_x));
+	pl_Sprite->SetY(static_cast<int>(m_y));
+
 	m_pSprite->SetX(static_cast<int>(m_x));
 	m_pSprite->SetY(static_cast<int>(m_y));
-	m_pSprite->setLocation(pl_direction);
+
+	pl_Sprite->setLocation(pl_direction);
 	m_x += m_velocityX*deltaTime;
 	m_y += m_velocityY*deltaTime;
 	
 	if (m_velocityX == 0 && m_velocityY == 0)
 	{
-		m_pSprite->SetFrameSpeed(50.0);
+		pl_Sprite->SetFrameSpeed(50.0);
 	}
 	else
 	{
-		m_pSprite->SetFrameSpeed(0.3);
+		pl_Sprite->SetFrameSpeed(0.3);
 	}
 
 	if (m_velocityX < 0)
@@ -76,7 +87,7 @@ Player::Process(float deltaTime)
 		pl_direction = 0;
 	}
 
-	m_pSprite->Process(deltaTime);
+	pl_Sprite->Process(deltaTime);
 
 	en_currentRoomX = (m_x / 1280);
 	en_currentRoomY = (m_y / 720);
@@ -87,12 +98,12 @@ void
 Player::Draw(BackBuffer& backBuffer, std::string name)
 {
 	Sprite* nameTXT = backBuffer.CreateText(name, { 255, 255, 255, 150 }, "assets//dkjalebi.otf", 20);
-	nameTXT->SetX(m_pSprite->GetX());
-	nameTXT->SetY(m_pSprite->GetY()-25);
+	nameTXT->SetX(pl_Sprite->GetX());
+	nameTXT->SetY(pl_Sprite->GetY() - 25);
 	backBuffer.DrawSprite(*nameTXT);
 
-	assert(m_pSprite);
-	m_pSprite->Draw(backBuffer);
+	assert(pl_Sprite);
+	pl_Sprite->Draw(backBuffer);
 }
 
 
