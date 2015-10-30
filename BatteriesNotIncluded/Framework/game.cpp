@@ -1705,6 +1705,7 @@ NetworkThread()
 					Game& game = Game::GetGame();
 					game.ga_gameState = RUNNING;
 
+					game.ga_fmodhelp->playBackgroundMusic(2);
 
 					//playerList.clear();
 					int plSize;
