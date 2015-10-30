@@ -72,6 +72,10 @@ typedef std::map<int, Sprite*>::iterator it_L2Text;
 int clientID;
 void NetworkThread();
 
+Bullet* one_bul[20];
+Bullet* two_bul[20];
+Bullet* three_bul[20];
+Bullet* four_bul[20];
 
 //James Shit
 bool hudCreated = false;
@@ -526,7 +530,6 @@ Game::Process(float deltaTime)
 		}
 	}
 	
-
 	updateCamera();
 
 }
@@ -945,8 +948,8 @@ Game::MoveSpaceShipVert(float speed)
 void 
 Game::FirePlayerBullet(int dir)
 {
-	//if (playerList[clientID]->pl_bulletContainer.size() < 10)
-	//{
+	if (playerList[clientID]->pl_bulletContainer.size() < 20)
+	{
 	
 		Sprite* bulletSprite = m_pBackBuffer->CreateSprite("assets\\playerbullet.png");
 		Bullet* bullet;
@@ -1024,7 +1027,7 @@ Game::FirePlayerBullet(int dir)
 			bsOut.Write(dir);
 			peer->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, ServerName, false);
 		}
-	//}
+	}
 }
 
 void 
