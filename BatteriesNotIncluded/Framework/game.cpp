@@ -397,7 +397,6 @@ Game::Process(float deltaTime)
 				if (!bossTime){
 					tempX = 640;
 					tempY = 320;
-					ga_gameMap->getRoomAt(playerList[0]->getCurrentRoomX(), playerList[0]->getCurrentRoomY())->ro_Locked = false;
 				}
 				else {
 					tempX = (4 * 1280) + 200 + (0 * 50);
@@ -415,7 +414,6 @@ Game::Process(float deltaTime)
 					if (!bossTime){
 						tempX = 640;
 						tempY = (8 * 720) + 360;
-						ga_gameMap->getRoomAt(playerList[1]->getCurrentRoomX(), playerList[1]->getCurrentRoomY())->ro_Locked = false;
 					}
 					else {
 						tempX = (4 * 1280) + 200 + (1 * 50);
@@ -434,7 +432,6 @@ Game::Process(float deltaTime)
 					if (!bossTime){
 						tempX = (8 * 1280) + 640;
 						tempY = (8 * 720) + 360;
-						ga_gameMap->getRoomAt(playerList[2]->getCurrentRoomX(), playerList[2]->getCurrentRoomY())->ro_Locked = false;
 					}
 					else {
 						tempX = (4 * 1280) + 200 + (2 * 50);
@@ -453,7 +450,6 @@ Game::Process(float deltaTime)
 					if (!bossTime){
 						tempX = (8 * 1280) + 640;
 						tempY = 360;
-						ga_gameMap->getRoomAt(playerList[3]->getCurrentRoomX(), playerList[3]->getCurrentRoomY())->ro_Locked = false;
 					}
 					else {
 						tempX = (4 * 1280) + 200 + (3 * 50);
@@ -464,6 +460,14 @@ Game::Process(float deltaTime)
 						playerList.at(3)->SetPositionY(tempY);
 					}
 				}
+			}
+			for (it_players iterator1 = playerList.begin(); iterator1 != playerList.end(); iterator1++)
+			{
+				Player* randySavage = (Player*)iterator1->second;
+				if ((e->getCurrentRoomX() != randySavage->getCurrentRoomX() || e->getCurrentRoomY() != randySavage->getCurrentRoomY()) && iterator->first != iterator1->first){
+					ga_gameMap->getRoomAt(randySavage->getCurrentRoomX(), randySavage->getCurrentRoomY())->ro_Locked = false;
+				}
+
 			}
 		}
 		for (int i = 0; i < e->pl_bulletContainer.size(); i++)
@@ -583,7 +587,7 @@ Game::Draw(BackBuffer& backBuffer)
 		for (it_players iterator = playerList.begin(); iterator != playerList.end(); iterator++)
 		{
 			Player* e = iterator->second;
-			e->Draw(backBuffer);
+			e->Draw(backBuffer, clientNames[clientID]);
 
 			if (e->pl_bulletContainer.size() != 0){
 				for each(Bullet* bullet in e->pl_bulletContainer)

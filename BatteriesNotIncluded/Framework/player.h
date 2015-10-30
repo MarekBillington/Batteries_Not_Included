@@ -25,7 +25,7 @@ public:
 	//Processing
 	bool Initialise(AnimatedSprite* sprite);
 	void Process(float deltaTime);
-	void Draw(BackBuffer& backBuffer);
+	void Draw(BackBuffer& backBuffer, std::string name);
 
 	//Name
 	std::string getName();

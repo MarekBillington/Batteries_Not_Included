@@ -281,7 +281,13 @@ Enemy::scrapshooterProcess(){
 void
 Enemy::bossProcess(){
 	if (en_enemyState == PASSIVE){
+		//if (){
 
+		//}
+		//else if (){
+
+		//}
+		//if (toShoot)
 	}
 	else if (en_enemyState == AGRO){
 

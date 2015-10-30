@@ -60,8 +60,8 @@ TextureManager::GetText(std::string textureText, SDL_Color textColor, std::strin
 {
 	Texture* pTexture = 0;
 
-	if (m_pLoadedTextures.find(textureText.c_str()) == m_pLoadedTextures.end())
-	{
+	//if (m_pLoadedTextures.find(textureText.c_str()) == m_pLoadedTextures.end())
+	//{
 		// Not already loaded... so load...
 		pTexture = new Texture();
 		if (!pTexture->loadText(m_pRenderer, textureText, textColor, textFont, textSize))
@@ -70,12 +70,12 @@ TextureManager::GetText(std::string textureText, SDL_Color textColor, std::strin
 		}
 
 		m_pLoadedTextures[textureText.c_str()] = pTexture;
-	}
-	else
-	{
+	//}
+	//else
+	//{
 		// Is already loaded...
-		pTexture = m_pLoadedTextures[textureText.c_str()];
-	}
+		//pTexture = m_pLoadedTextures[textureText.c_str()];
+	//}
 
 
 	return (pTexture);
