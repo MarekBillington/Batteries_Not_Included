@@ -3,10 +3,7 @@
 #include <cmath>
 
 
-FMOD::System *systemFMOD = NULL;
-FMOD::Sound      *sound1, *sound2, *sound3, *sound4;
-FMOD::Channel    *channel1, *channel2, *channel3;
-FMOD_RESULT result;
+
 
 
 
@@ -60,8 +57,22 @@ FMODHelper::initialiseSounds(){
 		exit(-1);
 	}
 
+	result = systemFMOD->createSound("assets\\Bang1.wav", FMOD_DEFAULT, 0, &sound3);
+	if (result != FMOD_OK)
+	{
+		printf("FMOD error! (%d) %s\n", result, FMOD_ErrorString(result));
+		exit(-1);
+	}
+
+	result = systemFMOD->createSound("assets\\step1.wav", FMOD_DEFAULT, 0, &sound4);
+	if (result != FMOD_OK)
+	{
+		printf("FMOD error! (%d) %s\n", result, FMOD_ErrorString(result));
+		exit(-1);
+	}
+
 	
-	
+	channel3->setVolume(0.001);
 	initBackgroundMusic();
 
 }
@@ -123,6 +134,7 @@ FMODHelper::adjustVolume(float volume)
 {
 	channel1->setVolume(volume);
 	channel2->setVolume(volume);
+	
 }
 
 
@@ -130,8 +142,16 @@ void
 FMODHelper::playSoundEffect(int sound){
 
 	//currently these will break games as there is no sound3 and sound4 initialised
+	
 	if (sound == 1){
-				result = systemFMOD->playSound(sound3, 0, false, &channel3);
+		result = sound3->setMode(FMOD_LOOP_OFF);
+		if (result != FMOD_OK)
+		{
+			printf("FMOD error! (%d) %s\n", result, FMOD_ErrorString(result));
+			exit(-1);
+		}
+
+		result = systemFMOD->playSound(sound3, 0, false, &channel3);
 		if (result != FMOD_OK)
 		{
 			printf("FMOD error! (%d) %s\n", result, FMOD_ErrorString(result));
@@ -140,6 +160,13 @@ FMODHelper::playSoundEffect(int sound){
 
 	}
 	if (sound == 2){
+		result = sound4->setMode(FMOD_LOOP_OFF);
+		if (result != FMOD_OK)
+		{
+			printf("FMOD error! (%d) %s\n", result, FMOD_ErrorString(result));
+			exit(-1);
+		}
+
 		result = systemFMOD->playSound(sound4, 0, false, &channel3);
 		if (result != FMOD_OK)
 		{
@@ -165,4 +192,50 @@ void FMODHelper::releaseSounds(){
 		exit(-1);
 	}
 
+	result = sound3->release();
+	if (result != FMOD_OK)
+	{
+		printf("FMOD error! (%d) %s\n", result, FMOD_ErrorString(result));
+		exit(-1);
+	}
+
+	result = sound4->release();
+	if (result != FMOD_OK)
+	{
+		printf("FMOD error! (%d) %s\n", result, FMOD_ErrorString(result));
+		exit(-1);
+	}
+
+}
+
+
+void 
+FMODHelper::update()
+{
+	systemFMOD->update();
+
+	if (result != FMOD_OK)
+	{
+		printf("FMOD error! (%d) %s\n", result, FMOD_ErrorString(result));
+		exit(-1);
+	}
+
+}
+
+void
+FMODHelper::releaseSFX()
+{
+	result = sound3->release();
+	if (result != FMOD_OK)
+	{
+		printf("FMOD error! (%d) %s\n", result, FMOD_ErrorString(result));
+		exit(-1);
+	}
+
+	result = sound4->release();
+	if (result != FMOD_OK)
+	{
+		printf("FMOD error! (%d) %s\n", result, FMOD_ErrorString(result));
+		exit(-1);
+	}
 }

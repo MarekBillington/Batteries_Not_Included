@@ -72,6 +72,7 @@ typedef std::map<int, Sprite*>::iterator it_L2Text;
 int clientID;
 void NetworkThread();
 
+
 Bullet* one_bul[20];
 Bullet* two_bul[20];
 Bullet* three_bul[20];
@@ -533,6 +534,8 @@ Game::Process(float deltaTime)
 			}
 		}
 	}
+
+	ga_fmodhelp->update();
 	
 	updateCamera();
 
@@ -900,6 +903,7 @@ Game::adjustVolume(int xValue)
 void
 Game::MoveSpaceShipHor(float speed)
 {
+
 	if (isServer)
 	{
 		for (it_sysaddr iterator = netClients.begin(); iterator != netClients.end(); iterator++){
@@ -927,6 +931,7 @@ Game::MoveSpaceShipHor(float speed)
 void
 Game::MoveSpaceShipVert(float speed)
 {
+	
 	if (isServer)
 	{
 		for (it_sysaddr iterator = netClients.begin(); iterator != netClients.end(); iterator++){
@@ -952,6 +957,7 @@ Game::MoveSpaceShipVert(float speed)
 void 
 Game::FirePlayerBullet(int dir)
 {
+	
 	if (playerList[clientID]->pl_bulletContainer.size() < 20)
 	{
 	
@@ -1032,6 +1038,7 @@ Game::FirePlayerBullet(int dir)
 			peer->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, ServerName, false);
 		}
 	}
+	ga_fmodhelp->playSoundEffect(1);
 }
 
 void 

@@ -4,6 +4,8 @@
 // Local includes:
 #include "texture.h"
 #include "backbuffer.h"
+#include "game.h"
+#include "fmodhelper.h"
 
 AnimatedSprite::AnimatedSprite()
 : m_frameSpeed(0.0f)
@@ -80,6 +82,8 @@ AnimatedSprite::Process(float deltaTime)
 
 	if (m_timeElapsed > m_frameSpeed)
 	{
+		Game& game = Game::GetGame();
+		game.ga_fmodhelp->playSoundEffect(2);
 		m_currentFrame++;
 		m_timeElapsed = 0;
 	}
