@@ -81,11 +81,16 @@ AnimatedSprite::Process(float deltaTime)
 	// Ex007.1: Reset the time elapsed counter.
 
 	if (m_timeElapsed > m_frameSpeed)
-	{
-		Game& game = Game::GetGame();
-		game.ga_fmodhelp->playSoundEffect(2);
-		m_currentFrame++;
-		m_timeElapsed = 0;
+	{	
+		if (m_width == 280){
+
+		}
+		else {
+			Game& game = Game::GetGame();
+			game.ga_fmodhelp->playSoundEffect(2);
+			m_currentFrame++;
+			m_timeElapsed = 0;
+		}
 	}
 
 
