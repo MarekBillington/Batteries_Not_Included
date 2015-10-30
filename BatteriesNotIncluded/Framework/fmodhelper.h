@@ -16,12 +16,20 @@ public:
 	FMODHelper();
 	~FMODHelper();
 
+	void update();
 	void initialiseSounds();
 	void playBackgroundMusic(int sound);
 	void initBackgroundMusic();
 	void playSoundEffect(int sound);
 	void releaseSounds();
 	void adjustVolume(float volume);
+	void releaseSFX();
+
+	FMOD::System *systemFMOD = NULL;
+	FMOD::Sound      *sound1, *sound2, *sound3, *sound4;
+	FMOD::Channel    *channel1, *channel2, *channel3;
+	FMOD_RESULT result;
+	bool playing = false;
 
 private:
 
