@@ -478,10 +478,12 @@ Game::Process(float deltaTime)
 		for (int i = 0; i < e->pl_bulletContainer.size(); i++)
 		{
 			Bullet* e_bullet = e->pl_bulletContainer.at(i);
-			//if (e_bullet->IsCollidingWith(*e))
-			//{
-			//	e->setHealth(e->getHealth() - 50);
-			//}
+			int stuff = clientID;
+			if (/*(e_bullet->getClient() != clientID) &&*/ e_bullet->IsCollidingWith(*e))
+			{
+					e->setHealth(e->getHealth() - 50);
+					e_bullet->SetDead(true);
+			}
 			if ((e_bullet->getCurrentRoomX() != e->getCurrentRoomX()) || (e_bullet->getCurrentRoomY() != e->getCurrentRoomY()))
 			{
 				e_bullet->SetDead(true);
@@ -953,7 +955,7 @@ Game::FirePlayerBullet(int dir)
 	if (playerList[clientID]->pl_bulletContainer.size() < 20)
 	{
 	
-		Sprite* bulletSprite = m_pBackBuffer->CreateSprite("assets\\playerbullet.png");
+		Sprite* bulletSprite = m_pBackBuffer->CreateSprite("assets\\hole80.png");
 		Bullet* bullet;
 		switch (dir)
 		{
@@ -1229,7 +1231,7 @@ Game::startGame()
 		//game.MoveSpaceShipRight(y);
 		BackBuffer* backBuffer = game.CallBackBuffer();
 		AnimatedSprite* pPlayerSprite = backBuffer->CreateAnimatedSprite("assets\\playerIdle.png");
-
+		//Sprite* pPlSprite = backBuffer->CreateAnimatedSprite("assets\\playership.png");
 
 		Player* player = new Player();
 		player->Initialise(pPlayerSprite);
@@ -1624,7 +1626,7 @@ NetworkThread()
 					}
 
 
-					Sprite* bulletSprite = backBuffer->CreateSprite("assets\\playerbullet.png");
+					Sprite* bulletSprite = backBuffer->CreateSprite("assets\\hole80.png");
 					Bullet* bullet = new Bullet(dirCheck);
 					bullet->Initialise(bulletSprite);
 					bullet->SetPositionX(playerList[i]->GetPositionX() + 40);
@@ -1860,7 +1862,7 @@ NetworkThread()
 
 
 
-					Sprite* bulletSprite = backBuffer->CreateSprite("assets\\playerbullet.png");
+					Sprite* bulletSprite = backBuffer->CreateSprite("assets\\hole80.png");
 					Bullet* bullet = new Bullet(dirCheck);
 					bullet->Initialise(bulletSprite);
 					bullet->SetPositionX(playerList[id]->GetPositionX() + 40);

@@ -1,14 +1,20 @@
 #include "bullet.h"
+#include "game.h"
+#include "backbuffer.h"
 
 Bullet::Bullet(int dir)
 {
 	direction = dir;
+
+
+	
 }
 
 Bullet::~Bullet()
 {
 
 }
+
 
 int
 Bullet::getDirection()

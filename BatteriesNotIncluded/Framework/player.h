@@ -76,7 +76,7 @@ public:
 	//AnimatedSprite* getSprite();
 
 private:
-	AnimatedSprite* m_pSprite;
+	AnimatedSprite* pl_Sprite;
 
 	std::string  pl_name;
 

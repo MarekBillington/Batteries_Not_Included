@@ -2,6 +2,8 @@
 #define __BULLET_H__
 
 #include "entity.h"
+#include "sprite.h"
+#include <cmath>
 
 class Bullet : public Entity
 {
@@ -15,7 +17,11 @@ public:
 	int getClient();
 	void setClient(int client);
 
+	//bool IsCollidingWith(Entity& e);
+
 private:
+
+	//Sprite* m_pSprite;
 	int clientID;
 	int direction;
 };
