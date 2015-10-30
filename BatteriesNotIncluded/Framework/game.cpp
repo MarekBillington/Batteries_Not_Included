@@ -465,14 +465,15 @@ Game::Process(float deltaTime)
 					}
 				}
 			}
-			for (it_players iterator1 = playerList.begin(); iterator1 != playerList.end(); iterator1++)
-			{
-				Player* randySavage = (Player*)iterator1->second;
-				if ((e->getCurrentRoomX() != randySavage->getCurrentRoomX() || e->getCurrentRoomY() != randySavage->getCurrentRoomY()) && iterator->first != iterator1->first){
-					ga_gameMap->getRoomAt(randySavage->getCurrentRoomX(), randySavage->getCurrentRoomY())->ro_Locked = false;
-				}
-
+			
+		}
+		for (it_players iterator1 = playerList.begin(); iterator1 != playerList.end(); iterator1++)
+		{
+			Player* randySavage = (Player*)iterator1->second;
+			if ((e->getCurrentRoomX() != randySavage->getCurrentRoomX() || e->getCurrentRoomY() != randySavage->getCurrentRoomY()) && iterator->first != iterator1->first){
+				ga_gameMap->getRoomAt(randySavage->getCurrentRoomX(), randySavage->getCurrentRoomY())->ro_Locked = false;
 			}
+
 		}
 		for (int i = 0; i < e->pl_bulletContainer.size(); i++)
 		{
