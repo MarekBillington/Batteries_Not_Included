@@ -304,6 +304,52 @@ InputHandler::ProcessInput(Game& game)
 					game.FirePlayerBullet(4);
 				}
 			}
+			else if (e.type == SDL_JOYBUTTONDOWN) //CONTROLLER SUPPORT
+			{
+				//move space ship down
+				if (e.jbutton.button == 1)
+				{
+					game.MoveSpaceShipVert(300);
+
+				}
+				//move ship up
+				if (e.jbutton.button == 0)
+				{
+					game.MoveSpaceShipVert(-300);
+
+				}
+				// Ex006.2: Tell the game to move the space ship left...
+				if (e.jbutton.button == 3)
+				{
+					game.MoveSpaceShipHor(-300);
+				}
+				// Ex006.2: Tell the game to move the space ship right...
+				if (e.jbutton.button == 2)
+				{
+					game.MoveSpaceShipHor(300);
+				}
+
+				//shoot up
+				else if (e.jbutton.button == 13)
+				{
+					game.FirePlayerBullet(1);
+				}
+				//shoot down
+				else if (e.jbutton.button == 10)
+				{
+					game.FirePlayerBullet(2);
+				}
+				//shoot left
+				else if (e.jbutton.button == 12)
+				{
+					game.FirePlayerBullet(3);
+				}
+				//shoot right
+				else if (e.jbutton.button == 11)
+				{
+					game.FirePlayerBullet(4);
+				}
+			}
 			else if (e.type == SDL_KEYUP){
 
 				if (e.key.keysym.sym == SDLK_d)

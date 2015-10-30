@@ -13,6 +13,7 @@ class GameMap;
 class FMODHelper;
 
 #include "hud.h"
+#include "bullet.h"
 
 enum GameState
 {
@@ -48,6 +49,7 @@ public:
 	void MoveSpaceShipVert(float speed);
 	BackBuffer* CallBackBuffer();
 	void ServerMoveShip();
+	
 	
 	void FirePlayerBullet(int dir);
 
@@ -132,7 +134,7 @@ protected:
 	Sprite* currentIP;
 	//Player* player;
 
-
+	
 	//james
 	//tom
 	GameMap* ga_gameMap;

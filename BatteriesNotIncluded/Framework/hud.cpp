@@ -140,7 +140,7 @@ Hud::Draw(BackBuffer& backBuffer, int minutesToBoss, int secondsToBoss)
 	backBuffer.DrawSpriteHUD(*deathCount);
 
 	//get boss timer
-	if (minutesToBoss > 0 && secondsToBoss > 0){
+	if (minutesToBoss > 0 || secondsToBoss > 0){
 		std::stringstream ss1;
 		ss1 << minutesToBoss;
 		std::string str1 = ss1.str();

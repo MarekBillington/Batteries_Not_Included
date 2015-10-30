@@ -12,8 +12,11 @@ public:
 	int getDirection();
 	void setDirection(int dir);
 
-private:
+	int getClient();
+	void setClient(int client);
 
+private:
+	int clientID;
 	int direction;
 };
 

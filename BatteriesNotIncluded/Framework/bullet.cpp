@@ -21,3 +21,15 @@ Bullet::setDirection(int dir)
 {
 	direction = dir;
 }
+
+int
+Bullet::getClient()
+{
+	return direction;
+}
+
+void
+Bullet::setClient(int cl)
+{
+	clientID = cl;
+}

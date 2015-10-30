@@ -23,7 +23,7 @@
 #include "logmanager.h"
 #include "sprite.h"
 #include "animatedsprite.h"
-
+#include "bullet.h"
 #include "gameMap.h"
 #include "entity.h"
 #include "player.h"
@@ -71,6 +71,7 @@ std::map<int, Sprite*> playerL2TextList;
 typedef std::map<int, Sprite*>::iterator it_L2Text;
 int clientID;
 void NetworkThread();
+
 
 //James Shit
 bool hudCreated = false;
@@ -330,7 +331,7 @@ Game::Process(float deltaTime)
 	if (isServer)
 	{
 		serverCounter += deltaTime;
-		if (serverCounter > 0.016)
+		if (serverCounter > 0.01666666666666666)
 		{
 			RakNet::BitStream bsOut;
 			bsOut.Write((RakNet::MessageID)NET_UPDATE);
@@ -456,7 +457,7 @@ Game::Process(float deltaTime)
 					}
 					else {
 						tempX = (4 * 1280) + 200 + (3 * 50);
-						tempY= (3 * 720) + 460;
+						tempY = (3 * 720) + 460;
 					}
 					if (e == playerList[3]){
 						playerList.at(3)->SetPositionX(tempX);
@@ -465,32 +466,30 @@ Game::Process(float deltaTime)
 				}
 			}
 		}
-
 		for (int i = 0; i < e->pl_bulletContainer.size(); i++)
 		{
-			Bullet* bullet = e->pl_bulletContainer.at(i);
-			bullet->Process(deltaTime);
-			
+			Bullet* e_bullet = e->pl_bulletContainer.at(i);
+			if (e_bullet->IsCollidingWith(*e))
+			{
+				e->setHealth(e->getHealth() - 50);
+			}
+			if ((e_bullet->getCurrentRoomX() != e->getCurrentRoomX()) || (e_bullet->getCurrentRoomY() != e->getCurrentRoomY()))
+			{
+				e_bullet->SetDead(true);
+			}
+			/*if (((e->GetPositionX() + 1280) > e_bullet->GetPositionX() || (e->GetPositionX() + 1280) < e_bullet->GetPositionX())
+				|| ((e->GetPositionY() + 720) > e_bullet->GetPositionY() || (e->GetPositionY() + 720) < e_bullet->GetPositionY()))
+			{
+				e_bullet->SetDead(true);
+			}*/
+			if (e_bullet->IsDead())
+			{
+				e->pl_bulletContainer.erase(e->pl_bulletContainer.begin() + i);
+			}
+			e_bullet->Process(deltaTime);
 		}
-
-		//for (int i = 0; i < e->pl_bulletContainer.size(); i++)
-		//{
-
-			//Bullet* bullet = e->pl_bulletContainer.at(i);
-			//if (ga_gameMap->getRoomAt(e->getCurrentRoomX(), e->getCurrentRoomY())->IsCollidingWith(*bullet)){
-
-			//	e->pl_bulletContainer.at(i)->SetDead(true);
-
-			//}
-
-			//if (e->pl_bulletContainer.at(i)->IsDead()){
-				//delete bullet;
-				//e->pl_bulletContainer.erase(e->pl_bulletContainer.begin() + i);
-			//}
-		//}
-		
 	}
-
+			
 	if (playerList.size() > 0){
 		if (playerList.size() > 1){
 			if (playerList[0]->getCurrentRoomX() == playerList[1]->getCurrentRoomX() && playerList[0]->getCurrentRoomY() == playerList[1]->getCurrentRoomY()){
@@ -517,8 +516,7 @@ Game::Process(float deltaTime)
 			}
 		}
 	}
-
-
+	
 
 	updateCamera();
 
@@ -531,6 +529,7 @@ Game::Draw(BackBuffer& backBuffer)
 
 	backBuffer.Clear();
 
+	
 	
 	if (ga_gameState == MAINMENU){
 		ga_mainMenu->Draw(backBuffer);
@@ -581,13 +580,17 @@ Game::Draw(BackBuffer& backBuffer)
 			Player* e = iterator->second;
 			e->Draw(backBuffer);
 
-			//for each (Bullet* bullet in e->pl_bulletContainer)
-			for each(Bullet* bullet in e->pl_bulletContainer)
-			{
-				
-					bullet->Draw(backBuffer);
+			if (e->pl_bulletContainer.size() != 0){
+				for each(Bullet* bullet in e->pl_bulletContainer)
+				{
+					if (!bullet->IsDead())
+					{
+						bullet->Draw(backBuffer);
+					}
+				}
 			}
 		}
+		
 
 		if (playerCreated){
 			//Probably a bad way to do this but im tired
@@ -918,9 +921,6 @@ Game::MoveSpaceShipVert(float speed)
 			bsOut.Write(speed);
 			peer->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, iterator->second, false);
 		}
-
-		
-
 			playerList.at(0)->SetVerticalVelocity(speed);
 	}
 
@@ -936,70 +936,86 @@ Game::MoveSpaceShipVert(float speed)
 void 
 Game::FirePlayerBullet(int dir)
 {
-	Sprite* bulletSprite = m_pBackBuffer->CreateSprite("assets\\playerbullet.png");
-	Bullet* bullet;
-	switch (dir)
-	{
-	case 1:
-		bullet = new Bullet(dir);
-		bullet->Initialise(bulletSprite);
+	//if (playerList[clientID]->pl_bulletContainer.size() < 10)
+	//{
+	
+		Sprite* bulletSprite = m_pBackBuffer->CreateSprite("assets\\playerbullet.png");
+		Bullet* bullet;
+		switch (dir)
+		{
+		case 1:
+			bullet = new Bullet(dir);
+			bullet->Initialise(bulletSprite);
 
-		bullet->SetPositionX(playerList[clientID]->GetPositionX() + 40);
-		bullet->SetPositionY(playerList[clientID]->GetPositionY() + 40);
-		/*bullet->SetPositionX(playerList.at(0)->GetPositionX());
-		bullet->SetPositionY(playerList.at(0)->GetPositionY());*/
+			bullet->SetPositionX(playerList[clientID]->GetPositionX() + 50);
+			bullet->SetPositionY(playerList[clientID]->GetPositionY() - 17);
+			bullet->setCurrentRoomX(playerList[clientID]->getCurrentRoomX());
+			bullet->setCurrentRoomY(playerList[clientID]->getCurrentRoomY());
+			/*bullet->SetPositionX(playerList.at(0)->GetPositionX());
+			bullet->SetPositionY(playerList.at(0)->GetPositionY());*/
 
-		bullet->SetVerticalVelocity(-600);
-		break;
-	case 2:
-		bullet = new Bullet(dir);
-		bullet->Initialise(bulletSprite);
+			bullet->setClient(clientID);
+			bullet->SetVerticalVelocity(-400);
+			break;
+		case 2:
+			bullet = new Bullet(dir);
+			bullet->Initialise(bulletSprite);
 
-		bullet->SetPositionX(playerList[clientID]->GetPositionX() + 40);
-		bullet->SetPositionY(playerList[clientID]->GetPositionY() + 40);
+			bullet->SetPositionX(playerList[clientID]->GetPositionX() + 40);
+			bullet->SetPositionY(playerList[clientID]->GetPositionY() + 129);
+			bullet->setCurrentRoomX(playerList[clientID]->getCurrentRoomX());
+			bullet->setCurrentRoomY(playerList[clientID]->getCurrentRoomY());
+
+			bullet->setClient(clientID);
+			bullet->SetVerticalVelocity(400);
+			break;
+		case 3:
+			bullet = new Bullet(dir);
+			bullet->Initialise(bulletSprite);
+
+			bullet->SetPositionX(playerList[clientID]->GetPositionX() - 17);
+			bullet->SetPositionY(playerList[clientID]->GetPositionY() + 58);
+
+			bullet->setCurrentRoomX(playerList[clientID]->getCurrentRoomX());
+			bullet->setCurrentRoomY(playerList[clientID]->getCurrentRoomY());
+
+			bullet->setClient(clientID);
+			bullet->SetHorizontalVelocity(-400);
+			break;
+		case 4:
+			bullet = new Bullet(dir);
+			bullet->Initialise(bulletSprite);
 
 
-		bullet->SetVerticalVelocity(600);
-		break;
-	case 3:
-		bullet = new Bullet(dir);
-		bullet->Initialise(bulletSprite);
+			bullet->SetPositionX(playerList[clientID]->GetPositionX() + 125);
+			bullet->SetPositionY(playerList[clientID]->GetPositionY() + 58);
+			bullet->setCurrentRoomX(playerList[clientID]->getCurrentRoomX());
+			bullet->setCurrentRoomY(playerList[clientID]->getCurrentRoomY());
 
-		bullet->SetPositionX(playerList[clientID]->GetPositionX() + 40);
-		bullet->SetPositionY(playerList[clientID]->GetPositionY() + 40);
-
-		bullet->SetHorizontalVelocity(-600);
-		break;
-	case 4:
-		bullet = new Bullet(dir);
-		bullet->Initialise(bulletSprite);
-
-
-		bullet->SetPositionX(playerList[clientID]->GetPositionX() + 40);
-		bullet->SetPositionY(playerList[clientID]->GetPositionY() + 40);
-
-		bullet->SetHorizontalVelocity(600);
-		break;
-	}
-	playerList.at(clientID)->pl_bulletContainer.push_back(bullet);
-	playerList[clientID]->pl_bulletContainer.push_back(bullet);
-	if (isServer){
-		for (it_sysaddr iterator = netClients.begin(); iterator != netClients.end(); iterator++){
+			bullet->setClient(clientID);
+			bullet->SetHorizontalVelocity(400);
+			break;
+		}
+		playerList.at(clientID)->pl_bulletContainer.push_back(bullet);
+		playerList[clientID]->pl_bulletContainer.push_back(bullet);
+		if (isServer){
+			for (it_sysaddr iterator = netClients.begin(); iterator != netClients.end(); iterator++){
+				RakNet::BitStream bsOut;
+				bsOut.Write((RakNet::MessageID)PLAYER_SHOOT);
+				bsOut.Write(clientID);
+				bsOut.Write(dir);
+				peer->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, iterator->second, false);
+			}
+		}
+		else
+		{
 			RakNet::BitStream bsOut;
 			bsOut.Write((RakNet::MessageID)PLAYER_SHOOT);
 			bsOut.Write(clientID);
 			bsOut.Write(dir);
-			peer->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, iterator->second, false);
+			peer->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, ServerName, false);
 		}
-	}
-	else
-	{
-		RakNet::BitStream bsOut;
-		bsOut.Write((RakNet::MessageID)PLAYER_SHOOT);
-		bsOut.Write(clientID);
-		bsOut.Write(dir);
-		peer->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, ServerName, false);
-	}
+	//}
 }
 
 void 
@@ -1603,22 +1619,24 @@ NetworkThread()
 					{
 					case 1:
 					{
-							bullet->SetVerticalVelocity(-600);
+							bullet->SetVerticalVelocity(-400);
+							//bullet->setCurrentRoomX(playerList[clientID]->getCurrentRoomX());
+							//bullet->setCurrentRoomY(playerList[clientID]->getCurrentRoomY());
 					}
 						break;
 					case 2:
 					{
-							bullet->SetVerticalVelocity(600);
+							bullet->SetVerticalVelocity(400);
 					}
 						break;
 					case 3:
 					{
-							bullet->SetHorizontalVelocity(-600);
+							bullet->SetHorizontalVelocity(-400);
 					}
 						break;
 					case 4:
 					{
-							bullet->SetHorizontalVelocity(600);
+							bullet->SetHorizontalVelocity(400);
 					}
 						break;
 					}
@@ -1836,28 +1854,34 @@ NetworkThread()
 					{
 					case 1:
 					{
-							bullet->SetVerticalVelocity(-600);
+							bullet->SetVerticalVelocity(-400);
+							bullet->setClient(id);
 					}
 						break;
 					case 2:
 					{
-							bullet->SetVerticalVelocity(600);
+							bullet->SetVerticalVelocity(400);
+							bullet->setClient(id);
 					}
 						break;
 					case 3:
 					{
-							bullet->SetHorizontalVelocity(-600);
+							bullet->SetHorizontalVelocity(-400);
+							bullet->setClient(id);
 					}
 						break;
 					case 4:
 					{
-							bullet->SetHorizontalVelocity(600);
+							bullet->SetHorizontalVelocity(400);
+							bullet->setClient(id);
 					}
 						break;
 					}
 
 					playerList.at(id)->pl_bulletContainer.push_back(bullet);
 					playerList[id]->pl_bulletContainer.push_back(bullet);
+					
+					
 				}
 					break;
 				}

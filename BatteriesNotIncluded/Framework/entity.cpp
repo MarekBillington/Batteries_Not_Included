@@ -42,27 +42,26 @@ Entity::Initialise(Sprite* sprite)
 void 
 Entity::Process(float deltaTime)
 {
-	m_pSprite->SetX(static_cast<int>(m_x));
-	m_pSprite->SetY(static_cast<int>(m_y));
-
-
-	m_x += m_velocityX*deltaTime;
-	m_y += m_velocityY*deltaTime;
-
-	if (m_x > 1280 || m_x < 0 || m_y > 720 || m_y < 0)
+	if (!m_dead)
 	{
-		m_dead = true;
-	
+		m_pSprite->SetX(static_cast<int>(m_x));
+		m_pSprite->SetY(static_cast<int>(m_y));
+
+
+		m_x += m_velocityX*deltaTime;
+		m_y += m_velocityY*deltaTime;
 	}
+	
+
 	// Ex006.2: Generic position update, based upon velocity (and time).
 
-	// Ex006.2: Boundary checking and position capping. 
+	// Ex006.2: Boundary checking and position capping.
 }
 
 void 
 Entity::Draw(BackBuffer& backBuffer)
 {
-	if (!m_dead){
+	if (!m_dead && (m_pSprite != NULL)){
 		assert(m_pSprite);
 		m_pSprite->Draw(backBuffer);
 	}
@@ -71,10 +70,36 @@ Entity::Draw(BackBuffer& backBuffer)
 bool
 Entity::IsCollidingWith(Entity& e)
 {
-	
+	float eX = e.GetPositionX();
+	float eY = e.GetPositionY();
 
-	return (false); // Ex006.4 Change return value!
+	float eR = 50.0;
+
+	eR = 55.0;
+	eX = e.GetPositionX();
+	eY = e.GetPositionY();
+	// Ex006.4: Generic Entity Collision routine.
+	bool result = false;
+	// Ex006.4: Does this object collide with the e object?
+	// Ex006.4: Create a circle for each entity (this and e).
+	float bR = 25.0;
+
+	float bX = m_x;
+	float bY = m_y;
+	if (true){
+
+	}
+
+	// Ex006.4: Check for intersection.
+	// Ex006.4: Using circle-vs-circle collision detection.
+	if ((sqrt((eX - bX)*(eX - bX) + (eY - bY)*(eY - bY)) - (eR - bR)) <= 0){
+		result = true;
+	}
+	// Ex006.4: Return result of collision.
+
+	return (result); // Ex006.4 Change return value!
 }
+
 
 bool 
 Entity::IsDead()
