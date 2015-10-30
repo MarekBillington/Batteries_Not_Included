@@ -192,7 +192,16 @@ GameMap::draw(BackBuffer& backbuffer){
 }
 
 
-
+void
+GameMap::process(float deltaTime){
+	for (size_t i = 0; i < 9; i++)
+	{
+		for (size_t j = 0; j < 9; j++)
+		{
+			gm_layout[i][j]->Process(deltaTime);
+		}
+	}
+}
 
 
 Room*

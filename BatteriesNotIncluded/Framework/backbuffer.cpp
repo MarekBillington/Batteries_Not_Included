@@ -138,7 +138,7 @@ BackBuffer::DrawAnimatedSprite(AnimatedSprite& sprite)
 	SDL_Rect dest;
 	SDL_Rect src;
 
-	src.x = sprite.GetWidth() * sprite.GetFrame() ;
+	src.x = sprite.GetWidth() * sprite.GetFrame();
 	src.y = sprite.GetHeight() * sprite.getLocation();
 	src.w = sprite.GetWidth();
 	src.h = sprite.GetHeight();

@@ -6,13 +6,18 @@ Enemy::Enemy(EnemyType enemyType, int x, int y, BackBuffer* backBuffer)
 	SetPositionX(x);
 	SetPositionY(y);
 
-	Sprite* enemySprite;
+	AnimatedSprite* enemySprite;
 
 	if (enemyType == ROBORAT){
-		enemySprite = backBuffer->CreateSprite("assets\\alienenemy.png");
+		enemySprite = backBuffer->CreateAnimatedSprite("assets\\alienenemy.png");
+	}
+	if (enemyType == BOSS){
+		enemySprite = backBuffer->CreateAnimatedSprite("assets\\boss 280.png");
+		SetHorizontalVelocity(-100);
 	}
 	
-
+	en_enemyType = enemyType;
+	en_enemyState = PASSIVE;
 	Initialise(enemySprite);
 	setInitialStats();
 }
@@ -23,25 +28,55 @@ Enemy::~Enemy()
 }
 
 bool
-Enemy::Initialise(Sprite* sprite)
+Enemy::Initialise(AnimatedSprite* pSprite)
 {
+	en_pSprite = pSprite;
+	int length = 0;
+	while (length < 7){
+		length++;
+		en_pSprite->AddFrame(length);
+	}
 
-	m_pSprite = sprite;
+	en_pSprite->SetFrameSpeed(0.3);
+	en_pSprite->SetFrameWidth(280.0);
+	setWidth(280.0);
+	en_pSprite->SetHeight(340);
+	setHeight(340);
 	
 
 
 	return (true);
 }
 
+
+void
+Enemy::Draw(BackBuffer& backBuffer)
+{
+	if (en_health <= 0){
+
+	}
+	else {
+		en_pSprite->Draw(backBuffer);
+	}
+}
+
 void
 Enemy::Process(float deltaTime)
 {
-	m_pSprite->SetX(static_cast<int>(m_x));
-	m_pSprite->SetY(static_cast<int>(m_y));
+	en_pSprite->SetX(static_cast<int>(m_x));
+	en_pSprite->SetY(static_cast<int>(m_y));
 
 	m_x += m_velocityX*deltaTime;
 	m_y += m_velocityY*deltaTime;
 	
+	if (m_velocityX != 0 && m_velocityY != 0)
+	{
+		en_pSprite->SetFrameSpeed(0.1);
+	}
+	else
+	{
+		en_pSprite->SetFrameSpeed(0.0000005);
+	}
 
 	if (en_enemyType == ROBORAT){
 		roboratProcess();
@@ -61,15 +96,12 @@ Enemy::Process(float deltaTime)
 	else if (en_enemyType == BOSS){
 		bossProcess();
 	}
-
+	en_pSprite->Process(deltaTime);
 	en_currentRoomX = (m_x / 1280);
 	en_currentRoomY = (m_y / 720);
 }
 
-//void Enemy::Draw(BackBuffer& backBuffer)
-//{
-//	m_pSprite->Draw(backBuffer);
-//}
+
 
 int
 Enemy::getHealth(){
@@ -281,13 +313,19 @@ Enemy::scrapshooterProcess(){
 void
 Enemy::bossProcess(){
 	if (en_enemyState == PASSIVE){
-		//if (){
-
-		//}
-		//else if (){
-
-		//}
-		//if (toShoot)
+		if (m_x - (1280*4) < 100){
+			m_velocityX = 100;
+		}
+		if (m_x - (1280 * 4) > 900){
+			m_velocityX = -100;
+		}
+		if (toShoot > 14){
+			//shoot
+			toShoot = 0;
+		}
+		else {
+			toShoot++;
+		}
 	}
 	else if (en_enemyState == AGRO){
 

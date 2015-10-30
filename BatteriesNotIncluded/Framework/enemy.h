@@ -6,6 +6,8 @@
 #include "passive.h"
 #include "active.h"
 #include "sprite.h"
+#include "animatedsprite.h"
+
 
 #include <string>
 
@@ -34,15 +36,17 @@ public:
 
 
 	//Processing
-	bool Initialise(Sprite* sprite);
+	bool Initialise(AnimatedSprite* sprite);
 	void Process(float deltaTime);
-	//void Draw(BackBuffer& backBuffer);
+	void Draw(BackBuffer& backBuffer);
 
 	//stats
 	int getCurrentRoomX();
 	int getCurrentRoomY();
 	int getHealth();
 	int getAttackSpeed();
+
+
 	int getAttackDamage();
 	int getMovementSpeed();
 
@@ -65,7 +69,9 @@ public:
 	void scrapshooterProcess();
 	void bossProcess();
 
-
+	bool direction = false;
+	int toShoot;
+	AnimatedSprite* en_pSprite;
 	//items not moved from player.h
 
 	//Effects
@@ -78,11 +84,11 @@ public:
 	void setPoisoned(int duration);
 	void setElectrocuted(int duration);
 	void setRepairing(int duration);
+	EnemyType en_enemyType;
+	EnemyState en_enemyState;
 
 private:
 	//name not included
-	EnemyType en_enemyType;
-	EnemyState en_enemyState;
 	int en_currentRoomX;
 	int en_currentRoomY;
 

@@ -16,6 +16,8 @@
 #include <stack>
 #include <deque>
 #include <vector>
+#include <sstream>
+
 
 // Local includes:
 #include "backbuffer.h"
@@ -80,6 +82,7 @@ Bullet* four_bul[20];
 //James Shit
 bool hudCreated = false;
 bool playerCreated = false;
+int winnerID = 0;
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -241,6 +244,9 @@ Game::Initialise()
 	ga_volumeSlider->SetX(900);
 	ga_volumeSlider->SetY(495);
 
+	ga_winScreen = m_pBackBuffer->CreateSprite("assets\\winscreen.png");
+	ga_winScreen = m_pBackBuffer->CreateSprite("assets\\losescreen.png");
+
 	ga_nameBox->SetX(screenWidth / 2 - 400);
 	ga_nameBox->SetY(screenHeight / 2 - 200);
 
@@ -391,6 +397,9 @@ Game::Process(float deltaTime)
 		Player* e = (Player*)iterator->second;
 		ga_gameMap->getRoomAt(e->getCurrentRoomX(), e->getCurrentRoomY())->IsCollidingWith(*e);
 		e->Process(deltaTime);
+		ga_gameMap->process(deltaTime);
+
+
 		//basic Respawn(
 		if (e->getHealth() <= 0){
 			e->setHealth(1000);
@@ -528,8 +537,72 @@ Game::Process(float deltaTime)
 				}
 			}
 		}
+
+
+
 	}
 	
+	if (ga_gameMap->getRoomAt(4, 3)->getBoss()->getHealth() <= 0 && ga_gameState == RUNNING){
+
+		if (playerList.size() > 0){
+			winnerID = 0;
+			if (playerList.size() > 1){
+				if (playerList[0]->pl_deathCount > playerList[1]->pl_deathCount){
+					winnerID = 1;
+				}
+				else {
+					winnerID = 0;
+				}
+				if (playerList.size() > 2){
+					if (winnerID == 0){
+						if (playerList[0]->pl_deathCount > playerList[2]->pl_deathCount){
+							winnerID = 2;
+						}
+						else {
+							winnerID = 0;
+						}
+					}
+					else {
+						if (playerList[2]->pl_deathCount > playerList[1]->pl_deathCount){
+							winnerID = 1;
+						}
+						else {
+							winnerID = 2;
+						}
+					}
+					if (playerList.size() > 3){
+						if (winnerID == 0){
+							if (playerList[0]->pl_deathCount > playerList[3]->pl_deathCount){
+								winnerID = 3;
+							}
+							else {
+								winnerID = 0;
+							}
+						}
+						else if (winnerID == 1){
+							if (playerList[1]->pl_deathCount > playerList[3]->pl_deathCount){
+								winnerID = 3;
+							}
+							else {
+								winnerID = 1;
+							}
+						}
+						else if (winnerID == 2){
+							if (playerList[2]->pl_deathCount > playerList[3]->pl_deathCount){
+								winnerID = 3;
+							}
+							else {
+								winnerID = 2;
+							}
+						}
+					}
+				}
+			}
+			ga_gameState = END;
+
+		}
+	}
+
 	updateCamera();
 
 }
@@ -603,6 +676,7 @@ Game::Draw(BackBuffer& backBuffer)
 			}
 		}
 		
+
 
 		if (playerCreated){
 			//Probably a bad way to do this but im tired
@@ -863,13 +937,55 @@ Game::Draw(BackBuffer& backBuffer)
 				ga_gameMap->LeftWallDoor->SetX(playerList[clientID]->getCurrentRoomX()*screenWidth);
 				ga_gameMap->LeftWallDoor->SetY(playerList[clientID]->getCurrentRoomY()*screenHeight);
 			}
+			
+
 		}
 
 		if (ga_hud != 0)
 			ga_hud->Draw(backBuffer, minutesToBoss, secondsToBoss);
 
+		
 	}
-	
+	else if (ga_gameState == END){
+		if (clientID == winnerID){
+			//win Game
+			backBuffer.DrawSpriteHUD(*ga_winScreen);
+		}
+		else {
+
+			//lose game
+			backBuffer.DrawSpriteHUD(*ga_loseScreen);
+		}
+		std::string win = "Winner: ";
+		win += clientNames[winnerID];
+		win += " with " ;
+		std::stringstream ss1;
+		ss1 << playerList[winnerID]->pl_deathCount;
+		win += ss1.str();
+		win += +" deaths";
+
+		Sprite* nameTXT = backBuffer.CreateText(win, { 255, 255, 255, 150 }, "assets//dkjalebi.otf", 20);
+		nameTXT->SetX(500);
+		nameTXT->SetY(400);
+		backBuffer.DrawSpriteHUD(*nameTXT);
+
+		std::string lose;
+		for (int i = 0; i < playerList.size(); i++){
+			if (i != winnerID){
+				lose += clientNames[winnerID];
+				lose += "with ";
+				std::stringstream ss2;
+				ss2 << playerList[i]->pl_deathCount;
+				lose += ss2.str();
+				lose += +" deaths";
+				nameTXT->SetX(500);
+				nameTXT->SetY(430 + (i * 40));
+				Sprite* nameTXT2 = backBuffer.CreateText(lose, { 255, 255, 255, 150 }, "assets//dkjalebi.otf", 20);
+				backBuffer.DrawSpriteHUD(*nameTXT2);
+			}
+		}
+	}
+	//480x640, 800x700
 
 	backBuffer.Present();
 }
@@ -1945,4 +2061,9 @@ void
 void
 	Game::minusHealth(){
 	playerList.at(clientID)->setHealth(playerList.at(clientID)->getHealth() - 10);
+}
+
+void 
+Game::BOSSDIE(){
+	ga_gameMap->getRoomAt(4, 3)->getBoss()->setHealth(0);
 }

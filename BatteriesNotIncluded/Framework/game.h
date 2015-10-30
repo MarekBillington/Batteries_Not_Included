@@ -25,7 +25,8 @@ enum GameState
 	LOBBY,
 	OPTIONS,
 	OPTIONS_NAME,
-	OPTIONS_VOLUME
+	OPTIONS_VOLUME,
+	END
 };
 
 class Game
@@ -78,6 +79,7 @@ public:
 	void addHealth();
 	void minusHealth();
 	Hud* ga_hud;
+	void BOSSDIE();
 
 protected:
 	void Process(float deltaTime);
@@ -130,6 +132,10 @@ protected:
 	Sprite* ga_nameChange1;
 	Sprite* ga_nameChange2;
 	Sprite* ga_volumeSlider;
+	Sprite* ga_winScreen;
+	Sprite* ga_loseScreen;
+
+
 
 	Sprite* currentIP;
 	//Player* player;

@@ -110,6 +110,7 @@ Room::Draw(BackBuffer& backBuffer)
 	{
 		ro_enemyContainer.at(i)->Draw(backBuffer);
 	}
+
 }
 
 
@@ -148,7 +149,7 @@ int Room::getRoomNumber(){
 }
 
 
-void 
+void
 Room::createTerrain(RoomType type){
 
 	Game& game = Game::GetGame();
@@ -157,14 +158,25 @@ Room::createTerrain(RoomType type){
 
 	if (type == fourDoors){
 
-		Terrain* dwayneTheRockJohnson = new Terrain(ROCK, m_x + 600, m_y + 220, backBuffer);
+
+
+		Terrain* dwayneTheRockJohnson = new Terrain(ROCK, m_x + 600, m_y + 320, backBuffer);
 		ro_terrainContainer.push_back(dwayneTheRockJohnson);
+		Terrain* dwayneTheRockJohnson2 = new Terrain(ROCK, m_x + 520, m_y + 320, backBuffer);
+		ro_terrainContainer.push_back(dwayneTheRockJohnson2);
+		Terrain* dwayneTheRockJohnson3 = new Terrain(ROCK, m_x + 680, m_y + 320, backBuffer);
+		ro_terrainContainer.push_back(dwayneTheRockJohnson3);
 
-		Terrain* dwayneTheSpikeJohnson = new Terrain(SPIKE, m_x + 900, m_y + 320, backBuffer);
+
+		Terrain* dwayneTheSpikeJohnson = new Terrain(SPIKE, m_x + 760, m_y + 240, backBuffer);
 		ro_terrainContainer.push_back(dwayneTheSpikeJohnson);
+		Terrain* dwayneTheSpikeJohnson1 = new Terrain(SPIKE, m_x + 760, m_y + 400, backBuffer);
+		ro_terrainContainer.push_back(dwayneTheSpikeJohnson1);
+		Terrain* dwayneTheSpikeJohnson2 = new Terrain(SPIKE, m_x + 440, m_y + 240, backBuffer);
+		ro_terrainContainer.push_back(dwayneTheSpikeJohnson2);
+		Terrain* dwayneTheSpikeJohnson3 = new Terrain(SPIKE, m_x + 440, m_y + 400, backBuffer);
+		ro_terrainContainer.push_back(dwayneTheSpikeJohnson3);
 
-		Terrain* dwayneTheHoleJohnson = new Terrain(HOLE, m_x + 300, m_y + 520, backBuffer);
-		ro_terrainContainer.push_back(dwayneTheHoleJohnson);
 
 
 		ro_doorNorth = true;
@@ -174,6 +186,14 @@ Room::createTerrain(RoomType type){
 	}
 	else if (type == threeDoorsTopWall){
 
+		Terrain* dwayneTheSpikeJohnson4 = new Terrain(SPIKE, m_x + 600, m_y + 200, backBuffer);
+		ro_terrainContainer.push_back(dwayneTheSpikeJohnson4);
+		Terrain* dwayneTheSpikeJohnson5 = new Terrain(SPIKE, m_x + 600, m_y + 440, backBuffer);
+		ro_terrainContainer.push_back(dwayneTheSpikeJohnson5);
+		Terrain* dwayneTheSpikeJohnson6 = new Terrain(SPIKE, m_x + 840, m_y + 320, backBuffer);
+		ro_terrainContainer.push_back(dwayneTheSpikeJohnson6);
+		Terrain* dwayneTheSpikeJohnson7 = new Terrain(SPIKE, m_x + 360, m_y + 320, backBuffer);
+		ro_terrainContainer.push_back(dwayneTheSpikeJohnson7);
 
 
 		ro_doorNorth = false;
@@ -183,6 +203,29 @@ Room::createTerrain(RoomType type){
 	}
 	else if (type == threeDoorsBottomWall){
 
+		Terrain* dwayneTheRockJohnson = new Terrain(ROCK, m_x + 600, m_y + 240, backBuffer);
+		ro_terrainContainer.push_back(dwayneTheRockJohnson);
+
+		Terrain* dwayneTheRockJohnson2 = new Terrain(ROCK, m_x + 520, m_y + 240, backBuffer);
+		ro_terrainContainer.push_back(dwayneTheRockJohnson2);
+
+		Terrain* dwayneTheRockJohnson3 = new Terrain(ROCK, m_x + 680, m_y + 240, backBuffer);
+		ro_terrainContainer.push_back(dwayneTheRockJohnson3);
+
+
+		Terrain* dwayneTheRockJohnson4 = new Terrain(ROCK, m_x + 600, m_y + 400, backBuffer);
+		ro_terrainContainer.push_back(dwayneTheRockJohnson4);
+		Terrain* dwayneTheRockJohnson5 = new Terrain(ROCK, m_x + 520, m_y + 400, backBuffer);
+		ro_terrainContainer.push_back(dwayneTheRockJohnson5);
+		Terrain* dwayneTheRockJohnson6 = new Terrain(ROCK, m_x + 680, m_y + 400, backBuffer);
+		ro_terrainContainer.push_back(dwayneTheRockJohnson6);
+
+		Terrain* dwayneTheRockJohnson7 = new Terrain(ROCK, m_x + 520, m_y + 320, backBuffer);
+		ro_terrainContainer.push_back(dwayneTheRockJohnson7);
+		Terrain* dwayneTheRockJohnson8 = new Terrain(ROCK, m_x + 680, m_y + 320, backBuffer);
+		ro_terrainContainer.push_back(dwayneTheRockJohnson8);
+
+
 		ro_doorNorth = true;
 		ro_doorEast = true;
 		ro_doorSouth = false;
@@ -190,12 +233,46 @@ Room::createTerrain(RoomType type){
 	}
 	else if (type == threeDoorsLeftWall){
 
+
+		Terrain* dwayneTheSpikeJohnson = new Terrain(SPIKE, m_x + 760, m_y + 240, backBuffer);
+		ro_terrainContainer.push_back(dwayneTheSpikeJohnson);
+		Terrain* dwayneTheSpikeJohnson1 = new Terrain(SPIKE, m_x + 760, m_y + 400, backBuffer);
+		ro_terrainContainer.push_back(dwayneTheSpikeJohnson1);
+		Terrain* dwayneTheSpikeJohnson2 = new Terrain(SPIKE, m_x + 440, m_y + 240, backBuffer);
+		ro_terrainContainer.push_back(dwayneTheSpikeJohnson2);
+		Terrain* dwayneTheSpikeJohnson3 = new Terrain(SPIKE, m_x + 440, m_y + 400, backBuffer);
+		ro_terrainContainer.push_back(dwayneTheSpikeJohnson3);
+
+
+		Terrain* dwayneTheSpikeJohnson4 = new Terrain(SPIKE, m_x + 840, m_y + 180, backBuffer);
+		ro_terrainContainer.push_back(dwayneTheSpikeJohnson4);
+		Terrain* dwayneTheSpikeJohnson5 = new Terrain(SPIKE, m_x + 840, m_y + 480, backBuffer);
+		ro_terrainContainer.push_back(dwayneTheSpikeJohnson5);
+		Terrain* dwayneTheSpikeJohnson6 = new Terrain(SPIKE, m_x + 360, m_y + 180, backBuffer);
+		ro_terrainContainer.push_back(dwayneTheSpikeJohnson6);
+		Terrain* dwayneTheSpikeJohnson7 = new Terrain(SPIKE, m_x + 360, m_y + 480, backBuffer);
+		ro_terrainContainer.push_back(dwayneTheSpikeJohnson7);
+
+
 		ro_doorNorth = true;
 		ro_doorEast = true;
 		ro_doorSouth = true;
 		ro_doorWest = false;
 	}
 	else if (type == threeDoorsRightWall){
+
+
+		Terrain* dwayneTheSpikeJohnson4 = new Terrain(SPIKE, m_x + 840, m_y + 180, backBuffer);
+		ro_terrainContainer.push_back(dwayneTheSpikeJohnson4);
+		Terrain* dwayneTheSpikeJohnson5 = new Terrain(SPIKE, m_x + 840, m_y + 480, backBuffer);
+		ro_terrainContainer.push_back(dwayneTheSpikeJohnson5);
+		Terrain* dwayneTheSpikeJohnson6 = new Terrain(SPIKE, m_x + 360, m_y + 180, backBuffer);
+		ro_terrainContainer.push_back(dwayneTheSpikeJohnson6);
+		Terrain* dwayneTheSpikeJohnson7 = new Terrain(SPIKE, m_x + 360, m_y + 480, backBuffer);
+		ro_terrainContainer.push_back(dwayneTheSpikeJohnson7);
+
+		Terrain* dwayneTheHoleJohnson = new Terrain(SPIKE, m_x + 600, m_y + 320, backBuffer);
+		ro_terrainContainer.push_back(dwayneTheHoleJohnson);
 
 		ro_doorNorth = true;
 		ro_doorEast = false;
@@ -209,14 +286,14 @@ Room::createTerrain(RoomType type){
 		ro_doorSouth = true;
 		ro_doorWest = false;
 
-		Terrain* dwayneTheRockJohnson = new Terrain(ROCK, m_x + 600, m_y + 220, backBuffer);
+		/*Terrain* dwayneTheRockJohnson = new Terrain(ROCK, m_x + 560, m_y + 220, backBuffer);
 		ro_terrainContainer.push_back(dwayneTheRockJohnson);
 
-		Terrain* dwayneTheSpikeJohnson = new Terrain(SPIKE, m_x + 900, m_y + 320, backBuffer);
+		Terrain* dwayneTheSpikeJohnson = new Terrain(SPIKE, m_x + 860, m_y + 320, backBuffer);
 		ro_terrainContainer.push_back(dwayneTheSpikeJohnson);
 
 		Terrain* dwayneTheHoleJohnson = new Terrain(HOLE, m_x + 300, m_y + 520, backBuffer);
-		ro_terrainContainer.push_back(dwayneTheHoleJohnson);
+		ro_terrainContainer.push_back(dwayneTheHoleJohnson);*/
 
 	}
 	else if (type == twoDoorsTopRightWalls){
@@ -232,6 +309,15 @@ Room::createTerrain(RoomType type){
 		ro_doorEast = true;
 		ro_doorSouth = false;
 		ro_doorWest = false;
+
+		/*Terrain* dwayneTheHoleJohnson = new Terrain(HOLE, m_x + 600, m_y + 320, backBuffer);
+		ro_terrainContainer.push_back(dwayneTheHoleJohnson);
+
+		Terrain* dwayneTheRockJohnson2 = new Terrain(ROCK, m_x + 600, m_y + 240, backBuffer);
+		ro_terrainContainer.push_back(dwayneTheRockJohnson2);
+		Terrain* dwayneTheRockJohnson3 = new Terrain(ROCK, m_x + 600, m_y + 400, backBuffer);
+		ro_terrainContainer.push_back(dwayneTheRockJohnson3);*/
+
 	}
 	else if (type == twoDoorsBottomRightWalls){
 
@@ -245,11 +331,17 @@ Room::createTerrain(RoomType type){
 		ro_doorEast = true;
 		ro_doorSouth = false;
 		ro_doorWest = true;
-		
+
 	}
 	else if (type == twoDoorsSplitVertical){
 
-		
+		Terrain* dwayneTheHoleJohnson = new Terrain(HOLE, m_x + 600, m_y + 320, backBuffer);
+		ro_terrainContainer.push_back(dwayneTheHoleJohnson);
+
+		Terrain* dwayneTheRockJohnson2 = new Terrain(ROCK, m_x + 600, m_y + 240, backBuffer);
+		ro_terrainContainer.push_back(dwayneTheRockJohnson2);
+		Terrain* dwayneTheRockJohnson3 = new Terrain(ROCK, m_x + 600, m_y + 400, backBuffer);
+		ro_terrainContainer.push_back(dwayneTheRockJohnson3);
 
 		ro_doorNorth = true;
 		ro_doorEast = false;
@@ -258,7 +350,7 @@ Room::createTerrain(RoomType type){
 	}
 	else if (type == oneDoorAtBottom){
 
-		Terrain* dwayneTheRockJohnson = new Terrain(ROCK, m_x + 600, m_y + 220, backBuffer);
+		/*Terrain* dwayneTheRockJohnson = new Terrain(ROCK, m_x + 600, m_y + 220, backBuffer);
 		ro_terrainContainer.push_back(dwayneTheRockJohnson);
 
 
@@ -266,7 +358,11 @@ Room::createTerrain(RoomType type){
 		ro_enemyContainer.push_back(theHoOfHoes);
 
 		Terrain* dwayneTheSpikeJohnson = new Terrain(SPIKE, m_x + 900, m_y + 320, backBuffer);
-		ro_terrainContainer.push_back(dwayneTheSpikeJohnson);
+		ro_terrainContainer.push_back(dwayneTheSpikeJohnson);*/
+		if (m_x / 1280 == 4 && m_y / 720 == 3) {
+			Enemy* theHoOfHoes = new Enemy(BOSS, m_x + 400, m_y + 10, backBuffer);
+			ro_enemyContainer.push_back(theHoOfHoes);
+		}
 
 		ro_doorNorth = false;
 		ro_doorEast = false;
@@ -275,11 +371,12 @@ Room::createTerrain(RoomType type){
 	}
 	else if (type == oneDoorAtTop){
 
-		Terrain* dwayneTheRockJohnson = new Terrain(ROCK, m_x + 600, m_y + 220, backBuffer);
+		/*Terrain* dwayneTheRockJohnson = new Terrain(ROCK, m_x + 600, m_y + 220, backBuffer);
 		ro_terrainContainer.push_back(dwayneTheRockJohnson);
 
 		Enemy* theHoOfHoes = new Enemy(ROBORAT, m_x + 400, m_y + 300, backBuffer);
-		ro_enemyContainer.push_back(theHoOfHoes);
+		ro_enemyContainer.push_back(theHoOfHoes);*/
+
 
 		ro_doorNorth = true;
 		ro_doorEast = false;
@@ -288,11 +385,11 @@ Room::createTerrain(RoomType type){
 	}
 	else if (type == oneDoorOnRight){
 
-		Terrain* dwayneTheRockJohnson = new Terrain(ROCK, m_x + 600, m_y + 220, backBuffer);
+		/*Terrain* dwayneTheRockJohnson = new Terrain(ROCK, m_x + 600, m_y + 220, backBuffer);
 		ro_terrainContainer.push_back(dwayneTheRockJohnson);
 
 		Enemy* theHoOfHoes = new Enemy(ROBORAT, m_x + 400, m_y + 300, backBuffer);
-		ro_enemyContainer.push_back(theHoOfHoes);
+		ro_enemyContainer.push_back(theHoOfHoes);*/
 
 		ro_doorNorth = false;
 		ro_doorEast = true;
@@ -301,11 +398,11 @@ Room::createTerrain(RoomType type){
 	}
 	else if (type == oneDoorOnLeft){
 
-		Terrain* dwayneTheRockJohnson = new Terrain(ROCK, m_x + 600, m_y + 220, backBuffer);
+		/*Terrain* dwayneTheRockJohnson = new Terrain(ROCK, m_x + 600, m_y + 220, backBuffer);
 		ro_terrainContainer.push_back(dwayneTheRockJohnson);
 
 		Enemy* theHoOfHoes = new Enemy(ROBORAT, m_x + 400, m_y + 300, backBuffer);
-		ro_enemyContainer.push_back(theHoOfHoes);
+		ro_enemyContainer.push_back(theHoOfHoes);*/
 
 		ro_doorNorth = false;
 		ro_doorEast = false;
@@ -318,7 +415,7 @@ Room::createTerrain(RoomType type){
 		ro_doorSouth = false;
 		ro_doorWest = false;
 	}
-		
+
 
 }
 
@@ -337,4 +434,18 @@ void
 Room::createWall(int x, int y, int width, int height, Side side, bool door, bool open){
 	Wall* wall = new Wall(x, y, width, height, side, door, open);
 	ro_wallContainer.push_back(wall);
+}
+
+Enemy*
+Room::getBoss(){
+	Enemy* toReturn;
+	for (size_t i = 0; i < ro_enemyContainer.size(); i++)
+	{
+		//if (!ro_terrainContainer.at(i)->IsDead()){
+		if (ro_enemyContainer.at(i)->en_enemyType == BOSS){
+			toReturn = ro_enemyContainer.at(i);
+		}
+		//}
+	}
+	return toReturn;
 }

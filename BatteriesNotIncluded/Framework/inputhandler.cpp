@@ -263,6 +263,9 @@ InputHandler::ProcessInput(Game& game)
 					game.minutesToBoss = 0;
 					game.secondsToBoss = 0;
 				}
+				else if (e.key.keysym.sym == SDLK_n){
+					game.BOSSDIE();
+				}
 				else if (e.key.keysym.sym == SDLK_3)
 				{
 					game.ga_hud->mapType = !game.ga_hud->mapType;
@@ -369,7 +372,21 @@ InputHandler::ProcessInput(Game& game)
 					game.MoveSpaceShipVert(0);
 				}
 			}
-		}	
+		}
+		else if (game.ga_gameState == END){
+			//480x640, 800x700
+			if (e.type == SDL_MOUSEBUTTONDOWN){
+				//remember to uncomment the related brackeT
+				int x;
+				int y;
+				SDL_GetMouseState(&x, &y);
+				if (480 < x && x < 800 && 640 < y && y < 700){
+					//Host lobby
+					game.Quit();
+				}
+			}
+		}
 	}
+	
 }
 

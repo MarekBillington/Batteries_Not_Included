@@ -59,6 +59,7 @@ public:
 	Sprite* ro_lockedSprite;
 	RoomSpecial getRoomSpecial();
 	bool ro_Locked = false;
+	Enemy* getBoss();
 private:
 	
 
