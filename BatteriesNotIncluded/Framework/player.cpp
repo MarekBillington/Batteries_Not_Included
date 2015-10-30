@@ -1,5 +1,6 @@
 
 #include"player.h"
+#include "backbuffer.h"
 
 #include <cassert>
 
@@ -83,8 +84,13 @@ Player::Process(float deltaTime)
 }
 
 void
-Player::Draw(BackBuffer& backBuffer)
+Player::Draw(BackBuffer& backBuffer, std::string name)
 {
+	Sprite* nameTXT = backBuffer.CreateText(name, { 255, 255, 255, 150 }, "assets//dkjalebi.otf", 20);
+	nameTXT->SetX(m_pSprite->GetX());
+	nameTXT->SetY(m_pSprite->GetY()-25);
+	backBuffer.DrawSprite(*nameTXT);
+
 	assert(m_pSprite);
 	m_pSprite->Draw(backBuffer);
 }
