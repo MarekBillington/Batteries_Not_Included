@@ -484,9 +484,14 @@ Game::Process(float deltaTime)
 			}*/
 			if (e_bullet->IsDead())
 			{
+				delete e_bullet;
 				e->pl_bulletContainer.erase(e->pl_bulletContainer.begin() + i);
 			}
+
+			
 			e_bullet->Process(deltaTime);
+			//e_bullet->SetDead(true);
+			
 		}
 	}
 			
@@ -996,7 +1001,7 @@ Game::FirePlayerBullet(int dir)
 			bullet->SetHorizontalVelocity(400);
 			break;
 		}
-		playerList.at(clientID)->pl_bulletContainer.push_back(bullet);
+		//playerList.at(clientID)->pl_bulletContainer.push_back(bullet);
 		playerList[clientID]->pl_bulletContainer.push_back(bullet);
 		if (isServer){
 			for (it_sysaddr iterator = netClients.begin(); iterator != netClients.end(); iterator++){
@@ -1641,7 +1646,7 @@ NetworkThread()
 						break;
 					}
 
-					playerList.at(i)->pl_bulletContainer.push_back(bullet);
+					//playerList.at(i)->pl_bulletContainer.push_back(bullet);
 					playerList[i]->pl_bulletContainer.push_back(bullet);
 
 				}
